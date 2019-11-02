@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  viiidb-api:
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    container_name: viiidb-api
+    volumes:
+      - ./:/app
+    working_dir: /app
+    env_file:
+      - .env
+    networks:
+      - viiidb
+
+networks:
+  viiidb:
+    external:
+      name: viiidb
