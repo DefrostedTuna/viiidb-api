@@ -165,5 +165,5 @@ An API documentation page will be placed here once it is completed.
   If a code coverage report is desired, unit tests can be run from inside the Docker container as the VIIIDB API development environment ships with XDebug enabled out of the box.
 
   ```bash
-  docker-compose exec viiidb-api sh vendor/bin/phpunit --coverage-text
+  docker-compose exec viiidb-api vendor/bin/phpunit --coverage-text
   ```
