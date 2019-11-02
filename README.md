@@ -137,7 +137,7 @@ An API documentation page will be placed here once it is completed.
   Migrations and Seeds (Ha! SeeDs... Some of you will understand...) will also need to be run if working with a fresh database. This can be done using the `artisan` command.
 
   ```bash
-  php artisan db:migrate
+  php artisan migrate
   # Seeding the initial values...
   php artisan db:seed
   ```
