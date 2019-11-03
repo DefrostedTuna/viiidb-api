@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Model;
 use Webpatser\Uuid\Uuid;
 
 class SeedRank extends Model
 {
+    use Uuids;
+
     /** 
      * The table associated with the model.
      *
@@ -37,15 +40,4 @@ class SeedRank extends Model
         'created_at',
         'updated_at',
     ];
-
-    /**
-     *  Setup model event hooks
-     */
-    public static function boot()
-    {
-        parent::boot();
-        self::creating(function ($model) {
-            $model->id = (string) Uuid::generate(4);
-        });
-    }
 }
