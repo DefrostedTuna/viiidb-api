@@ -44,6 +44,14 @@ class SeedRankTest extends TestCase
     }
 
     /** @test */
+    public function it_hides_the_deleted_at_field_from_the_output()
+    {
+        $seedRank = new SeedRank();
+
+        $this->assertContains('deleted_at', $seedRank->getHidden());
+    }
+
+    /** @test */
     public function it_casts_the_rank_column_to_a_string()
     {
         $seedRank = new SeedRank();
