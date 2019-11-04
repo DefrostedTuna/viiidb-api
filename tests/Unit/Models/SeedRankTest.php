@@ -3,6 +3,7 @@
 namespace Tests\Unit\Models;
 
 use App\Models\SeedRank;
+use App\Traits\Filterable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -43,6 +44,26 @@ class SeedRankTest extends TestCase
     }
 
     /** @test */
+    public function it_casts_the_rank_column_to_a_string()
+    {
+        $seedRank = new SeedRank();
+        $casts = $seedRank->getCasts();
+
+        $this->assertArrayHasKey('rank', $casts);
+        $this->assertEquals('string', $casts['rank']);
+    }
+
+    /** @test */
+    public function it_casts_the_salary_column_to_an_integer()
+    {
+        $seedRank = new SeedRank();
+        $casts = $seedRank->getCasts();
+
+        $this->assertArrayHasKey('salary', $casts);
+        $this->assertEquals('integer', $casts['salary']);
+    }
+
+    /** @test */
     public function it_stores_a_seed_rank_in_the_database()
     {
         $seedRank = factory(SeedRank::class)->make();
@@ -52,5 +73,26 @@ class SeedRankTest extends TestCase
         $this->assertDatabaseHas('seed_ranks', [
             'id' => $seedRank->id,
         ]);
+    }
+
+    /** @test */
+    public function it_is_able_to_filter_records()
+    {
+        $this->assertTrue(in_array(
+            Filterable::class, 
+            class_uses(SeedRank::class)
+        ));
+    }
+
+    /** @test */
+    public function it_allows_specific_fields_to_be_filtered()
+    {
+        $seedRank = new SeedRank();
+        $shouldBeFilterable = [
+            'rank',
+            'salary',
+        ];
+
+        $this->assertEquals($shouldBeFilterable, $seedRank->getFilterableFields());
     }
 }

@@ -35,7 +35,7 @@ class SeedRankController extends Controller
      */
     public function index(Request $request): \Illuminate\Database\Eloquent\Collection
     {
-        return $this->seedRankRepository->all();
+        return $this->seedRankRepository->applyRequestFilters($request->input());
     }
 
     /**

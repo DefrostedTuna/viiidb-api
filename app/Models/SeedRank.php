@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Filterable;
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Model;
 use Webpatser\Uuid\Uuid;
@@ -9,6 +10,7 @@ use Webpatser\Uuid\Uuid;
 class SeedRank extends Model
 {
     use Uuids;
+    use Filterable;
 
     /** 
      * The table associated with the model.
@@ -32,6 +34,20 @@ class SeedRank extends Model
     protected $fillable = [];
 
     /**
+     * The default field used to order query results by.
+     *
+     * @var array
+     */
+    protected $orderByField = 'salary';
+
+    /**
+     * The default direction used to order query results by.
+     *
+     * @var array
+     */
+    protected $orderByDirection = 'asc';
+
+    /**
      * The attributes that should be hidden for arrays.
      *
      * @var array $hidden
@@ -39,5 +55,25 @@ class SeedRank extends Model
     protected $hidden = [
         'created_at',
         'updated_at',
+    ];
+
+    /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array $casts
+     */
+    protected $casts = [
+        'rank' => 'string',
+        'salary' => 'integer',
+    ];
+
+    /**
+     * The fields that are explicitly enabled for filtering.
+     *
+     * @var array $filterableFields
+     */
+    protected $filterableFields = [
+        'rank',
+        'salary',
     ];
 }
