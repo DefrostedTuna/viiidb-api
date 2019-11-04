@@ -1,0 +1,69 @@
+version: 2
+
+jobs:
+  run-tests:
+    docker:
+      - image: circleci/php:7.3
+    steps:
+      - checkout
+      - run: composer install --no-interaction --no-suggest
+      - run: ./vendor/bin/phpunit
+
+  # Branch Jobs
+  build-branch:
+    machine: true
+    steps:
+      - checkout
+      - run: docker login $DOCKER_SERVER -u $DOCKER_USER -p $DOCKER_PASS
+      # Build the application image.
+      - run: docker build -t $DOCKER_SERVER/defrostedtuna/viiidb-api:$CIRCLE_BRANCH-$(echo $CIRCLE_SHA1 | cut -c -7) .
+      # Upload the image to the registry.
+      - run: docker push $DOCKER_SERVER/defrostedtuna/viiidb-api:$CIRCLE_BRANCH-$(echo $CIRCLE_SHA1 | cut -c -7)
+
+  # Tag Jobs
+  build-tag:
+    machine: true
+    steps:
+      - checkout
+      - run: docker login $DOCKER_SERVER -u $DOCKER_USER -p $DOCKER_PASS
+      # Build the application image.
+      - run: docker build -t $DOCKER_SERVER/defrostedtuna/viiidb-api:$CIRCLE_TAG .
+      # Upload the image to the registry.
+      - run: docker push $DOCKER_SERVER/defrostedtuna/viiidb-api:$CIRCLE_TAG
+
+workflows:
+  version: 2
+
+  build-branch:
+    jobs:
+      - run-tests:
+          filters:
+            branches:
+              only: master
+            tags:
+              ignore: /.*/
+      - build-branch:
+          requires:
+            - run-tests
+          filters:
+            branches:
+              only: master
+            tags:
+              ignore: /.*/
+
+  build-tag:
+    jobs:
+      - run-tests:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
+      - build-tag:
+          requires:
+            - run-tests
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
