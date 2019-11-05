@@ -112,9 +112,9 @@ trait Filterable
             // If the desired comparison operator is comparing an integer value,
             // then we want to cast the column as an integer so it checks the values properly.
             if (in_array($operator, $this->getNumericalOperators())) {
-                $query->whereRaw("CAST({$fieldName} AS UNSIGNED) ${operator} {$fieldValue}");
+                $query->whereRaw("CAST({$fieldName} AS UNSIGNED) ${operator} \"{$fieldValue}\"");
             } else {
-                $query->where($fieldName, $operator, $fieldValue);
+                $query->whereRaw("LOWER({$fieldName}) ${operator} \"{$fieldValue}\"");
             }
         }
 
