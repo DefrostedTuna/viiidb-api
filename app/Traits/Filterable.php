@@ -2,10 +2,22 @@
 
 namespace App\Traits;
 
+use App\Helpers\QueryRequestFilter;
 use Illuminate\Http\Request;
 
 trait Filterable 
 {
+    /**
+     * The relationships that are explicitly marked as valid through requests.
+     *
+     * @return array
+     */
+    public function getValidRelations(): array
+    {
+        return isset($this->validRelations)
+            ? $this->validRelations
+            : [];
+    }
     /**
      * The fields that are explicitly enabled for filtering.
      *
@@ -85,81 +97,12 @@ trait Filterable
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function applyRequestFilters(array $request): \Illuminate\Database\Eloquent\Collection
+    public function applyRequestFilters(array $filters): \Illuminate\Database\Eloquent\Collection
     {
-        $fieldNames = array_intersect(
-            $this->getFilterableFields(),
-            array_keys($request)
-        );
+        $query = new QueryRequestFilter($this->getModel());
 
-        $query = $this->newQuery();
-
-        foreach ($fieldNames as $fieldName) {
-            $param = strtolower($request[$fieldName]);
-
-            $operator = $this->parseComparisonOperator($param);
-            $fieldValue = $this->parseFieldValue($param);
-
-            // Check if the value can be converted to an integer.
-            if ((int)$fieldValue) {
-                $fieldValue = (int)$fieldValue;
-            }
-
-            if ($operator === 'like') {
-                $fieldValue = "%{$fieldValue}%";
-            }
-
-            // If the desired comparison operator is comparing an integer value,
-            // then we want to cast the column as an integer so it checks the values properly.
-            if (in_array($operator, $this->getNumericalOperators())) {
-                $query->whereRaw("CAST({$fieldName} AS UNSIGNED) ${operator} \"{$fieldValue}\"");
-            } else {
-                $query->whereRaw("LOWER({$fieldName}) ${operator} \"{$fieldValue}\"");
-            }
-        }
-
-        return $query->orderBy(
-            $this->getOrderByField(), 
-            $this->getOrderByDirection()
-        )->get();
-    }
-
-    /**
-     * Extracts the comparison operator from the query string.
-     *
-     * @param string $value
-     *
-     * @return string
-     */
-    public function parseComparisonOperator(string $value): string
-    {
-        $filterableOperators = $this->getFilterableOperators();
-        $splitValue = explode(':', $value);
-
-        // If the array has more than one value, there is an operator.
-        if (count($splitValue) > 1) {
-            return in_array($splitValue[0], array_keys($filterableOperators))
-                ? $filterableOperators[$splitValue[0]]
-                : '=';
-        }
-
-        return '=';
-    }
-
-    /**
-     * Extracts the desired value by which a user wishes filter.
-     *
-     * @param string $value
-     *
-     * @return string
-     */
-    public function parseFieldValue(String $value): string
-    {
-        // Splitting by three will ignore anything after the second colon.
-        $splitValue = explode(':', $value, 3);
-
-        return count($splitValue) > 1
-            ? $splitValue[1]
-            : $value;
+        return $query->loadRelations($filters)
+            ->applyFilters($filters)
+            ->getResults();
     }
 }
