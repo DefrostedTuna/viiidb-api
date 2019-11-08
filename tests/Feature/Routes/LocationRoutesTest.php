@@ -152,4 +152,108 @@ class LocationRoutesTest extends TestCase
             'area' => 'Monterosa Plateau',
         ]);
     }
+
+    /** @test */
+    public function it_can_load_the_region_without_additional_filters()
+    {
+        $balambRegion = factory(Location::class)->create([ 
+            'name' => 'Balamb Region', 
+            'description' => 'This is technically the parent',
+            'area' => 'Alcauld Plains', 
+        ]);
+        $balambGarden = factory(Location::class)->create([
+            'name' => 'Balamb Garden',
+            'region_id' => $balambRegion->id,
+            'description' => 'This is technically the child',
+            'area' => 'Alcauld Plains',
+        ]);
+
+        
+        $response = $this->get("/api/locations?with=region");
+
+        $response->assertStatus(200);
+        $response->assertJsonCount(2);
+        $response->assertJsonFragment([
+            'region' => $balambRegion->toArray(),
+        ]);
+    }
+
+    /** @test */
+    public function it_can_load_the_entire_region_relation()
+    {
+        $balambRegion = factory(Location::class)->create([ 
+            'name' => 'Balamb Region', 
+            'description' => 'This is technically the parent',
+            'area' => 'Alcauld Plains', 
+        ]);
+        $balambGarden = factory(Location::class)->create([
+            'name' => 'Balamb Garden',
+            'region_id' => $balambRegion->id,
+            'description' => 'This is technically the child',
+            'area' => 'Alcauld Plains',
+        ]);
+
+        $response = $this->get("/api/locations?with=region&name=like:Garden");
+
+        $response->assertStatus(200);
+        $response->assertJsonCount(1);
+        $response->assertJsonFragment([
+            'region' => $balambRegion->toArray(),
+        ]);
+    }
+
+    /** @test */
+    public function it_can_load_the_name_column_on_the_region_relation()
+    {
+        $balambRegion = factory(Location::class)->create([ 
+            'name' => 'Balamb Region', 
+            'description' => 'This is technically the parent',
+            'area' => 'Alcauld Plains', 
+        ]);
+        $balambGarden = factory(Location::class)->create([
+            'name' => 'Balamb Garden',
+            'region_id' => $balambRegion->id,
+            'description' => 'This is technically the child',
+            'area' => 'Alcauld Plains',
+        ]);
+
+        $response = $this->get("/api/locations?with=region.name&name=like:garden");
+
+        $response->assertStatus(200);
+        $response->assertJsonCount(1);
+        $response->assertJsonFragment([
+            'region' => [
+                'id' => $balambRegion->id,
+                'name' => $balambRegion->name,
+            ],
+        ]);
+    }
+
+    /** @test */
+    public function it_can_load_multiple_columns_explicitly()
+    {
+        $balambRegion = factory(Location::class)->create([ 
+            'name' => 'Balamb Region', 
+            'description' => 'This is technically the parent',
+            'area' => 'Alcauld Plains', 
+        ]);
+        $balambGarden = factory(Location::class)->create([
+            'name' => 'Balamb Garden',
+            'region_id' => $balambRegion->id,
+            'description' => 'This is technically the child',
+            'area' => 'Alcauld Plains',
+        ]);
+
+        $response = $this->get("/api/locations?with=region.name,region.area&name=like:garden");
+
+        $response->assertStatus(200);
+        $response->assertJsonCount(1);
+        $response->assertJsonFragment([
+            'region' => [
+                'id' => $balambRegion->id,
+                'name' => $balambRegion->name,
+                'area' => $balambGarden->area,
+            ],
+        ]);
+    }
 }

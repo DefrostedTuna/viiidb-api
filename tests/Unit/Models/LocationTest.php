@@ -20,6 +20,14 @@ class LocationTest extends TestCase
     }
 
     /** @test */
+    public function it_sets_the_primary_key_type_to_string()
+    {
+        $location = new Location();
+
+        $this->assertEquals('string', $location->getKeyType());
+    }
+
+    /** @test */
     public function it_does_not_allow_properties_to_be_assigned_in_mass()
     {
         $location = new Location();
@@ -28,27 +36,44 @@ class LocationTest extends TestCase
     }
 
     /** @test */
-    public function it_hides_the_created_at_field_from_the_output()
+    public function it_explicitly_defines_the_visible_fields_for_api_consumption()
     {
         $location = new Location();
 
-        $this->assertContains('created_at', $location->getHidden());
+        $visibleFields = [
+            'id',
+            'region_id',
+            'name',
+            'description',
+            'area',
+            'region',       
+        ];
+
+        $this->assertEquals($visibleFields, $location->getVisible());
     }
 
     /** @test */
-    public function it_hides_the_updated_at_field_from_the_output()
+    public function it_explicitly_defines_the_hidden_fields_for_api_consumption()
     {
         $location = new Location();
 
-        $this->assertContains('updated_at', $location->getHidden());
+        $hiddenFields = [
+            'created_at',
+            'updated_at',
+            'deleted_at',    
+        ];
+
+        $this->assertEquals($hiddenFields, $location->getHidden());
     }
 
     /** @test */
-    public function it_hides_the_deleted_at_field_from_the_output()
+    public function it_casts_the_region_id_column_to_a_string()
     {
         $location = new Location();
+        $casts = $location->getCasts();
 
-        $this->assertContains('deleted_at', $location->getHidden());
+        $this->assertArrayHasKey('region_id', $casts);
+        $this->assertEquals('string', $casts['region_id']);
     }
 
     /** @test */
@@ -100,6 +125,30 @@ class LocationTest extends TestCase
         ];
 
         $this->assertEquals($shouldBeFilterable, $location->getFilterableFields());
+    }
+
+    /** @test */
+    public function it_allows_regions_to_be_loaded_through_filters()
+    {
+        $location = new Location();
+
+        $this->assertContains('region', $location->getValidRelations());
+    }
+
+    /** @test */
+    public function it_orders_results_by_name()
+    {
+        $location = new Location();
+
+        $this->assertEquals('name', $location->getOrderByField());
+    }
+
+    /** @test */
+    public function it_explicitly_defines_the_order_results_should_be_returned_by()
+    {
+        $location = new Location();
+
+        $this->assertEquals('asc', $location->getOrderByDirection());
     }
 
     /** @test */

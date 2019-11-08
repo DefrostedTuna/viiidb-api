@@ -8,6 +8,7 @@ use Faker\Generator as Faker;
 $factory->define(Location::class, function (Faker $faker) {
     return [
         'name' => $faker->word,
+        'region_id' => null,
         'description' => $faker->paragraph,
         'area' => $faker->word,
     ];

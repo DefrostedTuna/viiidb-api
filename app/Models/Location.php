@@ -19,6 +19,13 @@ class Location extends Model
     protected $table = 'locations';
 
     /**
+     * The "type" of the primary key ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
+
+    /**
      * Indicates if the IDs are auto-incrementing.
      *
      * @var bool
@@ -47,6 +54,20 @@ class Location extends Model
     protected $orderByDirection = 'asc';
 
     /**
+     * The attributes that should be visible in serialization.
+     *
+     * @var array
+     */
+    protected $visible = [
+        'id',
+        'region_id',
+        'name',
+        'description',
+        'area',
+        'region',
+    ];
+
+    /**
      * The attributes that should be hidden for arrays.
      *
      * @var array $hidden
@@ -63,9 +84,20 @@ class Location extends Model
      * @var array $casts
      */
     protected $casts = [
-        'name' => 'string',
-        'description' => 'string',
-        'area' => 'string',
+        'id'            => 'string',
+        'region_id'     => 'string',
+        'name'          => 'string',
+        'description'   => 'string',
+        'area'          => 'string',
+    ];
+
+    /**
+     * The relationships that are explicitly marked as valid through requests.
+     *
+     * @return array $validRelations
+     */
+    protected $validRelations = [
+        'region',
     ];
 
     /**
