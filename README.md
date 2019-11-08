@@ -1,5 +1,9 @@
 # VIIIDB API
 
+<p align="center">
+  <img src="https://img.shields.io/circleci/build/github/DefrostedTuna/viiidb-api/master?logo=circleci&style=for-the-badge" alt="Build Status">
+</p>
+
 VIIIDB is a project that aims to bring all of the information related to Final Fantasy VIII to a simple, elegant API. VIIIDB is currently under construction and is subject to major additions and/or project changes. The final product will consist of a back end API that is publicly accessible, as well as a front end UI for general consumption.
 
 An API documentation page will be placed here once it is completed.
