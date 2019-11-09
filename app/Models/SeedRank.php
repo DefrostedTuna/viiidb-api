@@ -82,6 +82,7 @@ class SeedRank extends Model
      * @var array $casts
      */
     protected $casts = [
+        'id' => 'string',
         'rank' => 'string',
         'salary' => 'integer',
     ];

@@ -80,6 +80,7 @@ class Element extends Model
      * @var array $casts
      */
     protected $casts = [
+        'id' => 'string',
         'name' => 'string',
     ];
 
