@@ -19,7 +19,7 @@ class Location extends Model
     protected $table = 'locations';
 
     /**
-     * The "type" of the primary key ID.
+     * The 'type' of the primary key ID.
      *
      * @var string
      */

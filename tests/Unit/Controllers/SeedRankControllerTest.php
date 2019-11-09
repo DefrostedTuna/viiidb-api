@@ -54,7 +54,7 @@ class SeedRankControllerTest extends TestCase
         factory(SeedRank::class)->create([ 'rank' => 5 ]);
         factory(SeedRank::class)->create([ 'rank' => 10 ]);
 
-        $request = new Request(['rank' => "like:1:0"]);
+        $request = new Request(['rank' => 'like:1:0']);
         $seedRankController = new SeedRankController($seedRank);
         $response = $seedRankController->index($request);
 

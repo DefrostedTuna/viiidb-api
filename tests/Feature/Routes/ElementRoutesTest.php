@@ -4,7 +4,6 @@ namespace Tests\Feature\Routes;
 
 use App\Models\Element;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class ElementRoutesTest extends TestCase
@@ -40,7 +39,7 @@ class ElementRoutesTest extends TestCase
         factory(Element::class)->create([ 'name' => 'water' ]);
         factory(Element::class)->create([ 'name' => 'thunder' ]);
 
-        $response = $this->get("/api/elements?name=like:er:w");
+        $response = $this->get('/api/elements?name=like:er:w');
 
         $response->assertStatus(200);
         $response->assertJsonCount(2);
@@ -55,7 +54,7 @@ class ElementRoutesTest extends TestCase
         factory(Element::class)->create([ 'name' => 'water' ]);
         factory(Element::class)->create([ 'name' => 'thunder' ]);
 
-        $response = $this->get("/api/elements?name=thunder");
+        $response = $this->get('/api/elements?name=thunder');
 
         $response->assertStatus(200);
         $response->assertJsonCount(1);
@@ -69,7 +68,7 @@ class ElementRoutesTest extends TestCase
         factory(Element::class)->create([ 'name' => 'water' ]);
         factory(Element::class)->create([ 'name' => 'thunder' ]);
 
-        $response = $this->get("/api/elements?name=like:er");
+        $response = $this->get('/api/elements?name=like:er');
 
         $response->assertStatus(200);
         $response->assertJsonCount(2);
@@ -84,7 +83,7 @@ class ElementRoutesTest extends TestCase
         factory(Element::class)->create([ 'name' => 'water' ]);
         factory(Element::class)->create([ 'name' => 'thunder' ]);
 
-        $response = $this->get("/api/elements?name=not:water");
+        $response = $this->get('/api/elements?name=not:water');
 
         $response->assertStatus(200);
         $response->assertJsonCount(2);

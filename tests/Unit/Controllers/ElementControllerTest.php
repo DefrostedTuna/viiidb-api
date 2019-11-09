@@ -54,7 +54,7 @@ class ElementControllerTest extends TestCase
         factory(Element::class)->create([ 'name' => 'water' ]);
         factory(Element::class)->create([ 'name' => 'thunder' ]);
 
-        $request = new Request(['name' => "like:er:w"]);
+        $request = new Request(['name' => 'like:er:w']);
         $elementController = new ElementController($element);
         $response = $elementController->index($request);
 

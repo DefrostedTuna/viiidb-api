@@ -54,7 +54,7 @@ class LocationControllerTest extends TestCase
         factory(Location::class)->create([ 'name' => 'Galbadia Region' ]);
         factory(Location::class)->create([ 'name' => 'Esthar Region' ]);
 
-        $request = new Request(['name' => "like:al:w"]);
+        $request = new Request(['name' => 'like:al:w']);
         $locationController = new LocationController($location);
         $response = $locationController->index($request);
 
