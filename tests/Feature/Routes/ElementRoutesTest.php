@@ -33,6 +33,14 @@ class ElementRoutesTest extends TestCase
     }
 
     /** @test */
+    public function it_throws_an_exception_when_an_individual_record_is_not_found()
+    {
+        $response = $this->get('/api/elements/invalid');
+
+        $response->assertStatus(404);
+    }
+
+    /** @test */
     public function multiple_colons_will_be_ignored_when_filtering_results()
     {
         factory(Element::class)->create([ 'name' => 'fire' ]);

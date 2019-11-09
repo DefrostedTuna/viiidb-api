@@ -5,6 +5,7 @@ namespace Tests\Unit\Controllers;
 use App\Http\Controllers\ElementController;
 use App\Models\Element;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
 use Tests\TestCase;
@@ -34,13 +35,25 @@ class ElementControllerTest extends TestCase
 
         $elementController = new ElementController(new Element());
 
-        $response = $elementController->show(new Request(), $element);
+        $response = $elementController->show(new Request(), $element->id);
 
         // The controller should return the instance of a Element that was found via 
         // route model binding. Since we are mocking this result by injecting the
         // Element into the method, we should get the same Element back.
         $this->assertInstanceOf(Element::class, $response);
-        $this->assertEquals($element, $response);
+        $this->assertEquals($element->toArray(), $response->toArray());
+    }
+
+    /** @test */
+    public function it_throws_an_exception_when_an_individual_record_is_not_found()
+    {
+        $this->expectException(ModelNotFoundException::class);
+
+        $element = factory(Element::class)->create();
+
+        $elementController = new ElementController(new Element());
+
+        $response = $elementController->show(new Request(), 'invalid');
     }
 
     /** @test */

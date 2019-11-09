@@ -33,6 +33,90 @@ class LocationRoutesTest extends TestCase
     }
 
     /** @test */
+    public function it_can_load_relations_on_individual_records()
+    {
+        $balambRegion = factory(Location::class)->create([ 
+            'name' => 'Balamb Region', 
+            'description' => 'This is technically the parent',
+            'area' => 'Alcauld Plains', 
+        ]);
+        $balambGarden = factory(Location::class)->create([
+            'name' => 'Balamb Garden',
+            'region_id' => $balambRegion->id,
+            'description' => 'This is technically the child',
+            'area' => 'Alcauld Plains',
+        ]);
+
+        $response = $this->get("/api/locations/{$balambGarden->id}?with=region");
+
+        $response->assertStatus(200);
+        $response->assertJsonFragment([
+            'region' => $balambRegion->toArray()
+        ]);
+    }
+
+    /** @test */
+    public function it_can_load_relation_properties_on_individual_records()
+    {
+        $balambRegion = factory(Location::class)->create([ 
+            'name' => 'Balamb Region', 
+            'description' => 'This is technically the parent',
+            'area' => 'Alcauld Plains', 
+        ]);
+        $balambGarden = factory(Location::class)->create([
+            'name' => 'Balamb Garden',
+            'region_id' => $balambRegion->id,
+            'description' => 'This is technically the child',
+            'area' => 'Alcauld Plains',
+        ]);
+
+        $response = $this->get("/api/locations/{$balambGarden->id}?with=region.name");
+
+        $response->assertStatus(200);
+        $response->assertJsonFragment([
+            'region' => [
+                'id' => $balambRegion->id,
+                'name' => $balambRegion->name,
+            ],
+        ]);
+    }
+
+    /** @test */
+    public function it_can_load_multiple_relation_properties_on_individual_records()
+    {
+        $balambRegion = factory(Location::class)->create([ 
+            'name' => 'Balamb Region', 
+            'description' => 'This is technically the parent',
+            'area' => 'Alcauld Plains', 
+        ]);
+        $balambGarden = factory(Location::class)->create([
+            'name' => 'Balamb Garden',
+            'region_id' => $balambRegion->id,
+            'description' => 'This is technically the child',
+            'area' => 'Alcauld Plains',
+        ]);
+
+        $response = $this->get("/api/locations/{$balambGarden->id}?with=region.name,region.area");
+
+        $response->assertStatus(200);
+        $response->assertJsonFragment([
+            'region' => [
+                'id' => $balambRegion->id,
+                'name' => $balambRegion->name,
+                'area' => $balambRegion->area,
+            ],
+        ]);
+    }
+
+    /** @test */
+    public function it_throws_an_exception_when_an_individual_record_is_not_found()
+    {
+        $response = $this->get('/api/locations/invalid');
+
+        $response->assertStatus(404);
+    }
+
+    /** @test */
     public function multiple_colons_will_be_ignored_when_filtering_results()
     {
         factory(Location::class)->create([ 'name' => 'Balamb Region' ]);

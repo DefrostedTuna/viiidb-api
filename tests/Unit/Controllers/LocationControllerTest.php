@@ -5,6 +5,7 @@ namespace Tests\Unit\Controllers;
 use App\Http\Controllers\LocationController;
 use App\Models\Location;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
 use Tests\TestCase;
@@ -34,13 +35,125 @@ class LocationControllerTest extends TestCase
 
         $locationController = new LocationController(new Location());
 
-        $response = $locationController->show(new Request(), $location);
+        $response = $locationController->show(new Request(), $location->id);
 
         // The controller should return the instance of a Location that was found via 
         // route model binding. Since we are mocking this result by injecting the
         // Location into the method, we should get the same Location back.
         $this->assertInstanceOf(Location::class, $response);
-        $this->assertEquals($location, $response);
+        $this->assertEquals($location->toArray(), $response->toArray());
+    }
+
+    /** @test */
+    public function it_can_load_relations_on_individual_records()
+    {
+        $balambRegion = factory(Location::class)->create([ 
+            'name' => 'Balamb Region', 
+            'description' => 'This is technically the parent',
+            'area' => 'Alcauld Plains', 
+        ]);
+        $balambGarden = factory(Location::class)->create([
+            'name' => 'Balamb Garden',
+            'region_id' => $balambRegion->id,
+            'description' => 'This is technically the child',
+            'area' => 'Alcauld Plains',
+        ]);
+
+        $locationController = new LocationController(new Location());
+
+        $response = $locationController->show(new Request([
+            'with' => 'region',
+        ]), $balambGarden->id);
+
+        $this->assertTrue(array_key_exists(
+            'region', 
+            $response->toArray()
+        ));
+        $this->assertEquals(
+            $balambRegion->toArray(), 
+            $response->region->toArray()
+        );
+    }
+
+    /** @test */
+    public function it_can_load_relation_properties_on_individual_records()
+    {
+        $balambRegion = factory(Location::class)->create([ 
+            'name' => 'Balamb Region', 
+            'description' => 'This is technically the parent',
+            'area' => 'Alcauld Plains', 
+        ]);
+        $balambGarden = factory(Location::class)->create([
+            'name' => 'Balamb Garden',
+            'region_id' => $balambRegion->id,
+            'description' => 'This is technically the child',
+            'area' => 'Alcauld Plains',
+        ]);
+
+        $locationController = new LocationController(new Location());
+
+        $response = $locationController->show(new Request([
+            'with' => 'region.name',
+        ]), $balambGarden->id);
+
+        $this->assertTrue(array_key_exists(
+            'region', 
+            $response->toArray()
+        ));
+        $this->assertEquals(
+            [
+                'id' => $balambRegion->id,
+                'name' => $balambRegion->name,
+            ], 
+            $response->region->toArray()
+        );
+    }
+
+    /** @test */
+    public function it_can_load_multiple_relation_properties_on_individual_records()
+    {
+        $balambRegion = factory(Location::class)->create([ 
+            'name' => 'Balamb Region', 
+            'description' => 'This is technically the parent',
+            'area' => 'Alcauld Plains', 
+        ]);
+        $balambGarden = factory(Location::class)->create([
+            'name' => 'Balamb Garden',
+            'region_id' => $balambRegion->id,
+            'description' => 'This is technically the child',
+            'area' => 'Alcauld Plains',
+        ]);
+
+        $locationController = new LocationController(new Location());
+
+        $response = $locationController->show(new Request([
+            'with' => 'region.name,region.area',
+        ]), $balambGarden->id);
+
+        $this->assertTrue(array_key_exists(
+            'region', 
+            $response->toArray()
+        ));
+        $this->assertEquals(
+            [
+                'id' => $balambRegion->id,
+                'name' => $balambRegion->name,
+                'area' => $balambRegion->area,
+            ], 
+            $response->region->toArray()
+        );
+    }
+
+    /** @test */
+    public function it_throws_an_exception_when_an_individual_record_is_not_found()
+    {
+        $this->expectException(ModelNotFoundException::class);
+
+        $location = factory(Location::class)->create();
+
+        $locationController = new LocationController(new Location());
+
+        $response = $locationController->show(new Request(), 'invalid');
     }
 
     /** @test */

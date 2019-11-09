@@ -93,16 +93,33 @@ trait Filterable
     /**
      * Filters query results by the given parameters.
      *
-     * @param array $request
+     * @param array $filters
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function applyRequestFilters(array $filters): \Illuminate\Database\Eloquent\Collection
+    public function getFilteredRecords(array $filters): \Illuminate\Database\Eloquent\Collection
     {
         $query = new QueryRequestFilter($this->getModel());
 
-        return $query->loadRelations($filters)
-            ->applyFilters($filters)
-            ->getResults();
+        $query->loadRelations($filters)->applyFilters($filters);
+
+        return $query->getResults();
+    }
+
+    /**
+     * Fetches a record with the applicable relations requested by the filters.
+     *
+     * @param string $id
+     * @param array $filters
+     *
+     * @return \Illuminate\Database\Eloquent\Model
+     * 
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     */
+    public function getRecordWithRelations(string $id, array $filters): \Illuminate\Database\Eloquent\Model
+    {
+        $query = new QueryRequestFilter($this->getModel());
+
+        return $query->loadRelations($filters)->getResult($id);
     }
 }
