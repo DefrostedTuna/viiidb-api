@@ -48,13 +48,13 @@ class SeedRankControllerTest extends TestCase
     {
         // Set the filterable operators on the SeedRank class.
         $seedRank = new SeedRank();
-        $seedRank->filterableOperators = ['like' => 'like'];
+        $seedRank->filterableOperators = [ 'like' => 'like' ];
 
         factory(SeedRank::class)->create([ 'rank' => 1 ]);
         factory(SeedRank::class)->create([ 'rank' => 5 ]);
         factory(SeedRank::class)->create([ 'rank' => 10 ]);
 
-        $request = new Request(['rank' => 'like:1:0']);
+        $request = new Request([ 'rank' => 'like:1:0' ]);
         $seedRankController = new SeedRankController($seedRank);
         $response = $seedRankController->index($request);
 
@@ -70,7 +70,7 @@ class SeedRankControllerTest extends TestCase
         factory(SeedRank::class)->create([ 'rank' => 5 ]);
         factory(SeedRank::class)->create([ 'rank' => 10 ]);
 
-        $request = new Request(['rank' => 5]);
+        $request = new Request([ 'rank' => 5 ]);
         $seedRankController = new SeedRankController(new SeedRank);
         $response = $seedRankController->index($request);
 
@@ -85,7 +85,7 @@ class SeedRankControllerTest extends TestCase
         factory(SeedRank::class)->create([ 'rank' => 5 ]);
         factory(SeedRank::class)->create([ 'rank' => 10 ]);
 
-        $request = new Request(['rank' => 'gt:5']);
+        $request = new Request([ 'rank' => 'gt:5' ]);
         $seedRankController = new SeedRankController(new SeedRank);
         $response = $seedRankController->index($request);
 
@@ -100,7 +100,7 @@ class SeedRankControllerTest extends TestCase
         factory(SeedRank::class)->create([ 'rank' => 5 ]);
         factory(SeedRank::class)->create([ 'rank' => 10 ]);
 
-        $request = new Request(['rank' => 'gte:5']);
+        $request = new Request([ 'rank' => 'gte:5' ]);
         $seedRankController = new SeedRankController(new SeedRank);
         $response = $seedRankController->index($request);
 
@@ -116,7 +116,7 @@ class SeedRankControllerTest extends TestCase
         factory(SeedRank::class)->create([ 'rank' => 5 ]);
         factory(SeedRank::class)->create([ 'rank' => 10 ]);
 
-        $request = new Request(['rank' => 'lt:5']);
+        $request = new Request([ 'rank' => 'lt:5' ]);
         $seedRankController = new SeedRankController(new SeedRank);
         $response = $seedRankController->index($request);
 
@@ -131,7 +131,7 @@ class SeedRankControllerTest extends TestCase
         factory(SeedRank::class)->create([ 'rank' => 5 ]);
         factory(SeedRank::class)->create([ 'rank' => 10 ]);
 
-        $request = new Request(['rank' => 'lte:5']);
+        $request = new Request([ 'rank' => 'lte:5' ]);
         $seedRankController = new SeedRankController(new SeedRank);
         $response = $seedRankController->index($request);
 
@@ -147,7 +147,7 @@ class SeedRankControllerTest extends TestCase
         factory(SeedRank::class)->create([ 'rank' => 5 ]);
         factory(SeedRank::class)->create([ 'rank' => 10 ]);
 
-        $request = new Request(['rank' => 'like:1']);
+        $request = new Request([ 'rank' => 'like:1' ]);
         $seedRankController = new SeedRankController(new SeedRank);
         $response = $seedRankController->index($request);
 
@@ -163,7 +163,7 @@ class SeedRankControllerTest extends TestCase
         factory(SeedRank::class)->create([ 'rank' => 5 ]);
         factory(SeedRank::class)->create([ 'rank' => 10 ]);
 
-        $request = new Request(['rank' => 'not:10']);
+        $request = new Request([ 'rank' => 'not:10' ]);
         $seedRankController = new SeedRankController(new SeedRank);
         $response = $seedRankController->index($request);
 
@@ -179,7 +179,7 @@ class SeedRankControllerTest extends TestCase
         factory(SeedRank::class)->create([ 'rank' => 5, 'salary' =>  3000 ]);
         factory(SeedRank::class)->create([ 'rank' => 10, 'salary' => 8000 ]);
 
-        $request = new Request(['salary' => 500]);
+        $request = new Request([ 'salary' => 500 ]);
         $seedRankController = new SeedRankController(new SeedRank);
         $response = $seedRankController->index($request);
 
@@ -194,7 +194,7 @@ class SeedRankControllerTest extends TestCase
         factory(SeedRank::class)->create([ 'rank' => 5, 'salary' =>  3000 ]);
         factory(SeedRank::class)->create([ 'rank' => 10, 'salary' => 8000 ]);
 
-        $request = new Request(['salary' => 'gt:3000']);
+        $request = new Request([ 'salary' => 'gt:3000' ]);
         $seedRankController = new SeedRankController(new SeedRank);
         $response = $seedRankController->index($request);
 
@@ -209,7 +209,7 @@ class SeedRankControllerTest extends TestCase
         factory(SeedRank::class)->create([ 'rank' => 5, 'salary' =>  3000 ]);
         factory(SeedRank::class)->create([ 'rank' => 10, 'salary' => 8000 ]);
 
-        $request = new Request(['salary' => 'gte:3000']);
+        $request = new Request([ 'salary' => 'gte:3000' ]);
         $seedRankController = new SeedRankController(new SeedRank);
         $response = $seedRankController->index($request);
 
@@ -225,7 +225,7 @@ class SeedRankControllerTest extends TestCase
         factory(SeedRank::class)->create([ 'rank' => 5, 'salary' =>  3000 ]);
         factory(SeedRank::class)->create([ 'rank' => 10, 'salary' => 8000 ]);
 
-        $request = new Request(['salary' => 'lt:3000']);
+        $request = new Request([ 'salary' => 'lt:3000' ]);
         $seedRankController = new SeedRankController(new SeedRank);
         $response = $seedRankController->index($request);
 
@@ -240,7 +240,7 @@ class SeedRankControllerTest extends TestCase
         factory(SeedRank::class)->create([ 'rank' => 5, 'salary' =>  3000 ]);
         factory(SeedRank::class)->create([ 'rank' => 10, 'salary' => 8000 ]);
 
-        $request = new Request(['salary' => 'lte:3000']);
+        $request = new Request([ 'salary' => 'lte:3000' ]);
         $seedRankController = new SeedRankController(new SeedRank);
         $response = $seedRankController->index($request);
 
@@ -256,7 +256,7 @@ class SeedRankControllerTest extends TestCase
         factory(SeedRank::class)->create([ 'rank' => 5, 'salary' =>  3000 ]);
         factory(SeedRank::class)->create([ 'rank' => 10, 'salary' => 8000 ]);
 
-        $request = new Request(['salary' => 'like:000']);
+        $request = new Request([ 'salary' => 'like:000' ]);
         $seedRankController = new SeedRankController(new SeedRank);
         $response = $seedRankController->index($request);
 
@@ -272,7 +272,7 @@ class SeedRankControllerTest extends TestCase
         factory(SeedRank::class)->create([ 'rank' => 5, 'salary' =>  3000 ]);
         factory(SeedRank::class)->create([ 'rank' => 10, 'salary' => 8000 ]);
 
-        $request = new Request(['salary' => 'not:8000']);
+        $request = new Request([ 'salary' => 'not:8000' ]);
         $seedRankController = new SeedRankController(new SeedRank);
         $response = $seedRankController->index($request);
 
