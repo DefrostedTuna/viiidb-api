@@ -5,7 +5,6 @@ namespace Tests\Unit\Models;
 use App\Models\Element;
 use App\Traits\Filterable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class ElementTest extends TestCase
