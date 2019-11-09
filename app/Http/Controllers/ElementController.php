@@ -35,19 +35,19 @@ class ElementController extends Controller
      */
     public function index(Request $request): \Illuminate\Database\Eloquent\Collection
     {
-        return $this->elementRepository->applyRequestFilters($request->input());
+        return $this->elementRepository->getFilteredRecords($request->input());
     }
 
     /**
      * Display the specified resource.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Element $element
+     * @param string $elementId
      * 
      * @return \App\Models\Element
      */
-    public function show(Request $request, Element $element)
+    public function show(Request $request, string $elementId): \App\Models\Element
     {
-        return $element;
+        return $this->elementRepository->getRecordWithRelations($elementId, $request->input());
     }
 }

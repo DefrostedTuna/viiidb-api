@@ -100,6 +100,20 @@ class QueryRequestFilter
     }
 
     /**
+     * Fetch a specific record from the database, or fail trying to do so.
+     *
+     * @param string $id
+     * 
+     * @return \Illuminate\Database\Eloquent\Model
+     * 
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     */
+    public function getResult(string $id): \Illuminate\Database\Eloquent\Model
+    {
+        return $this->query->where('id', $id)->firstOrFail();
+    }
+
+    /**
      * Fetches query results and sorts them according to the defined column and direction.
      *
      * @return \Illuminate\Database\Eloquent\Collection

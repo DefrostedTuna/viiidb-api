@@ -35,19 +35,19 @@ class SeedRankController extends Controller
      */
     public function index(Request $request): \Illuminate\Database\Eloquent\Collection
     {
-        return $this->seedRankRepository->applyRequestFilters($request->input());
+        return $this->seedRankRepository->getFilteredRecords($request->input());
     }
 
     /**
      * Display the specified resource.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \App\Models\SeedRank $seedRank
+     * @param string $seedRankId
      * 
-     * @return \App\Models\SeedRank $seedRank
+     * @return \App\Models\SeedRank
      */
-    public function show(Request $request, SeedRank $seedRank): \App\Models\SeedRank
+    public function show(Request $request, string $seedRankId): \App\Models\SeedRank
     {
-        return $seedRank;
+        return $this->seedRankRepository->getRecordWithRelations($seedRankId, $request->input());
     }
 }

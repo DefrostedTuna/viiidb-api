@@ -5,6 +5,7 @@ namespace Tests\Unit\Controllers;
 use App\Http\Controllers\SeedRankController;
 use App\Models\SeedRank;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
 use Tests\TestCase;
@@ -34,13 +35,25 @@ class SeedRankControllerTest extends TestCase
 
         $seedRankController = new SeedRankController(new SeedRank);
 
-        $response = $seedRankController->show(new Request(), $seedRank);
+        $response = $seedRankController->show(new Request(), $seedRank->id);
 
         // The controller should return the instance of a Seed Rank that was found via 
         // route model binding. Since we are mocking this result by injecting the
         // Seed Rank into the method, we should get the same Seed Rank back.
         $this->assertInstanceOf(SeedRank::class, $response);
-        $this->assertEquals($seedRank, $response);
+        $this->assertEquals($seedRank->toArray(), $response->toArray());
+    }
+
+    /** @test */
+    public function it_throws_an_exception_when_an_individual_record_is_not_found()
+    {
+        $this->expectException(ModelNotFoundException::class);
+
+        $seedRank = factory(SeedRank::class)->create();
+
+        $seedRankController = new SeedRankController(new SeedRank());
+
+        $response = $seedRankController->show(new Request(), 'invalid');
     }
 
     /** @test */

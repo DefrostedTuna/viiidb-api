@@ -35,19 +35,19 @@ class LocationController extends Controller
      */
     public function index(Request $request): \Illuminate\Database\Eloquent\Collection
     {
-        return $this->locationRepository->applyRequestFilters($request->input());
+        return $this->locationRepository->getFilteredRecords($request->input());
     }
 
     /**
      * Display the specified resource.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Location $location
+     * @param string $locationId
      * 
      * @return \App\Models\Location
      */
-    public function show(Request $request, Location $location)
+    public function show(Request $request, string $locationId): \App\Models\Location
     {
-        return $location;
+        return $this->locationRepository->getRecordWithRelations($locationId, $request->input());
     }
 }
