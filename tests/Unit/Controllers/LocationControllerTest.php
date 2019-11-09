@@ -54,7 +54,7 @@ class LocationControllerTest extends TestCase
         factory(Location::class)->create([ 'name' => 'Galbadia Region' ]);
         factory(Location::class)->create([ 'name' => 'Esthar Region' ]);
 
-        $request = new Request(['name' => "like:al:w"]);
+        $request = new Request([ 'name' => 'like:al:w' ]);
         $locationController = new LocationController($location);
         $response = $locationController->index($request);
 
@@ -70,7 +70,7 @@ class LocationControllerTest extends TestCase
         factory(Location::class)->create([ 'name' => 'Galbadia Region' ]);
         factory(Location::class)->create([ 'name' => 'Esthar Region' ]);
 
-        $request = new Request(['name' => 'galbadia region']);
+        $request = new Request([ 'name' => 'galbadia region' ]);
         $locationController = new LocationController(new Location());
         $response = $locationController->index($request);
 
@@ -85,7 +85,7 @@ class LocationControllerTest extends TestCase
         factory(Location::class)->create([ 'name' => 'Galbadia Region' ]);
         factory(Location::class)->create([ 'name' => 'Esthar Region' ]);
 
-        $request = new Request(['name' => 'Galbadia Region']);
+        $request = new Request([ 'name' => 'Galbadia Region' ]);
         $locationController = new LocationController(new Location());
         $response = $locationController->index($request);
 
@@ -100,7 +100,7 @@ class LocationControllerTest extends TestCase
         factory(Location::class)->create([ 'name' => 'Galbadia Region' ]);
         factory(Location::class)->create([ 'name' => 'Esthar' ]);
 
-        $request = new Request(['name' => 'like:Region']);
+        $request = new Request([ 'name' => 'like:Region' ]);
         $locationController = new LocationController(new Location());
         $response = $locationController->index($request);
 
@@ -116,7 +116,7 @@ class LocationControllerTest extends TestCase
         factory(Location::class)->create([ 'name' => 'Galbadia Region' ]);
         factory(Location::class)->create([ 'name' => 'Esthar' ]);
 
-        $request = new Request(['name' => 'not:Galbadia Region']);
+        $request = new Request([ 'name' => 'not:Galbadia Region' ]);
         $locationController = new LocationController(new Location());
         $response = $locationController->index($request);
 
@@ -147,7 +147,7 @@ class LocationControllerTest extends TestCase
         factory(Location::class)->create([ 'name' => 'Timber', 'area' => 'Lanker Plains' ]);
         factory(Location::class)->create([ 'name' => 'Winhill', 'area' => 'Winhill Bluffs' ]);
 
-        $request = new Request(['area' => 'like:Plains']);
+        $request = new Request([ 'area' => 'like:Plains' ]);
         $locationController = new LocationController(new Location());
         $response = $locationController->index($request);
 
@@ -163,7 +163,7 @@ class LocationControllerTest extends TestCase
         factory(Location::class)->create([ 'name' => 'Timber', 'area' => 'Lanker Plains' ]);
         factory(Location::class)->create([ 'name' => 'Winhill', 'area' => 'Winhill Bluffs' ]);
 
-        $request = new Request(['area' => 'not:Alcauld Plains']);
+        $request = new Request([ 'area' => 'not:Alcauld Plains' ]);
         $locationController = new LocationController(new Location());
         $response = $locationController->index($request);
 
@@ -274,7 +274,7 @@ class LocationControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_can_load_multiple_columns_explicitly()
+    public function it_can_load_multiple_relation_columns_explicitly()
     {
         $balambRegion = factory(Location::class)->create([ 
             'name' => 'Balamb Region', 

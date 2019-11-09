@@ -4,7 +4,6 @@ namespace Tests\Feature\Routes;
 
 use App\Models\SeedRank;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class SeedRankRoutesTest extends TestCase
@@ -40,7 +39,7 @@ class SeedRankRoutesTest extends TestCase
         factory(SeedRank::class)->create([ 'rank' => 5 ]);
         factory(SeedRank::class)->create([ 'rank' => 10 ]);
 
-        $response = $this->get("/api/seed-ranks?rank=like:1:0");
+        $response = $this->get('/api/seed-ranks?rank=like:1:0');
 
         $response->assertStatus(200);
         $response->assertJsonCount(2);
@@ -55,7 +54,7 @@ class SeedRankRoutesTest extends TestCase
         factory(SeedRank::class)->create([ 'rank' => 5 ]);
         factory(SeedRank::class)->create([ 'rank' => 10 ]);
 
-        $response = $this->get("/api/seed-ranks?rank=5");
+        $response = $this->get('/api/seed-ranks?rank=5');
 
         $response->assertStatus(200);
         $response->assertJsonCount(1);
@@ -69,7 +68,7 @@ class SeedRankRoutesTest extends TestCase
         factory(SeedRank::class)->create([ 'rank' => 5 ]);
         factory(SeedRank::class)->create([ 'rank' => 10 ]);
 
-        $response = $this->get("/api/seed-ranks?rank=gt:5");
+        $response = $this->get('/api/seed-ranks?rank=gt:5');
 
         $response->assertStatus(200);
         $response->assertJsonCount(1);
@@ -83,7 +82,7 @@ class SeedRankRoutesTest extends TestCase
         factory(SeedRank::class)->create([ 'rank' => 5 ]);
         factory(SeedRank::class)->create([ 'rank' => 10 ]);
 
-        $response = $this->get("/api/seed-ranks?rank=gte:5");
+        $response = $this->get('/api/seed-ranks?rank=gte:5');
 
         $response->assertStatus(200);
         $response->assertJsonCount(2);
@@ -98,7 +97,7 @@ class SeedRankRoutesTest extends TestCase
         factory(SeedRank::class)->create([ 'rank' => 5 ]);
         factory(SeedRank::class)->create([ 'rank' => 10 ]);
 
-        $response = $this->get("/api/seed-ranks?rank=lt:5");
+        $response = $this->get('/api/seed-ranks?rank=lt:5');
 
         $response->assertStatus(200);
         $response->assertJsonCount(1);
@@ -112,7 +111,7 @@ class SeedRankRoutesTest extends TestCase
         factory(SeedRank::class)->create([ 'rank' => 5 ]);
         factory(SeedRank::class)->create([ 'rank' => 10 ]);
 
-        $response = $this->get("/api/seed-ranks?rank=lte:5");
+        $response = $this->get('/api/seed-ranks?rank=lte:5');
 
         $response->assertStatus(200);
         $response->assertJsonCount(2);
@@ -127,7 +126,7 @@ class SeedRankRoutesTest extends TestCase
         factory(SeedRank::class)->create([ 'rank' => 5 ]);
         factory(SeedRank::class)->create([ 'rank' => 10 ]);
 
-        $response = $this->get("/api/seed-ranks?rank=like:1");
+        $response = $this->get('/api/seed-ranks?rank=like:1');
 
         $response->assertStatus(200);
         $response->assertJsonCount(2);
@@ -142,7 +141,7 @@ class SeedRankRoutesTest extends TestCase
         factory(SeedRank::class)->create([ 'rank' => 5 ]);
         factory(SeedRank::class)->create([ 'rank' => 10 ]);
 
-        $response = $this->get("/api/seed-ranks?rank=not:10");
+        $response = $this->get('/api/seed-ranks?rank=not:10');
 
         $response->assertStatus(200);
         $response->assertJsonCount(2);
@@ -157,7 +156,7 @@ class SeedRankRoutesTest extends TestCase
         factory(SeedRank::class)->create([ 'rank' => 5, 'salary' =>  3000 ]);
         factory(SeedRank::class)->create([ 'rank' => 10, 'salary' => 8000 ]);
 
-        $response = $this->get("/api/seed-ranks?salary=3000");
+        $response = $this->get('/api/seed-ranks?salary=3000');
 
         $response->assertStatus(200);
         $response->assertJsonCount(1);
@@ -171,7 +170,7 @@ class SeedRankRoutesTest extends TestCase
         factory(SeedRank::class)->create([ 'rank' => 5, 'salary' =>  3000 ]);
         factory(SeedRank::class)->create([ 'rank' => 10, 'salary' => 8000 ]);
 
-        $response = $this->get("/api/seed-ranks?salary=gt:3000");
+        $response = $this->get('/api/seed-ranks?salary=gt:3000');
 
         $response->assertStatus(200);
         $response->assertJsonCount(1);
@@ -185,7 +184,7 @@ class SeedRankRoutesTest extends TestCase
         factory(SeedRank::class)->create([ 'rank' => 5, 'salary' =>  3000 ]);
         factory(SeedRank::class)->create([ 'rank' => 10, 'salary' => 8000 ]);
 
-        $response = $this->get("/api/seed-ranks?salary=gte:3000");
+        $response = $this->get('/api/seed-ranks?salary=gte:3000');
 
         $response->assertStatus(200);
         $response->assertJsonCount(2);
@@ -200,7 +199,7 @@ class SeedRankRoutesTest extends TestCase
         factory(SeedRank::class)->create([ 'rank' => 5, 'salary' =>  3000 ]);
         factory(SeedRank::class)->create([ 'rank' => 10, 'salary' => 8000 ]);
 
-        $response = $this->get("/api/seed-ranks?salary=lt:3000");
+        $response = $this->get('/api/seed-ranks?salary=lt:3000');
 
         $response->assertStatus(200);
         $response->assertJsonCount(1);
@@ -214,7 +213,7 @@ class SeedRankRoutesTest extends TestCase
         factory(SeedRank::class)->create([ 'rank' => 5, 'salary' =>  3000 ]);
         factory(SeedRank::class)->create([ 'rank' => 10, 'salary' => 8000 ]);
 
-        $response = $this->get("/api/seed-ranks?salary=lte:3000");
+        $response = $this->get('/api/seed-ranks?salary=lte:3000');
 
         $response->assertStatus(200);
         $response->assertJsonCount(2);
@@ -229,7 +228,7 @@ class SeedRankRoutesTest extends TestCase
         factory(SeedRank::class)->create([ 'rank' => 5, 'salary' =>  3000 ]);
         factory(SeedRank::class)->create([ 'rank' => 10, 'salary' => 8000 ]);
 
-        $response = $this->get("/api/seed-ranks?salary=like:000");
+        $response = $this->get('/api/seed-ranks?salary=like:000');
 
         $response->assertStatus(200);
         $response->assertJsonCount(2);
@@ -244,7 +243,7 @@ class SeedRankRoutesTest extends TestCase
         factory(SeedRank::class)->create([ 'rank' => 5, 'salary' =>  3000 ]);
         factory(SeedRank::class)->create([ 'rank' => 10, 'salary' => 8000 ]);
 
-        $response = $this->get("/api/seed-ranks?salary=not:3000");
+        $response = $this->get('/api/seed-ranks?salary=not:3000');
 
         $response->assertStatus(200);
         $response->assertJsonCount(2);
@@ -259,7 +258,7 @@ class SeedRankRoutesTest extends TestCase
         factory(SeedRank::class)->create([ 'rank' => 5, 'salary' =>  3000 ]);
         factory(SeedRank::class)->create([ 'rank' => 10, 'salary' => 8000 ]);
 
-        $response = $this->get("/api/seed-ranks?salary=not:8000");
+        $response = $this->get('/api/seed-ranks?salary=not:8000');
 
         $response->assertStatus(200);
         $response->assertJsonCount(2);

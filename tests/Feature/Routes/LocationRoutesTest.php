@@ -4,7 +4,6 @@ namespace Tests\Feature\Routes;
 
 use App\Models\Location;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class LocationRoutesTest extends TestCase
@@ -40,7 +39,7 @@ class LocationRoutesTest extends TestCase
         factory(Location::class)->create([ 'name' => 'Galbadia Region' ]);
         factory(Location::class)->create([ 'name' => 'Esthar Region' ]);
 
-        $response = $this->get("/api/locations?name=like:al:0");
+        $response = $this->get('/api/locations?name=like:al:0');
 
         $response->assertStatus(200);
         $response->assertJsonCount(2);
@@ -55,7 +54,7 @@ class LocationRoutesTest extends TestCase
         factory(Location::class)->create([ 'name' => 'Galbadia Region' ]);
         factory(Location::class)->create([ 'name' => 'Esthar Region' ]);
 
-        $response = $this->get("/api/locations?name=Balamb Region");
+        $response = $this->get('/api/locations?name=Balamb Region');
 
         $response->assertStatus(200);
         $response->assertJsonCount(1);
@@ -69,7 +68,7 @@ class LocationRoutesTest extends TestCase
         factory(Location::class)->create([ 'name' => 'Galbadia Region' ]);
         factory(Location::class)->create([ 'name' => 'Esthar Region' ]);
 
-        $response = $this->get("/api/locations?name=like:al");
+        $response = $this->get('/api/locations?name=like:al');
 
         $response->assertStatus(200);
         $response->assertJsonCount(2);
@@ -84,7 +83,7 @@ class LocationRoutesTest extends TestCase
         factory(Location::class)->create([ 'name' => 'Galbadia Region' ]);
         factory(Location::class)->create([ 'name' => 'Esthar Region' ]);
 
-        $response = $this->get("/api/locations?name=not:Balamb Region");
+        $response = $this->get('/api/locations?name=not:Balamb Region');
 
         $response->assertStatus(200);
         $response->assertJsonCount(2);
@@ -99,7 +98,7 @@ class LocationRoutesTest extends TestCase
         factory(Location::class)->create([ 'name' => 'Timber', 'area' => 'Lanker Plains' ]);
         factory(Location::class)->create([ 'name' => 'Winhill', 'area' => 'Winhill Bluffs' ]);
 
-        $response = $this->get("/api/locations?area=Alcauld Plains");
+        $response = $this->get('/api/locations?area=Alcauld Plains');
 
         $response->assertStatus(200);
         $response->assertJsonCount(1);
@@ -113,7 +112,7 @@ class LocationRoutesTest extends TestCase
         factory(Location::class)->create([ 'name' => 'Timber', 'area' => 'Lanker Plains' ]);
         factory(Location::class)->create([ 'name' => 'Winhill', 'area' => 'Winhill Bluffs' ]);
 
-        $response = $this->get("/api/locations?area=like:Plains");
+        $response = $this->get('/api/locations?area=like:Plains');
 
         $response->assertStatus(200);
         $response->assertJsonCount(2);
@@ -128,7 +127,7 @@ class LocationRoutesTest extends TestCase
         factory(Location::class)->create([ 'name' => 'Timber', 'area' => 'Lanker Plains' ]);
         factory(Location::class)->create([ 'name' => 'Winhill', 'area' => 'Winhill Bluffs' ]);
 
-        $response = $this->get("/api/locations?area=not:Alcauld Plains");
+        $response = $this->get('/api/locations?area=not:Alcauld Plains');
 
         $response->assertStatus(200);
         $response->assertJsonCount(2);
@@ -143,7 +142,7 @@ class LocationRoutesTest extends TestCase
         factory(Location::class)->create([ 'name' => 'Galbadia Garden', 'area' => 'Monterosa Plateau' ]);
         factory(Location::class)->create([ 'name' => 'Winhill', 'area' => 'Winhill Bluffs' ]);
 
-        $response = $this->get("/api/locations?name=like:Garden&area=not:Alcauld Plains");
+        $response = $this->get('/api/locations?name=like:Garden&area=not:Alcauld Plains');
 
         $response->assertStatus(200);
         $response->assertJsonCount(1);
@@ -168,8 +167,7 @@ class LocationRoutesTest extends TestCase
             'area' => 'Alcauld Plains',
         ]);
 
-        
-        $response = $this->get("/api/locations?with=region");
+        $response = $this->get('/api/locations?with=region');
 
         $response->assertStatus(200);
         $response->assertJsonCount(2);
@@ -193,7 +191,7 @@ class LocationRoutesTest extends TestCase
             'area' => 'Alcauld Plains',
         ]);
 
-        $response = $this->get("/api/locations?with=region&name=like:Garden");
+        $response = $this->get('/api/locations?with=region&name=like:Garden');
 
         $response->assertStatus(200);
         $response->assertJsonCount(1);
@@ -217,7 +215,7 @@ class LocationRoutesTest extends TestCase
             'area' => 'Alcauld Plains',
         ]);
 
-        $response = $this->get("/api/locations?with=region.name&name=like:garden");
+        $response = $this->get('/api/locations?with=region.name&name=like:garden');
 
         $response->assertStatus(200);
         $response->assertJsonCount(1);
@@ -230,7 +228,7 @@ class LocationRoutesTest extends TestCase
     }
 
     /** @test */
-    public function it_can_load_multiple_columns_explicitly()
+    public function it_can_load_multiple_relation_columns_explicitly()
     {
         $balambRegion = factory(Location::class)->create([ 
             'name' => 'Balamb Region', 
@@ -244,7 +242,7 @@ class LocationRoutesTest extends TestCase
             'area' => 'Alcauld Plains',
         ]);
 
-        $response = $this->get("/api/locations?with=region.name,region.area&name=like:garden");
+        $response = $this->get('/api/locations?with=region.name,region.area&name=like:garden');
 
         $response->assertStatus(200);
         $response->assertJsonCount(1);

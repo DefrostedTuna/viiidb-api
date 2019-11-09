@@ -19,6 +19,13 @@ class Element extends Model
     protected $table = 'elements';
 
     /**
+     * The 'type' of the primary key ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
+
+    /**
      * Indicates if the IDs are auto-incrementing.
      *
      * @var bool
@@ -47,6 +54,16 @@ class Element extends Model
     protected $orderByDirection = 'asc';
 
     /**
+     * The attributes that should be visible in serialization.
+     *
+     * @var array
+     */
+    protected $visible = [
+        'id',
+        'name',
+    ];
+
+    /**
      * The attributes that should be hidden for arrays.
      *
      * @var array $hidden
@@ -63,6 +80,7 @@ class Element extends Model
      * @var array $casts
      */
     protected $casts = [
+        'id' => 'string',
         'name' => 'string',
     ];
 
@@ -73,5 +91,15 @@ class Element extends Model
      */
     protected $filterableFields = [
         'name',
+    ];
+
+    /**
+     * The operators that are explicitly enabled for filtering.
+     *
+     * @return array
+     */
+    protected $filterableOperators = [
+        'like' => 'like',
+        'not' => '<>',
     ];
 }

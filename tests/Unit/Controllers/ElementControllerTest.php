@@ -54,7 +54,7 @@ class ElementControllerTest extends TestCase
         factory(Element::class)->create([ 'name' => 'water' ]);
         factory(Element::class)->create([ 'name' => 'thunder' ]);
 
-        $request = new Request(['name' => "like:er:w"]);
+        $request = new Request([ 'name' => 'like:er:w' ]);
         $elementController = new ElementController($element);
         $response = $elementController->index($request);
 
@@ -64,13 +64,28 @@ class ElementControllerTest extends TestCase
     }
 
     /** @test */
+    public function the_filters_are_case_insensitive()
+    {
+        factory(Element::class)->create([ 'name' => 'fire' ]);
+        factory(Element::class)->create([ 'name' => 'water' ]);
+        factory(Element::class)->create([ 'name' => 'thunder' ]);
+
+        $request = new Request([ 'name' => 'FiRe' ]);
+        $elementController = new ElementController(new Element());
+        $response = $elementController->index($request);
+
+        $this->assertCount(1, $response);
+        $this->assertTrue($response->contains('name', 'fire'));
+    }
+
+    /** @test */
     public function the_name_column_can_be_filtered_by_the_equals_operator()
     {
         factory(Element::class)->create([ 'name' => 'fire' ]);
         factory(Element::class)->create([ 'name' => 'water' ]);
         factory(Element::class)->create([ 'name' => 'thunder' ]);
 
-        $request = new Request(['name' => 'thunder']);
+        $request = new Request([ 'name' => 'thunder' ]);
         $elementController = new ElementController(new Element());
         $response = $elementController->index($request);
 
@@ -85,7 +100,7 @@ class ElementControllerTest extends TestCase
         factory(Element::class)->create([ 'name' => 'water' ]);
         factory(Element::class)->create([ 'name' => 'thunder' ]);
 
-        $request = new Request(['name' => 'like:er']);
+        $request = new Request([ 'name' => 'like:er' ]);
         $elementController = new ElementController(new Element());
         $response = $elementController->index($request);
 
@@ -101,7 +116,7 @@ class ElementControllerTest extends TestCase
         factory(Element::class)->create([ 'name' => 'water' ]);
         factory(Element::class)->create([ 'name' => 'thunder' ]);
 
-        $request = new Request(['name' => 'not:water']);
+        $request = new Request([ 'name' => 'not:water' ]);
         $elementController = new ElementController(new Element());
         $response = $elementController->index($request);
 

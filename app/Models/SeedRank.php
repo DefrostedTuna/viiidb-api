@@ -20,6 +20,13 @@ class SeedRank extends Model
     protected $table = 'seed_ranks';
 
     /**
+     * The 'type' of the primary key ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
+
+    /**
      * Indicates if the IDs are auto-incrementing.
      *
      * @var bool
@@ -48,6 +55,17 @@ class SeedRank extends Model
     protected $orderByDirection = 'asc';
 
     /**
+     * The attributes that should be visible in serialization.
+     *
+     * @var array
+     */
+    protected $visible = [
+        'id',
+        'rank',
+        'salary',
+    ];
+
+    /**
      * The attributes that should be hidden for arrays.
      *
      * @var array $hidden
@@ -64,6 +82,7 @@ class SeedRank extends Model
      * @var array $casts
      */
     protected $casts = [
+        'id' => 'string',
         'rank' => 'string',
         'salary' => 'integer',
     ];
@@ -76,5 +95,19 @@ class SeedRank extends Model
     protected $filterableFields = [
         'rank',
         'salary',
+    ];
+
+    /**
+     * The operators that are explicitly enabled for filtering.
+     *
+     * @return array
+     */
+    protected $filterableOperators = [
+        'lt' => '<',
+        'lte' => '<=',
+        'gt' => '>',
+        'gte' => '>=',
+        'like' => 'like',
+        'not' => '<>',
     ];
 }
