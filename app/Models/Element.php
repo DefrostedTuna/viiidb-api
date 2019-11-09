@@ -54,6 +54,16 @@ class Element extends Model
     protected $orderByDirection = 'asc';
 
     /**
+     * The attributes that should be visible in serialization.
+     *
+     * @var array
+     */
+    protected $visible = [
+        'id',
+        'name',
+    ];
+
+    /**
      * The attributes that should be hidden for arrays.
      *
      * @var array $hidden
