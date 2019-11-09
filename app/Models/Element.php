@@ -92,4 +92,14 @@ class Element extends Model
     protected $filterableFields = [
         'name',
     ];
+
+    /**
+     * The operators that are explicitly enabled for filtering.
+     *
+     * @return array
+     */
+    protected $filterableOperators = [
+        'like' => 'like',
+        'not' => '<>',
+    ];
 }

@@ -96,4 +96,18 @@ class SeedRank extends Model
         'rank',
         'salary',
     ];
+
+    /**
+     * The operators that are explicitly enabled for filtering.
+     *
+     * @return array
+     */
+    protected $filterableOperators = [
+        'lt' => '<',
+        'lte' => '<=',
+        'gt' => '>',
+        'gte' => '>=',
+        'like' => 'like',
+        'not' => '<>',
+    ];
 }
