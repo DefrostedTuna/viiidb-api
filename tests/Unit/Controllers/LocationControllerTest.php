@@ -274,7 +274,7 @@ class LocationControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_can_load_multiple_columns_explicitly()
+    public function it_can_load_multiple_relation_columns_explicitly()
     {
         $balambRegion = factory(Location::class)->create([ 
             'name' => 'Balamb Region', 

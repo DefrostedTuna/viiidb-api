@@ -20,6 +20,14 @@ class ElementTest extends TestCase
     }
 
     /** @test */
+    public function it_sets_the_primary_key_type_to_string()
+    {
+        $element = new Element();
+
+        $this->assertEquals('string', $element->getKeyType());
+    }
+
+    /** @test */
     public function it_does_not_allow_properties_to_be_assigned_in_mass()
     {
         $element = new Element();
@@ -28,27 +36,30 @@ class ElementTest extends TestCase
     }
 
     /** @test */
-    public function it_hides_the_created_at_field_from_the_output()
+    public function it_explicitly_defines_the_visible_fields_for_api_consumption()
     {
         $element = new Element();
 
-        $this->assertContains('created_at', $element->getHidden());
+        $visibleFields = [
+            'id',
+            'name',      
+        ];
+
+        $this->assertEquals($visibleFields, $element->getVisible());
     }
 
     /** @test */
-    public function it_hides_the_updated_at_field_from_the_output()
+    public function it_explicitly_defines_the_hidden_fields_for_api_consumption()
     {
         $element = new Element();
 
-        $this->assertContains('updated_at', $element->getHidden());
-    }
+        $hiddenFields = [
+            'created_at',
+            'updated_at',
+            'deleted_at',    
+        ];
 
-    /** @test */
-    public function it_hides_the_deleted_at_field_from_the_output()
-    {
-        $element = new Element();
-
-        $this->assertContains('deleted_at', $element->getHidden());
+        $this->assertEquals($hiddenFields, $element->getHidden());
     }
 
     /** @test */
@@ -80,4 +91,21 @@ class ElementTest extends TestCase
 
         $this->assertEquals($shouldBeFilterable, $element->getFilterableFields());
     }
+
+    /** @test */
+    public function it_orders_results_by_name()
+    {
+        $element = new Element();
+
+        $this->assertEquals('name', $element->getOrderByField());
+    }
+
+    /** @test */
+    public function it_explicitly_defines_the_order_results_should_be_returned_by()
+    {
+        $element = new Element();
+
+        $this->assertEquals('asc', $element->getOrderByDirection());
+    }
+
 }

@@ -20,6 +20,14 @@ class SeedRankTest extends TestCase
     }
 
     /** @test */
+    public function it_sets_the_primary_key_type_to_string()
+    {
+        $seedRank = new SeedRank();
+
+        $this->assertEquals('string', $seedRank->getKeyType());
+    }
+
+    /** @test */
     public function it_does_not_allow_properties_to_be_assigned_in_mass()
     {
         $seedRank = new SeedRank();
@@ -28,27 +36,31 @@ class SeedRankTest extends TestCase
     }
 
     /** @test */
-    public function it_hides_the_created_at_field_from_the_output()
+    public function it_explicitly_defines_the_visible_fields_for_api_consumption()
     {
         $seedRank = new SeedRank();
 
-        $this->assertContains('created_at', $seedRank->getHidden());
+        $visibleFields = [
+            'id',
+            'rank',
+            'salary',
+        ];
+
+        $this->assertEquals($visibleFields, $seedRank->getVisible());
     }
 
     /** @test */
-    public function it_hides_the_updated_at_field_from_the_output()
+    public function it_explicitly_defines_the_hidden_fields_for_api_consumption()
     {
         $seedRank = new SeedRank();
 
-        $this->assertContains('updated_at', $seedRank->getHidden());
-    }
+        $hiddenFields = [
+            'created_at',
+            'updated_at',
+            'deleted_at',    
+        ];
 
-    /** @test */
-    public function it_hides_the_deleted_at_field_from_the_output()
-    {
-        $seedRank = new SeedRank();
-
-        $this->assertContains('deleted_at', $seedRank->getHidden());
+        $this->assertEquals($hiddenFields, $seedRank->getHidden());
     }
 
     /** @test */
@@ -72,18 +84,6 @@ class SeedRankTest extends TestCase
     }
 
     /** @test */
-    public function it_stores_a_seed_rank_in_the_database()
-    {
-        $seedRank = factory(SeedRank::class)->make();
-
-        $seedRank->save();
-
-        $this->assertDatabaseHas('seed_ranks', [
-            'id' => $seedRank->id,
-        ]);
-    }
-
-    /** @test */
     public function it_is_able_to_filter_records()
     {
         $this->assertTrue(in_array(
@@ -102,5 +102,21 @@ class SeedRankTest extends TestCase
         ];
 
         $this->assertEquals($shouldBeFilterable, $seedRank->getFilterableFields());
+    }
+
+    /** @test */
+    public function it_orders_results_by_salary()
+    {
+        $seedRank = new SeedRank();
+
+        $this->assertEquals('salary', $seedRank->getOrderByField());
+    }
+
+    /** @test */
+    public function it_explicitly_defines_the_order_results_should_be_returned_by()
+    {
+        $seedRank = new SeedRank();
+
+        $this->assertEquals('asc', $seedRank->getOrderByDirection());
     }
 }
