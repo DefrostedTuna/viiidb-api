@@ -2,6 +2,7 @@
 
 use App\Models\SeedRank;
 use Illuminate\Database\Seeder;
+use Webpatser\Uuid\Uuid;
 
 class SeedRanksTableSeeder extends Seeder
 {

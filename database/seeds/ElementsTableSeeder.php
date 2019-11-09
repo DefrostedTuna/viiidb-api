@@ -3,6 +3,7 @@
 use App\Models\Element;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
+use Webpatser\Uuid\Uuid;
 
 class ElementsTableSeeder extends Seeder
 {
