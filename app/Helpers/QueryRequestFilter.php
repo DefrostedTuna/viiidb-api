@@ -137,12 +137,13 @@ class QueryRequestFilter
     protected function constructRelationString(string $relation, array $columns): string
     {
         $visibleFields = $this->filterable->{$relation}()->getRelated()->getVisible();
+        $foreignKeyName = $this->filterable->{$relation}()->getForeignKeyName();
         $intersectingFields = array_intersect($columns, $visibleFields);
 
         // The ID field must always be included for the query to succeed.
         if (count($intersectingFields) > 0) {
             $fields = implode(',', $intersectingFields);
-            return "{$relation}:id,{$fields}";
+            return "{$relation}:id,{$foreignKeyName},{$fields}";
         }
 
         return $relation;
