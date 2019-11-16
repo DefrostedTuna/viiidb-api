@@ -77,6 +77,7 @@ class LocationRoutesTest extends TestCase
             'region' => [
                 'id' => $balambRegion->id,
                 'name' => $balambRegion->name,
+                'region_id' => $balambRegion->region_id,
             ],
         ]);
     }
@@ -104,6 +105,7 @@ class LocationRoutesTest extends TestCase
                 'id' => $balambRegion->id,
                 'name' => $balambRegion->name,
                 'area' => $balambRegion->area,
+                'region_id' => $balambRegion->region_id,
             ],
         ]);
     }
@@ -307,6 +309,7 @@ class LocationRoutesTest extends TestCase
             'region' => [
                 'id' => $balambRegion->id,
                 'name' => $balambRegion->name,
+                'region_id' => $balambRegion->region_id
             ],
         ]);
     }
@@ -335,6 +338,7 @@ class LocationRoutesTest extends TestCase
                 'id' => $balambRegion->id,
                 'name' => $balambRegion->name,
                 'area' => $balambGarden->area,
+                'region_id' => $balambRegion->region_id,
             ],
         ]);
     }
