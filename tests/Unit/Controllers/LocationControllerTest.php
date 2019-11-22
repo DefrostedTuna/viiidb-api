@@ -104,6 +104,7 @@ class LocationControllerTest extends TestCase
             [
                 'id' => $balambRegion->id,
                 'name' => $balambRegion->name,
+                'region_id' => $balambRegion->region_id,
             ], 
             $response->region->toArray()
         );
@@ -139,6 +140,7 @@ class LocationControllerTest extends TestCase
                 'id' => $balambRegion->id,
                 'name' => $balambRegion->name,
                 'area' => $balambRegion->area,
+                'region_id' => $balambRegion->region_id,
             ], 
             $response->region->toArray()
         );
@@ -381,6 +383,7 @@ class LocationControllerTest extends TestCase
         $this->assertEquals([
                 'id' => $balambRegion->id,
                 'name' => $balambRegion->name,
+                'region_id' => $balambRegion->region_id,
             ], 
             $response->first()->region->toArray()
         );
@@ -411,6 +414,7 @@ class LocationControllerTest extends TestCase
                 'id' => $balambRegion->id,
                 'name' => $balambRegion->name,
                 'area' => $balambRegion->area,
+                'region_id' => $balambRegion->region_id,
             ], 
             $response->first()->region->toArray()
         );
