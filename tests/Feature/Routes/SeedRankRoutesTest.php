@@ -41,21 +41,6 @@ class SeedRankRoutesTest extends TestCase
     }
 
     /** @test */
-    public function multiple_colons_will_be_ignored_when_filtering_results()
-    {
-        factory(SeedRank::class)->create([ 'rank' => 1 ]);
-        factory(SeedRank::class)->create([ 'rank' => 5 ]);
-        factory(SeedRank::class)->create([ 'rank' => 10 ]);
-
-        $response = $this->get('/api/seed-ranks?rank=like:1:0');
-
-        $response->assertStatus(200);
-        $response->assertJsonCount(2);
-        $response->assertJsonFragment([ 'rank' => '1' ]);
-        $response->assertJsonFragment([ 'rank' => '10' ]);
-    }
-
-    /** @test */
     public function the_rank_column_can_be_filtered_by_the_equals_operator()
     {
         factory(SeedRank::class)->create([ 'rank' => 1 ]);

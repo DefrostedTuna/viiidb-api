@@ -38,7 +38,7 @@ class TestQuestionControllerTest extends TestCase
 
         $response = $testQuestionController->show(new Request(), $testQuestion->id);
 
-        // The controller should return the instance of a TestQuestion that was found via 
+        // The controller should return the instance of a TestQuestion that was found via
         // route model binding. Since we are mocking this result by injecting the
         // TestQuestion into the method, we should get the same TestQuestion back.
         $this->assertInstanceOf(TestQuestion::class, $response);
@@ -48,7 +48,7 @@ class TestQuestionControllerTest extends TestCase
     /** @test */
     public function it_can_load_relations_on_individual_records()
     {
-        $seedTest = factory(SeedTest::class)->create([ 
+        $seedTest = factory(SeedTest::class)->create([
             'level' => 1,
         ]);
         $testQuestion = factory(TestQuestion::class)->create([
@@ -65,11 +65,11 @@ class TestQuestionControllerTest extends TestCase
         ]), $testQuestion->id);
 
         $this->assertTrue(array_key_exists(
-            'test', 
+            'test',
             $response->toArray()
         ));
         $this->assertEquals(
-            $seedTest->toArray(), 
+            $seedTest->toArray(),
             $response->test->toArray()
         );
     }
@@ -77,7 +77,7 @@ class TestQuestionControllerTest extends TestCase
     /** @test */
     public function it_can_load_relation_properties_on_individual_records()
     {
-        $seedTest = factory(SeedTest::class)->create([ 
+        $seedTest = factory(SeedTest::class)->create([
             'level' => 1,
         ]);
         $testQuestion = factory(TestQuestion::class)->create([
@@ -99,7 +99,7 @@ class TestQuestionControllerTest extends TestCase
         ));
         // Because there is only one parameter here, it will be the same as the array.
         $this->assertEquals(
-            $seedTest->toArray(), 
+            $seedTest->toArray(),
             $response->test->toArray()
         );
     }
@@ -114,38 +114,6 @@ class TestQuestionControllerTest extends TestCase
         $testQuestionController = new TestQuestionController(new TestQuestion());
 
         $response = $testQuestionController->show(new Request(), 'invalid');
-    }
-
-    /** @test */
-    public function multiple_colons_will_be_ignored_when_filtering_results()
-    {
-        // Set the filterable operators on the TestQuestion class.
-        $testQuestion = new TestQuestion();
-        $testQuestion->filterableOperators = [ 'like' => 'like' ];
-
-        factory(TestQuestion::class)->create([
-            'question_number' => 1,
-            'question' => 'What is your favorite color?',
-            'answer' => 'yes',
-        ]);
-        factory(TestQuestion::class)->create([
-            'question_number' => 2,
-            'question' => 'What Is the airspeed velocity of an unladen swallow?',
-            'answer' => 'no',
-        ]);
-        factory(TestQuestion::class)->create([
-            'question_number' => 3,
-            'question' => 'What is your quest?',
-            'answer' => 'yes',
-        ]);
-
-        $request = new Request([ 'question' => 'like:your:w' ]);
-        $testQuestionController = new TestQuestionController($testQuestion);
-        $response = $testQuestionController->index($request);
-
-        $this->assertCount(2, $response);
-        $this->assertTrue($response->contains('question_number', 1));
-        $this->assertTrue($response->contains('question_number', 3));
     }
 
     /** @test */
@@ -537,7 +505,7 @@ class TestQuestionControllerTest extends TestCase
     /** @test */
     public function it_can_load_the_test_without_additional_filters()
     {
-        $seedTest = factory(SeedTest::class)->create([ 
+        $seedTest = factory(SeedTest::class)->create([
             'level' => 1,
         ]);
         $testQuestion = factory(TestQuestion::class)->create([
@@ -554,11 +522,11 @@ class TestQuestionControllerTest extends TestCase
         ]), $testQuestion->id);
 
         $this->assertTrue(array_key_exists(
-            'test', 
+            'test',
             $response->first()->toArray()
         ));
         $this->assertEquals(
-            $seedTest->toArray(), 
+            $seedTest->toArray(),
             $response->first()->test->toArray()
         );
     }
@@ -566,7 +534,7 @@ class TestQuestionControllerTest extends TestCase
     /** @test */
     public function it_can_load_the_level_column_on_the_test_relation()
     {
-        $seedTest = factory(SeedTest::class)->create([ 
+        $seedTest = factory(SeedTest::class)->create([
             'level' => 1,
         ]);
         $testQuestion = factory(TestQuestion::class)->create([
@@ -583,12 +551,12 @@ class TestQuestionControllerTest extends TestCase
         ]), $testQuestion->id);
 
         $this->assertTrue(array_key_exists(
-            'test', 
+            'test',
             $response->first()->toArray()
         ));
         // Because there is only one parameter here, it will be the same as the array.
         $this->assertEquals(
-            $seedTest->toArray(), 
+            $seedTest->toArray(),
             $response->first()->test->toArray()
         );
     }

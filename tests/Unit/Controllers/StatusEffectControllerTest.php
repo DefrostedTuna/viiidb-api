@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Controllers;
 
-
 use App\Http\Controllers\StatusEffectController;
 use App\Models\StatusEffect;
 use Illuminate\Database\Eloquent\Collection;
@@ -38,7 +37,7 @@ class StatusEffectControllerTest extends TestCase
 
         $response = $statusEffectController->show(new Request(), $statusEffect->id);
 
-        // The controller should return the instance of a StatusEffect that was found via 
+        // The controller should return the instance of a StatusEffect that was found via
         // route model binding. Since we are mocking this result by injecting the
         // StatusEffect into the method, we should get the same StatusEffect back.
         $this->assertInstanceOf(StatusEffect::class, $response);
@@ -55,26 +54,6 @@ class StatusEffectControllerTest extends TestCase
         $statusEffectController = new StatusEffectController(new StatusEffect());
 
         $response = $statusEffectController->show(new Request(), 'invalid');
-    }
-
-    /** @test */
-    public function multiple_colons_will_be_ignored_when_filtering_results()
-    {
-        // Set the filterable operators on the StatusEffect class.
-        $statusEffect = new StatusEffect();
-        $statusEffect->filterableOperators = [ 'like' => 'like' ];
-
-        factory(StatusEffect::class)->create([ 'name' => 'Death', 'type' => 'harmful' ]);
-        factory(StatusEffect::class)->create([ 'name' => 'Double', 'type' => 'beneficial' ]);
-        factory(StatusEffect::class)->create([ 'name' => 'Triple', 'type' => 'beneficial' ]);
-
-        $request = new Request([ 'name' => 'like:le:w' ]);
-        $statusEffectController = new StatusEffectController($statusEffect);
-        $response = $statusEffectController->index($request);
-
-        $this->assertCount(2, $response);
-        $this->assertTrue($response->contains('name', 'Double'));
-        $this->assertTrue($response->contains('name', 'Triple'));
     }
 
     /** @test */

@@ -38,7 +38,7 @@ class SeedTestControllerTest extends TestCase
 
         $response = $seedTestController->show(new Request(), $seedTest->id);
 
-        // The controller should return the instance of a SeedTest that was found via 
+        // The controller should return the instance of a SeedTest that was found via
         // route model binding. Since we are mocking this result by injecting the
         // SeedTest into the method, we should get the same SeedTest back.
         $this->assertInstanceOf(SeedTest::class, $response);
@@ -65,12 +65,12 @@ class SeedTestControllerTest extends TestCase
         ]), $seedTest->id);
 
         $this->assertTrue(array_key_exists(
-            'questions', 
+            'questions',
             $response->toArray()
         ));
         $this->assertInstanceOf(Collection::class, $response->questions);
         $this->assertEquals(
-            $testQuestion->toArray(), 
+            $testQuestion->toArray(),
             $response->questions->first()->toArray()
         );
     }
@@ -78,7 +78,7 @@ class SeedTestControllerTest extends TestCase
     /** @test */
     public function it_can_load_relation_properties_on_individual_records()
     {
-        $seedTest = factory(SeedTest::class)->create([ 
+        $seedTest = factory(SeedTest::class)->create([
             'level' => 1,
         ]);
         $testQuestion = factory(TestQuestion::class)->create([
@@ -95,7 +95,7 @@ class SeedTestControllerTest extends TestCase
         ]), $seedTest->id);
 
         $this->assertTrue(array_key_exists(
-            'questions', 
+            'questions',
             $response->toArray()
         ));
         $this->assertInstanceOf(Collection::class, $response->questions);
@@ -104,7 +104,7 @@ class SeedTestControllerTest extends TestCase
                 'id' => $testQuestion->id,
                 'seed_test_id' => $seedTest->id,
                 'question_number' => $testQuestion->question_number,
-            ], 
+            ],
             $response->questions->first()->toArray()
         );
     }
@@ -112,7 +112,7 @@ class SeedTestControllerTest extends TestCase
     /** @test */
     public function it_can_load_multiple_relation_properties_on_individual_records()
     {
-        $seedTest = factory(SeedTest::class)->create([ 
+        $seedTest = factory(SeedTest::class)->create([
             'level' => 1,
         ]);
         $testQuestion = factory(TestQuestion::class)->create([
@@ -129,7 +129,7 @@ class SeedTestControllerTest extends TestCase
         ]), $seedTest->id);
 
         $this->assertTrue(array_key_exists(
-            'questions', 
+            'questions',
             $response->toArray()
         ));
         $this->assertInstanceOf(Collection::class, $response->questions);
@@ -139,7 +139,7 @@ class SeedTestControllerTest extends TestCase
                 'seed_test_id' => $seedTest->id,
                 'question_number' => $testQuestion->question_number,
                 'question' => $testQuestion->question,
-            ], 
+            ],
             $response->questions->first()->toArray()
         );
     }
@@ -154,28 +154,6 @@ class SeedTestControllerTest extends TestCase
         $seedTestController = new SeedTestController(new SeedTest());
 
         $response = $seedTestController->show(new Request(), 'invalid');
-    }
-
-    /** @test */
-    public function multiple_colons_will_be_ignored_when_filtering_results()
-    {
-        // Set the filterable operators on the SeedTest class.
-        $seedTest = new SeedTest();
-        $seedTest->filterableOperators = [ 'like' => 'like' ];
-
-        factory(SeedTest::class)->create([ 'level' => 1 ]);
-        factory(SeedTest::class)->create([ 'level' => 3 ]);
-        factory(SeedTest::class)->create([ 'level' => 10 ]);
-        factory(SeedTest::class)->create([ 'level' => 12 ]);
-
-        $request = new Request([ 'level' => 'like:1:2' ]);
-        $seedTestController = new SeedTestController($seedTest);
-        $response = $seedTestController->index($request);
-
-        $this->assertCount(3, $response);
-        $this->assertTrue($response->contains('level', 1));
-        $this->assertTrue($response->contains('level', 10));
-        $this->assertTrue($response->contains('level', 12));
     }
 
     /** @test */
@@ -233,7 +211,7 @@ class SeedTestControllerTest extends TestCase
     /** @test */
     public function it_can_load_the_questions_without_additional_filters()
     {
-        $seedTest = factory(SeedTest::class)->create([ 
+        $seedTest = factory(SeedTest::class)->create([
             'level' => 1,
         ]);
         $testQuestion = factory(TestQuestion::class)->create([
@@ -249,11 +227,11 @@ class SeedTestControllerTest extends TestCase
 
         $this->assertCount(1, $response);
         $this->assertTrue(array_key_exists(
-            'questions', 
+            'questions',
             $response->first()->toArray()
         ));
         $this->assertEquals(
-            $testQuestion->toArray(), 
+            $testQuestion->toArray(),
             $response->first()->questions->first()->toArray()
         );
     }
@@ -261,7 +239,7 @@ class SeedTestControllerTest extends TestCase
     /** @test */
     public function it_can_load_the_question_number_column_on_the_questions_relation()
     {
-        $seedTest = factory(SeedTest::class)->create([ 
+        $seedTest = factory(SeedTest::class)->create([
             'level' => 1,
         ]);
         $testQuestion = factory(TestQuestion::class)->create([
@@ -277,7 +255,7 @@ class SeedTestControllerTest extends TestCase
 
         $this->assertCount(1, $response);
         $this->assertTrue(array_key_exists(
-            'questions', 
+            'questions',
             $response->first()->toArray()
         ));
         $this->assertEquals(
@@ -285,7 +263,7 @@ class SeedTestControllerTest extends TestCase
                 'id' => $testQuestion->id,
                 'seed_test_id' => $seedTest->id,
                 'question_number' => $testQuestion->question_number,
-            ], 
+            ],
             $response->first()->questions->first()->toArray()
         );
     }
@@ -293,7 +271,7 @@ class SeedTestControllerTest extends TestCase
     /** @test */
     public function it_can_load_the_question_column_on_the_questions_relation()
     {
-        $seedTest = factory(SeedTest::class)->create([ 
+        $seedTest = factory(SeedTest::class)->create([
             'level' => 1,
         ]);
         $testQuestion = factory(TestQuestion::class)->create([
@@ -309,7 +287,7 @@ class SeedTestControllerTest extends TestCase
 
         $this->assertCount(1, $response);
         $this->assertTrue(array_key_exists(
-            'questions', 
+            'questions',
             $response->first()->toArray()
         ));
         $this->assertEquals(
@@ -317,7 +295,7 @@ class SeedTestControllerTest extends TestCase
                 'id' => $testQuestion->id,
                 'seed_test_id' => $seedTest->id,
                 'question' => $testQuestion->question,
-            ], 
+            ],
             $response->first()->questions->first()->toArray()
         );
     }
@@ -325,7 +303,7 @@ class SeedTestControllerTest extends TestCase
     /** @test */
     public function it_can_load_the_answer_column_on_the_questions_relation()
     {
-        $seedTest = factory(SeedTest::class)->create([ 
+        $seedTest = factory(SeedTest::class)->create([
             'level' => 1,
         ]);
         $testQuestion = factory(TestQuestion::class)->create([
@@ -341,7 +319,7 @@ class SeedTestControllerTest extends TestCase
 
         $this->assertCount(1, $response);
         $this->assertTrue(array_key_exists(
-            'questions', 
+            'questions',
             $response->first()->toArray()
         ));
         $this->assertEquals(
@@ -349,7 +327,7 @@ class SeedTestControllerTest extends TestCase
                 'id' => $testQuestion->id,
                 'seed_test_id' => $seedTest->id,
                 'answer' => $testQuestion->answer,
-            ], 
+            ],
             $response->first()->questions->first()->toArray()
         );
     }
@@ -357,7 +335,7 @@ class SeedTestControllerTest extends TestCase
     /** @test */
     public function it_can_load_multiple_relation_columns_explicitly()
     {
-        $seedTest = factory(SeedTest::class)->create([ 
+        $seedTest = factory(SeedTest::class)->create([
             'level' => 1,
         ]);
         $testQuestion = factory(TestQuestion::class)->create([
@@ -373,7 +351,7 @@ class SeedTestControllerTest extends TestCase
 
         $this->assertCount(1, $response);
         $this->assertTrue(array_key_exists(
-            'questions', 
+            'questions',
             $response->first()->toArray()
         ));
         $this->assertEquals(
@@ -382,7 +360,7 @@ class SeedTestControllerTest extends TestCase
                 'seed_test_id' => $seedTest->id,
                 'question_number' => $testQuestion->question_number,
                 'question' => $testQuestion->question,
-            ], 
+            ],
             $response->first()->questions->first()->toArray()
         );
     }

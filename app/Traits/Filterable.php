@@ -3,9 +3,11 @@
 namespace App\Traits;
 
 use App\Helpers\QueryRequestFilter;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
-trait Filterable 
+trait Filterable
 {
     /**
      * The relationships that are explicitly marked as valid through requests.
@@ -93,11 +95,11 @@ trait Filterable
     /**
      * Filters query results by the given parameters.
      *
-     * @param array $filters
+     * @param  array  $filters
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function getFilteredRecords(array $filters): \Illuminate\Database\Eloquent\Collection
+    public function getFilteredRecords(array $filters): Collection
     {
         $query = new QueryRequestFilter($this->getModel());
 
@@ -109,17 +111,18 @@ trait Filterable
     /**
      * Fetches a record with the applicable relations requested by the filters.
      *
-     * @param string $id
-     * @param array $filters
+     * @param  string  $id
+     * @param  array   $filters
+     * @param  string  $column
      *
      * @return \Illuminate\Database\Eloquent\Model
-     * 
+     *
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      */
-    public function getRecordWithRelations(string $id, array $filters): \Illuminate\Database\Eloquent\Model
+    public function getRecordWithRelations(string $id, array $filters, string $column = 'id'): Model
     {
         $query = new QueryRequestFilter($this->getModel());
 
-        return $query->loadRelations($filters)->getResult($id);
+        return $query->loadRelations($filters)->getResult($id, $column);
     }
 }

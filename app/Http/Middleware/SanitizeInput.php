@@ -12,7 +12,7 @@ class SanitizeInput
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
-     * 
+     *
      * @return mixed
      */
     public function handle($request, Closure $next)
@@ -29,7 +29,8 @@ class SanitizeInput
      *
      * @return void
      */
-    protected function sanitizeInput(ParameterBag $bag) {
+    protected function sanitizeInput(ParameterBag $bag)
+    {
         $sanitized = [];
 
         foreach ($bag as $key => $value) {
