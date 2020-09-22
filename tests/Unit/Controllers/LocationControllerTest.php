@@ -37,7 +37,7 @@ class LocationControllerTest extends TestCase
 
         $response = $locationController->show(new Request(), $location->id);
 
-        // The controller should return the instance of a Location that was found via 
+        // The controller should return the instance of a Location that was found via
         // route model binding. Since we are mocking this result by injecting the
         // Location into the method, we should get the same Location back.
         $this->assertInstanceOf(Location::class, $response);
@@ -47,10 +47,10 @@ class LocationControllerTest extends TestCase
     /** @test */
     public function it_can_load_relations_on_individual_records()
     {
-        $balambRegion = factory(Location::class)->create([ 
-            'name' => 'Balamb Region', 
+        $balambRegion = factory(Location::class)->create([
+            'name' => 'Balamb Region',
             'description' => 'This is technically the parent',
-            'area' => 'Alcauld Plains', 
+            'area' => 'Alcauld Plains',
         ]);
         $balambGarden = factory(Location::class)->create([
             'name' => 'Balamb Garden',
@@ -66,11 +66,11 @@ class LocationControllerTest extends TestCase
         ]), $balambGarden->id);
 
         $this->assertTrue(array_key_exists(
-            'region', 
+            'region',
             $response->toArray()
         ));
         $this->assertEquals(
-            $balambRegion->toArray(), 
+            $balambRegion->toArray(),
             $response->region->toArray()
         );
     }
@@ -78,10 +78,10 @@ class LocationControllerTest extends TestCase
     /** @test */
     public function it_can_load_relation_properties_on_individual_records()
     {
-        $balambRegion = factory(Location::class)->create([ 
-            'name' => 'Balamb Region', 
+        $balambRegion = factory(Location::class)->create([
+            'name' => 'Balamb Region',
             'description' => 'This is technically the parent',
-            'area' => 'Alcauld Plains', 
+            'area' => 'Alcauld Plains',
         ]);
         $balambGarden = factory(Location::class)->create([
             'name' => 'Balamb Garden',
@@ -97,7 +97,7 @@ class LocationControllerTest extends TestCase
         ]), $balambGarden->id);
 
         $this->assertTrue(array_key_exists(
-            'region', 
+            'region',
             $response->toArray()
         ));
         $this->assertEquals(
@@ -105,7 +105,7 @@ class LocationControllerTest extends TestCase
                 'id' => $balambRegion->id,
                 'name' => $balambRegion->name,
                 'region_id' => $balambRegion->region_id,
-            ], 
+            ],
             $response->region->toArray()
         );
     }
@@ -113,10 +113,10 @@ class LocationControllerTest extends TestCase
     /** @test */
     public function it_can_load_multiple_relation_properties_on_individual_records()
     {
-        $balambRegion = factory(Location::class)->create([ 
-            'name' => 'Balamb Region', 
+        $balambRegion = factory(Location::class)->create([
+            'name' => 'Balamb Region',
             'description' => 'This is technically the parent',
-            'area' => 'Alcauld Plains', 
+            'area' => 'Alcauld Plains',
         ]);
         $balambGarden = factory(Location::class)->create([
             'name' => 'Balamb Garden',
@@ -132,7 +132,7 @@ class LocationControllerTest extends TestCase
         ]), $balambGarden->id);
 
         $this->assertTrue(array_key_exists(
-            'region', 
+            'region',
             $response->toArray()
         ));
         $this->assertEquals(
@@ -141,7 +141,7 @@ class LocationControllerTest extends TestCase
                 'name' => $balambRegion->name,
                 'area' => $balambRegion->area,
                 'region_id' => $balambRegion->region_id,
-            ], 
+            ],
             $response->region->toArray()
         );
     }
@@ -156,26 +156,6 @@ class LocationControllerTest extends TestCase
         $locationController = new LocationController(new Location());
 
         $response = $locationController->show(new Request(), 'invalid');
-    }
-
-    /** @test */
-    public function multiple_colons_will_be_ignored_when_filtering_results()
-    {
-        // Set the filterable operators on the Location class.
-        $location = new Location();
-        $location->filterableOperators = [ 'like' => 'like' ];
-
-        factory(Location::class)->create([ 'name' => 'Balamb Region' ]);
-        factory(Location::class)->create([ 'name' => 'Galbadia Region' ]);
-        factory(Location::class)->create([ 'name' => 'Esthar Region' ]);
-
-        $request = new Request([ 'name' => 'like:al:w' ]);
-        $locationController = new LocationController($location);
-        $response = $locationController->index($request);
-
-        $this->assertCount(2, $response);
-        $this->assertTrue($response->contains('name', 'Balamb Region'));
-        $this->assertTrue($response->contains('name', 'Galbadia Region'));
     }
 
     /** @test */
@@ -308,10 +288,10 @@ class LocationControllerTest extends TestCase
     /** @test */
     public function it_can_load_the_region_without_additional_filters()
     {
-        $balambRegion = factory(Location::class)->create([ 
-            'name' => 'Balamb Region', 
+        $balambRegion = factory(Location::class)->create([
+            'name' => 'Balamb Region',
             'description' => 'This is technically the parent',
-            'area' => 'Alcauld Plains', 
+            'area' => 'Alcauld Plains',
         ]);
         $balambGarden = factory(Location::class)->create([
             'name' => 'Balamb Garden',
@@ -326,11 +306,11 @@ class LocationControllerTest extends TestCase
 
         $this->assertCount(2, $response);
         $this->assertTrue(array_key_exists(
-            'region', 
+            'region',
             $response->firstWhere('id', $balambGarden->id)->toArray()
         ));
         $this->assertEquals(
-            $balambRegion->toArray(), 
+            $balambRegion->toArray(),
             $response->firstWhere('id', $balambGarden->id)->region->toArray()
         );
     }
@@ -338,10 +318,10 @@ class LocationControllerTest extends TestCase
     /** @test */
     public function it_can_load_the_entire_region_relation()
     {
-        $balambRegion = factory(Location::class)->create([ 
-            'name' => 'Balamb Region', 
+        $balambRegion = factory(Location::class)->create([
+            'name' => 'Balamb Region',
             'description' => 'This is technically the parent',
-            'area' => 'Alcauld Plains', 
+            'area' => 'Alcauld Plains',
         ]);
         $balambGarden = factory(Location::class)->create([
             'name' => 'Balamb Garden',
@@ -362,10 +342,10 @@ class LocationControllerTest extends TestCase
     /** @test */
     public function it_can_load_the_name_column_on_the_region_relation()
     {
-        $balambRegion = factory(Location::class)->create([ 
-            'name' => 'Balamb Region', 
+        $balambRegion = factory(Location::class)->create([
+            'name' => 'Balamb Region',
             'description' => 'This is technically the parent',
-            'area' => 'Alcauld Plains', 
+            'area' => 'Alcauld Plains',
         ]);
         $balambGarden = factory(Location::class)->create([
             'name' => 'Balamb Garden',
@@ -380,11 +360,12 @@ class LocationControllerTest extends TestCase
 
         $this->assertCount(1, $response);
         $this->assertTrue(array_key_exists('region', $response->first()->toArray()));
-        $this->assertEquals([
+        $this->assertEquals(
+            [
                 'id' => $balambRegion->id,
                 'name' => $balambRegion->name,
                 'region_id' => $balambRegion->region_id,
-            ], 
+            ],
             $response->first()->region->toArray()
         );
     }
@@ -392,10 +373,10 @@ class LocationControllerTest extends TestCase
     /** @test */
     public function it_can_load_multiple_relation_columns_explicitly()
     {
-        $balambRegion = factory(Location::class)->create([ 
-            'name' => 'Balamb Region', 
+        $balambRegion = factory(Location::class)->create([
+            'name' => 'Balamb Region',
             'description' => 'This is technically the parent',
-            'area' => 'Alcauld Plains', 
+            'area' => 'Alcauld Plains',
         ]);
         $balambGarden = factory(Location::class)->create([
             'name' => 'Balamb Garden',
@@ -410,12 +391,13 @@ class LocationControllerTest extends TestCase
 
         $this->assertCount(1, $response);
         $this->assertTrue(array_key_exists('region', $response->first()->toArray()));
-        $this->assertEquals([
+        $this->assertEquals(
+            [
                 'id' => $balambRegion->id,
                 'name' => $balambRegion->name,
                 'area' => $balambRegion->area,
                 'region_id' => $balambRegion->region_id,
-            ], 
+            ],
             $response->first()->region->toArray()
         );
     }

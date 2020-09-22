@@ -41,21 +41,6 @@ class StatusEffectRoutesTest extends TestCase
     }
 
     /** @test */
-    public function multiple_colons_will_be_ignored_when_filtering_results()
-    {
-        factory(StatusEffect::class)->create([ 'name' => 'Death', 'type' => 'harmful' ]);
-        factory(StatusEffect::class)->create([ 'name' => 'Double', 'type' => 'beneficial' ]);
-        factory(StatusEffect::class)->create([ 'name' => 'Triple', 'type' => 'beneficial' ]);
-
-        $response = $this->get('/api/status-effects?name=like:le:0');
-
-        $response->assertStatus(200);
-        $response->assertJsonCount(2);
-        $response->assertJsonFragment([ 'name' => 'Double' ]);
-        $response->assertJsonFragment([ 'name' => 'Triple' ]);
-    }
-
-    /** @test */
     public function the_name_column_can_be_filtered_by_the_equals_operator()
     {
         factory(StatusEffect::class)->create([ 'name' => 'Death', 'type' => 'harmful' ]);

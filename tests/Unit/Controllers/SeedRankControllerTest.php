@@ -37,7 +37,7 @@ class SeedRankControllerTest extends TestCase
 
         $response = $seedRankController->show(new Request(), $seedRank->id);
 
-        // The controller should return the instance of a Seed Rank that was found via 
+        // The controller should return the instance of a Seed Rank that was found via
         // route model binding. Since we are mocking this result by injecting the
         // Seed Rank into the method, we should get the same Seed Rank back.
         $this->assertInstanceOf(SeedRank::class, $response);
@@ -54,26 +54,6 @@ class SeedRankControllerTest extends TestCase
         $seedRankController = new SeedRankController(new SeedRank());
 
         $response = $seedRankController->show(new Request(), 'invalid');
-    }
-
-    /** @test */
-    public function multiple_colons_will_be_ignored_when_filtering_results()
-    {
-        // Set the filterable operators on the SeedRank class.
-        $seedRank = new SeedRank();
-        $seedRank->filterableOperators = [ 'like' => 'like' ];
-
-        factory(SeedRank::class)->create([ 'rank' => 1 ]);
-        factory(SeedRank::class)->create([ 'rank' => 5 ]);
-        factory(SeedRank::class)->create([ 'rank' => 10 ]);
-
-        $request = new Request([ 'rank' => 'like:1:0' ]);
-        $seedRankController = new SeedRankController($seedRank);
-        $response = $seedRankController->index($request);
-
-        $this->assertCount(2, $response);
-        $this->assertTrue($response->contains('rank', 1));
-        $this->assertTrue($response->contains('rank', 10));
     }
 
     /** @test */

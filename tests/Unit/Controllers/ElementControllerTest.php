@@ -37,7 +37,7 @@ class ElementControllerTest extends TestCase
 
         $response = $elementController->show(new Request(), $element->id);
 
-        // The controller should return the instance of a Element that was found via 
+        // The controller should return the instance of a Element that was found via
         // route model binding. Since we are mocking this result by injecting the
         // Element into the method, we should get the same Element back.
         $this->assertInstanceOf(Element::class, $response);
@@ -54,26 +54,6 @@ class ElementControllerTest extends TestCase
         $elementController = new ElementController(new Element());
 
         $response = $elementController->show(new Request(), 'invalid');
-    }
-
-    /** @test */
-    public function multiple_colons_will_be_ignored_when_filtering_results()
-    {
-        // Set the filterable operators on the Element class.
-        $element = new Element();
-        $element->filterableOperators = [ 'like' => 'like' ];
-
-        factory(Element::class)->create([ 'name' => 'fire' ]);
-        factory(Element::class)->create([ 'name' => 'water' ]);
-        factory(Element::class)->create([ 'name' => 'thunder' ]);
-
-        $request = new Request([ 'name' => 'like:er:w' ]);
-        $elementController = new ElementController($element);
-        $response = $elementController->index($request);
-
-        $this->assertCount(2, $response);
-        $this->assertTrue($response->contains('name', 'water'));
-        $this->assertTrue($response->contains('name', 'thunder'));
     }
 
     /** @test */

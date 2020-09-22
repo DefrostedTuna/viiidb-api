@@ -36,7 +36,7 @@ class TestQuestionRoutesTest extends TestCase
     /** @test */
     public function it_can_load_relations_on_individual_records()
     {
-        $seedTest = factory(SeedTest::class)->create([ 
+        $seedTest = factory(SeedTest::class)->create([
             'level' => 5,
         ]);
         $testQuestion = factory(TestQuestion::class)->create([
@@ -57,7 +57,7 @@ class TestQuestionRoutesTest extends TestCase
     /** @test */
     public function it_can_load_relation_properties_on_individual_records()
     {
-        $seedTest = factory(SeedTest::class)->create([ 
+        $seedTest = factory(SeedTest::class)->create([
             'level' => 5,
         ]);
         $testQuestion = factory(TestQuestion::class)->create([
@@ -84,33 +84,6 @@ class TestQuestionRoutesTest extends TestCase
         $response = $this->get('/api/test-questions/invalid');
 
         $response->assertStatus(404);
-    }
-
-    /** @test */
-    public function multiple_colons_will_be_ignored_when_filtering_results()
-    {
-        factory(TestQuestion::class)->create([
-            'question_number' => 1,
-            'question' => 'What is your favorite color?',
-            'answer' => 'yes',
-        ]);
-        factory(TestQuestion::class)->create([
-            'question_number' => 2,
-            'question' => 'What Is the airspeed velocity of an unladen swallow?',
-            'answer' => 'no',
-        ]);
-        factory(TestQuestion::class)->create([
-            'question_number' => 3,
-            'question' => 'What is your quest?',
-            'answer' => 'yes',
-        ]);
-
-        $response = $this->get('/api/test-questions?question=like:your:what');
-
-        $response->assertStatus(200);
-        $response->assertJsonCount(2);
-        $response->assertJsonFragment([ 'question_number' => 1 ]);
-        $response->assertJsonFragment([ 'question_number' => 3 ]);
     }
 
     /** @test */
@@ -490,7 +463,7 @@ class TestQuestionRoutesTest extends TestCase
     /** @test */
     public function it_can_load_the_test_without_additional_filters()
     {
-        $seedTest = factory(SeedTest::class)->create([ 
+        $seedTest = factory(SeedTest::class)->create([
             'level' => 5,
         ]);
         $testQuestion = factory(TestQuestion::class)->create([
@@ -511,7 +484,7 @@ class TestQuestionRoutesTest extends TestCase
     /** @test */
     public function it_can_load_the_level_column_on_the_test_relation()
     {
-        $seedTest = factory(SeedTest::class)->create([ 
+        $seedTest = factory(SeedTest::class)->create([
             'level' => 5,
         ]);
         $testQuestion = factory(TestQuestion::class)->create([

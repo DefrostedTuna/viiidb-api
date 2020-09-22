@@ -41,21 +41,6 @@ class ElementRoutesTest extends TestCase
     }
 
     /** @test */
-    public function multiple_colons_will_be_ignored_when_filtering_results()
-    {
-        factory(Element::class)->create([ 'name' => 'fire' ]);
-        factory(Element::class)->create([ 'name' => 'water' ]);
-        factory(Element::class)->create([ 'name' => 'thunder' ]);
-
-        $response = $this->get('/api/elements?name=like:er:w');
-
-        $response->assertStatus(200);
-        $response->assertJsonCount(2);
-        $response->assertJsonFragment([ 'name' => 'water' ]);
-        $response->assertJsonFragment([ 'name' => 'thunder' ]);
-    }
-
-    /** @test */
     public function the_name_column_can_be_filtered_by_the_equals_operator()
     {
         factory(Element::class)->create([ 'name' => 'fire' ]);

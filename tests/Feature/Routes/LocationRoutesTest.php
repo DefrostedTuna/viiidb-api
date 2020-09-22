@@ -35,10 +35,10 @@ class LocationRoutesTest extends TestCase
     /** @test */
     public function it_can_load_relations_on_individual_records()
     {
-        $balambRegion = factory(Location::class)->create([ 
-            'name' => 'Balamb Region', 
+        $balambRegion = factory(Location::class)->create([
+            'name' => 'Balamb Region',
             'description' => 'This is technically the parent',
-            'area' => 'Alcauld Plains', 
+            'area' => 'Alcauld Plains',
         ]);
         $balambGarden = factory(Location::class)->create([
             'name' => 'Balamb Garden',
@@ -58,10 +58,10 @@ class LocationRoutesTest extends TestCase
     /** @test */
     public function it_can_load_relation_properties_on_individual_records()
     {
-        $balambRegion = factory(Location::class)->create([ 
-            'name' => 'Balamb Region', 
+        $balambRegion = factory(Location::class)->create([
+            'name' => 'Balamb Region',
             'description' => 'This is technically the parent',
-            'area' => 'Alcauld Plains', 
+            'area' => 'Alcauld Plains',
         ]);
         $balambGarden = factory(Location::class)->create([
             'name' => 'Balamb Garden',
@@ -85,10 +85,10 @@ class LocationRoutesTest extends TestCase
     /** @test */
     public function it_can_load_multiple_relation_properties_on_individual_records()
     {
-        $balambRegion = factory(Location::class)->create([ 
-            'name' => 'Balamb Region', 
+        $balambRegion = factory(Location::class)->create([
+            'name' => 'Balamb Region',
             'description' => 'This is technically the parent',
-            'area' => 'Alcauld Plains', 
+            'area' => 'Alcauld Plains',
         ]);
         $balambGarden = factory(Location::class)->create([
             'name' => 'Balamb Garden',
@@ -116,21 +116,6 @@ class LocationRoutesTest extends TestCase
         $response = $this->get('/api/locations/invalid');
 
         $response->assertStatus(404);
-    }
-
-    /** @test */
-    public function multiple_colons_will_be_ignored_when_filtering_results()
-    {
-        factory(Location::class)->create([ 'name' => 'Balamb Region' ]);
-        factory(Location::class)->create([ 'name' => 'Galbadia Region' ]);
-        factory(Location::class)->create([ 'name' => 'Esthar Region' ]);
-
-        $response = $this->get('/api/locations?name=like:al:0');
-
-        $response->assertStatus(200);
-        $response->assertJsonCount(2);
-        $response->assertJsonFragment([ 'name' => 'Balamb Region' ]);
-        $response->assertJsonFragment([ 'name' => 'Galbadia Region' ]);
     }
 
     /** @test */
@@ -241,10 +226,10 @@ class LocationRoutesTest extends TestCase
     /** @test */
     public function it_can_load_the_region_without_additional_filters()
     {
-        $balambRegion = factory(Location::class)->create([ 
-            'name' => 'Balamb Region', 
+        $balambRegion = factory(Location::class)->create([
+            'name' => 'Balamb Region',
             'description' => 'This is technically the parent',
-            'area' => 'Alcauld Plains', 
+            'area' => 'Alcauld Plains',
         ]);
         $balambGarden = factory(Location::class)->create([
             'name' => 'Balamb Garden',
@@ -265,10 +250,10 @@ class LocationRoutesTest extends TestCase
     /** @test */
     public function it_can_load_the_entire_region_relation()
     {
-        $balambRegion = factory(Location::class)->create([ 
-            'name' => 'Balamb Region', 
+        $balambRegion = factory(Location::class)->create([
+            'name' => 'Balamb Region',
             'description' => 'This is technically the parent',
-            'area' => 'Alcauld Plains', 
+            'area' => 'Alcauld Plains',
         ]);
         $balambGarden = factory(Location::class)->create([
             'name' => 'Balamb Garden',
@@ -289,10 +274,10 @@ class LocationRoutesTest extends TestCase
     /** @test */
     public function it_can_load_the_name_column_on_the_region_relation()
     {
-        $balambRegion = factory(Location::class)->create([ 
-            'name' => 'Balamb Region', 
+        $balambRegion = factory(Location::class)->create([
+            'name' => 'Balamb Region',
             'description' => 'This is technically the parent',
-            'area' => 'Alcauld Plains', 
+            'area' => 'Alcauld Plains',
         ]);
         $balambGarden = factory(Location::class)->create([
             'name' => 'Balamb Garden',
@@ -317,10 +302,10 @@ class LocationRoutesTest extends TestCase
     /** @test */
     public function it_can_load_multiple_relation_columns_explicitly()
     {
-        $balambRegion = factory(Location::class)->create([ 
-            'name' => 'Balamb Region', 
+        $balambRegion = factory(Location::class)->create([
+            'name' => 'Balamb Region',
             'description' => 'This is technically the parent',
-            'area' => 'Alcauld Plains', 
+            'area' => 'Alcauld Plains',
         ]);
         $balambGarden = factory(Location::class)->create([
             'name' => 'Balamb Garden',

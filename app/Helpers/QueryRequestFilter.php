@@ -11,22 +11,22 @@ class QueryRequestFilter
     /**
      * Instance of the filterable class.
      *
-     * @var \Illuminate\Database\Eloquent\Model $filterable
+     * @var  \Illuminate\Database\Eloquent\Model  $filterable
      */
     protected $filterable;
 
     /**
      * Instance of the query builder.
-     * 
-     * @var Illuminate\Database\Eloquent\Builder $query
+     *
+     * @var  Illuminate\Database\Eloquent\Builder  $query
      */
     protected $query;
 
     /**
      * Sets the model and query builder instance.
      *
-     * @param \Illuminate\Database\Eloquent\Model $model
-     * 
+     * @param  \Illuminate\Database\Eloquent\Model  $model
+     *
      * @return void;
      */
     public function __construct(Model $model)
@@ -38,11 +38,11 @@ class QueryRequestFilter
     /**
      * Filters query results by the given parameters.
      *
-     * @param array $filters
+     * @param  array  $filters
      *
      * @return \App\Helpers\QueryRequestFilter
      */
-    public function applyFilters(array $filters): \App\Helpers\QueryRequestFilter
+    public function applyFilters(array $filters): QueryRequestFilter
     {
         $fieldNames = array_intersect(
             $this->filterable->getFilterableFields(),
@@ -53,10 +53,12 @@ class QueryRequestFilter
             $param = strtolower($filters[$fieldName]);
             $operator = $this->parseComparisonOperator($param);
             $fieldValue = $this->parseFieldValue($param);
+            $fieldTypes = $this->filterable->getCasts();
+            $fieldType = $fieldTypes[$fieldName] ?: null;
 
             // Check if the value can be converted to an integer.
-            if ((int)$fieldValue) {
-                $fieldValue = (int)$fieldValue;
+            if ((int) $fieldValue) {
+                $fieldValue = (int) $fieldValue;
             }
 
             if ($operator === 'like') {
@@ -70,7 +72,11 @@ class QueryRequestFilter
             if (in_array($operator, $this->filterable->getNumericalOperators())) {
                 $this->query->whereRaw("CAST({$fieldName} AS UNSIGNED) ${operator} \"{$fieldValue}\"");
             } else {
-                $this->query->whereRaw("LOWER({$fieldName}) ${operator} \"{$fieldValue}\"");
+                $castStatement = $fieldType === 'boolean'
+                    ? "CASE WHEN {$fieldName} = 1 THEN 'true' ELSE 'false' END"
+                    : "LOWER({$fieldName})";
+                    
+                $this->query->whereRaw("${castStatement} ${operator} \"{$fieldValue}\"");
             }
         }
 
@@ -80,13 +86,13 @@ class QueryRequestFilter
     /**
      * Loads valid relations present in the filters.
      *
-     * @param array $filters
+     * @param  array  $filters
      *
      * @return \App\Helpers\QueryRequestFilter
      */
-    public function loadRelations(array $filters): \App\Helpers\QueryRequestFilter
+    public function loadRelations(array $filters): QueryRequestFilter
     {
-        if (!array_key_exists('with', $filters)) {
+        if (! array_key_exists('with', $filters)) {
             return $this;
         }
 
@@ -102,15 +108,16 @@ class QueryRequestFilter
     /**
      * Fetch a specific record from the database, or fail trying to do so.
      *
-     * @param string $id
-     * 
+     * @param  string  $id
+     * @param  string  $column
+     *
      * @return \Illuminate\Database\Eloquent\Model
-     * 
+     *
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      */
-    public function getResult(string $id): \Illuminate\Database\Eloquent\Model
+    public function getResult(string $id, string $column = 'id'): Model
     {
-        return $this->query->where('id', $id)->firstOrFail();
+        return $this->query->where($column, $id)->firstOrFail();
     }
 
     /**
@@ -118,7 +125,7 @@ class QueryRequestFilter
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function getResults(): \Illuminate\Database\Eloquent\Collection
+    public function getResults(): Collection
     {
         return $this->query->orderBy(
             $this->filterable->getOrderByField(),
@@ -129,8 +136,8 @@ class QueryRequestFilter
     /**
      * Converts an array of relation fields into a string that the query builder expects.
      *
-     * @param string $relation
-     * @param array $columns
+     * @param  string  $relation
+     * @param  array   $columns
      *
      * @return string
      */
@@ -152,7 +159,7 @@ class QueryRequestFilter
     /**
      * Converts the relations in the query string into an array of strings that the query builder expects.
      *
-     * @param string $filters
+     * @param  string  $filters
      *
      * @return array
      */
@@ -162,7 +169,7 @@ class QueryRequestFilter
         $requestedRelations = [];
         $relations = [];
 
-        foreach(explode(',', $filters) as $relationString) {
+        foreach (explode(',', $filters) as $relationString) {
             $relationArray = explode('.', $relationString, 2);
 
             if (!array_key_exists($relationArray[0], $requestedRelations)) {
@@ -187,7 +194,7 @@ class QueryRequestFilter
     /**
      * Extracts the comparison operator from the query string.
      *
-     * @param string $value
+     * @param  string  $value
      *
      * @return string
      */
@@ -196,11 +203,9 @@ class QueryRequestFilter
         $filterableOperators = $this->filterable->getFilterableOperators();
         $splitValue = explode(':', $value);
 
-        // If the array has more than one value, there is an operator.
-        if (count($splitValue) > 1) {
-            return in_array($splitValue[0], array_keys($filterableOperators))
-                ? $filterableOperators[$splitValue[0]]
-                : '=';
+        // If the first value in the array is a valid operator, we want to return the operator.
+        if (count($splitValue) > 1 && in_array($splitValue[0], array_keys($filterableOperators))) {
+            return $filterableOperators[$splitValue[0]];
         }
 
         return '=';
@@ -209,17 +214,22 @@ class QueryRequestFilter
     /**
      * Extracts the desired value by which a user wishes filter.
      *
-     * @param string $value
+     * @param  string  $value
      *
      * @return string
      */
     protected function parseFieldValue(String $value): string
     {
-        // Splitting by three will ignore anything after the second colon.
-        $splitValue = explode(':', $value, 3);
+        $filterableOperators = $this->filterable->getFilterableOperators();
+        $splitValue = explode(':', $value);
 
-        return count($splitValue) > 1
-            ? $splitValue[1]
-            : $value;
+        // If the first value in the array is a valid operator, we want to return everything afterward.
+        if (count($splitValue) > 1 && in_array($splitValue[0], array_keys($filterableOperators))) {
+            unset($splitValue[0]);
+
+            return implode(":", $splitValue);
+        }
+
+        return $value;
     }
 }

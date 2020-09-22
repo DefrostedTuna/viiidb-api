@@ -10,3 +10,4 @@ Route::resource('locations', 'LocationController')->only(['index', 'show']);
 Route::resource('status-effects', 'StatusEffectController')->only(['index', 'show']);
 Route::resource('seed-tests', 'SeedTestController')->only(['index', 'show']);
 Route::resource('test-questions', 'TestQuestionController')->only(['index', 'show']);
+Route::resource('items', 'ItemController')->only(['index', 'show']);
