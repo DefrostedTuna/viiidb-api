@@ -1,4 +1,5 @@
-FROM harbor.uptilt.io/defrostedtuna/laravel-php:7.3-1.0.1
+FROM harbor.uptilt.io/defrostedtuna/laravel-php:7.3-1.1.1
+LABEL maintainer="Rick Bennett <rbennett1106@gmail.com>"
 
 RUN apk add --no-cache \
   php7-xdebug
