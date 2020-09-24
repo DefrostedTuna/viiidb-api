@@ -18,7 +18,7 @@ class SeedTestControllerTest extends TestCase
     /** @test */
     public function it_can_return_a_list_of_seed_tests()
     {
-        $seedTests = factory(SeedTest::class, 10)->create();
+        $seedTests = SeedTest::factory()->count(10)->create();
 
         $seedTestController = new SeedTestController(new SeedTest());
 
@@ -32,7 +32,7 @@ class SeedTestControllerTest extends TestCase
     /** @test */
     public function it_returns_an_individual_seed_test()
     {
-        $seedTest = factory(SeedTest::class)->create();
+        $seedTest = SeedTest::factory()->create();
 
         $seedTestController = new SeedTestController(new SeedTest());
 
@@ -48,10 +48,10 @@ class SeedTestControllerTest extends TestCase
     /** @test */
     public function it_can_load_relations_on_individual_records()
     {
-        $seedTest = factory(SeedTest::class)->create([
+        $seedTest = SeedTest::factory()->create([
             'level' => 1,
         ]);
-        $testQuestion = factory(TestQuestion::class)->create([
+        $testQuestion = TestQuestion::factory()->create([
             'seed_test_id' => $seedTest->id,
             'question_number' => 1,
             'question' => 'Will this work?',
@@ -78,10 +78,10 @@ class SeedTestControllerTest extends TestCase
     /** @test */
     public function it_can_load_relation_properties_on_individual_records()
     {
-        $seedTest = factory(SeedTest::class)->create([
+        $seedTest = SeedTest::factory()->create([
             'level' => 1,
         ]);
-        $testQuestion = factory(TestQuestion::class)->create([
+        $testQuestion = TestQuestion::factory()->create([
             'seed_test_id' => $seedTest->id,
             'question_number' => 1,
             'question' => 'Will this work?',
@@ -112,10 +112,10 @@ class SeedTestControllerTest extends TestCase
     /** @test */
     public function it_can_load_multiple_relation_properties_on_individual_records()
     {
-        $seedTest = factory(SeedTest::class)->create([
+        $seedTest = SeedTest::factory()->create([
             'level' => 1,
         ]);
-        $testQuestion = factory(TestQuestion::class)->create([
+        $testQuestion = TestQuestion::factory()->create([
             'seed_test_id' => $seedTest->id,
             'question_number' => 1,
             'question' => 'Will this work?',
@@ -149,7 +149,7 @@ class SeedTestControllerTest extends TestCase
     {
         $this->expectException(ModelNotFoundException::class);
 
-        $seedTest = factory(SeedTest::class)->create();
+        $seedTest = SeedTest::factory()->create();
 
         $seedTestController = new SeedTestController(new SeedTest());
 
@@ -159,10 +159,10 @@ class SeedTestControllerTest extends TestCase
     /** @test */
     public function the_level_column_can_be_filtered_by_the_equals_operator()
     {
-        factory(SeedTest::class)->create([ 'level' => 1 ]);
-        factory(SeedTest::class)->create([ 'level' => 3 ]);
-        factory(SeedTest::class)->create([ 'level' => 10 ]);
-        factory(SeedTest::class)->create([ 'level' => 12 ]);
+        SeedTest::factory()->create([ 'level' => 1 ]);
+        SeedTest::factory()->create([ 'level' => 3 ]);
+        SeedTest::factory()->create([ 'level' => 10 ]);
+        SeedTest::factory()->create([ 'level' => 12 ]);
 
         $request = new Request([ 'level' => 1 ]);
         $seedTestController = new SeedTestController(new SeedTest());
@@ -175,10 +175,10 @@ class SeedTestControllerTest extends TestCase
     /** @test */
     public function the_level_column_can_be_filtered_by_the_like_operator()
     {
-        factory(SeedTest::class)->create([ 'level' => 1 ]);
-        factory(SeedTest::class)->create([ 'level' => 3 ]);
-        factory(SeedTest::class)->create([ 'level' => 10 ]);
-        factory(SeedTest::class)->create([ 'level' => 12 ]);
+        SeedTest::factory()->create([ 'level' => 1 ]);
+        SeedTest::factory()->create([ 'level' => 3 ]);
+        SeedTest::factory()->create([ 'level' => 10 ]);
+        SeedTest::factory()->create([ 'level' => 12 ]);
 
         $request = new Request([ 'level' => 'like:1' ]);
         $seedTestController = new SeedTestController(new SeedTest());
@@ -193,10 +193,10 @@ class SeedTestControllerTest extends TestCase
     /** @test */
     public function the_level_column_can_be_filtered_by_the_not_operator()
     {
-        factory(SeedTest::class)->create([ 'level' => 1 ]);
-        factory(SeedTest::class)->create([ 'level' => 3 ]);
-        factory(SeedTest::class)->create([ 'level' => 10 ]);
-        factory(SeedTest::class)->create([ 'level' => 12 ]);
+        SeedTest::factory()->create([ 'level' => 1 ]);
+        SeedTest::factory()->create([ 'level' => 3 ]);
+        SeedTest::factory()->create([ 'level' => 10 ]);
+        SeedTest::factory()->create([ 'level' => 12 ]);
 
         $request = new Request([ 'level' => 'not:10' ]);
         $seedTestController = new SeedTestController(new SeedTest());
@@ -211,10 +211,10 @@ class SeedTestControllerTest extends TestCase
     /** @test */
     public function it_can_load_the_questions_without_additional_filters()
     {
-        $seedTest = factory(SeedTest::class)->create([
+        $seedTest = SeedTest::factory()->create([
             'level' => 1,
         ]);
-        $testQuestion = factory(TestQuestion::class)->create([
+        $testQuestion = TestQuestion::factory()->create([
             'seed_test_id' => $seedTest->id,
             'question_number' => 1,
             'question' => 'Will this work?',
@@ -239,10 +239,10 @@ class SeedTestControllerTest extends TestCase
     /** @test */
     public function it_can_load_the_question_number_column_on_the_questions_relation()
     {
-        $seedTest = factory(SeedTest::class)->create([
+        $seedTest = SeedTest::factory()->create([
             'level' => 1,
         ]);
-        $testQuestion = factory(TestQuestion::class)->create([
+        $testQuestion = TestQuestion::factory()->create([
             'seed_test_id' => $seedTest->id,
             'question_number' => 1,
             'question' => 'Will this work?',
@@ -271,10 +271,10 @@ class SeedTestControllerTest extends TestCase
     /** @test */
     public function it_can_load_the_question_column_on_the_questions_relation()
     {
-        $seedTest = factory(SeedTest::class)->create([
+        $seedTest = SeedTest::factory()->create([
             'level' => 1,
         ]);
-        $testQuestion = factory(TestQuestion::class)->create([
+        $testQuestion = TestQuestion::factory()->create([
             'seed_test_id' => $seedTest->id,
             'question_number' => 1,
             'question' => 'Will this work?',
@@ -303,10 +303,10 @@ class SeedTestControllerTest extends TestCase
     /** @test */
     public function it_can_load_the_answer_column_on_the_questions_relation()
     {
-        $seedTest = factory(SeedTest::class)->create([
+        $seedTest = SeedTest::factory()->create([
             'level' => 1,
         ]);
-        $testQuestion = factory(TestQuestion::class)->create([
+        $testQuestion = TestQuestion::factory()->create([
             'seed_test_id' => $seedTest->id,
             'question_number' => 1,
             'question' => 'Will this work?',
@@ -335,10 +335,10 @@ class SeedTestControllerTest extends TestCase
     /** @test */
     public function it_can_load_multiple_relation_columns_explicitly()
     {
-        $seedTest = factory(SeedTest::class)->create([
+        $seedTest = SeedTest::factory()->create([
             'level' => 1,
         ]);
-        $testQuestion = factory(TestQuestion::class)->create([
+        $testQuestion = TestQuestion::factory()->create([
             'seed_test_id' => $seedTest->id,
             'question_number' => 1,
             'question' => 'Will this work?',

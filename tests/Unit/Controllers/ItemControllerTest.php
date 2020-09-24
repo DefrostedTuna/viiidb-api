@@ -17,7 +17,7 @@ class ItemControllerTest extends TestCase
     /** @test */
     public function it_will_return_a_list_of_items()
     {
-        $items = factory(Item::class, 10)->create();
+        $items = Item::factory()->count(10)->create();
 
         $itemController = new ItemController(new Item());
 
@@ -31,7 +31,7 @@ class ItemControllerTest extends TestCase
     /** @test */
     public function it_will_return_an_individual_item()
     {
-        $item = factory(Item::class)->create();
+        $item = Item::factory()->create();
 
         $itemController = new ItemController(new Item());
 
@@ -58,10 +58,10 @@ class ItemControllerTest extends TestCase
     public function it_can_filter_items_by_the_position_column()
     {
         $item = new Item();
-        factory(Item::class)->create(['position' => 1]);
-        factory(Item::class)->create(['position' => 2]);
-        factory(Item::class)->create(['position' => 3]);
-        factory(Item::class)->create(['position' => 13]);
+        Item::factory()->create(['position' => 1]);
+        Item::factory()->create(['position' => 2]);
+        Item::factory()->create(['position' => 3]);
+        Item::factory()->create(['position' => 13]);
 
         // Equals
         $request = new Request(['position' => '1']);
@@ -124,10 +124,10 @@ class ItemControllerTest extends TestCase
     public function it_can_filter_items_by_the_name_column()
     {
         $item = new Item();
-        factory(Item::class)->create(['name' => 'Potion']);
-        factory(Item::class)->create(['name' => 'Potion+']);
-        factory(Item::class)->create(['name' => 'Elixir']);
-        factory(Item::class)->create(['name' => 'Phoenix Down']);
+        Item::factory()->create(['name' => 'Potion']);
+        Item::factory()->create(['name' => 'Potion+']);
+        Item::factory()->create(['name' => 'Elixir']);
+        Item::factory()->create(['name' => 'Phoenix Down']);
 
         // Equals
         $request = new Request(['name' => 'Potion']);
@@ -158,10 +158,10 @@ class ItemControllerTest extends TestCase
     public function it_can_filter_items_by_the_type_column()
     {
         $item = new Item();
-        factory(Item::class)->create(['type' => 'Medicine']);
-        factory(Item::class)->create(['type' => 'Ammo']);
-        factory(Item::class)->create(['type' => 'Tool']);
-        factory(Item::class)->create(['type' => 'Magazine']);
+        Item::factory()->create(['type' => 'Medicine']);
+        Item::factory()->create(['type' => 'Ammo']);
+        Item::factory()->create(['type' => 'Tool']);
+        Item::factory()->create(['type' => 'Magazine']);
 
         // Equals
         $request = new Request(['type' => 'Medicine']);
@@ -192,10 +192,10 @@ class ItemControllerTest extends TestCase
     public function it_can_filter_items_by_the_description_column()
     {
         $item = new Item();
-        factory(Item::class)->create(['description' => 'Restores HP by 200']);
-        factory(Item::class)->create(['description' => 'Raises HP']);
-        factory(Item::class)->create(['description' => 'Poisonous monster fang']);
-        factory(Item::class)->create(['description' => 'Cures Poison']);
+        Item::factory()->create(['description' => 'Restores HP by 200']);
+        Item::factory()->create(['description' => 'Raises HP']);
+        Item::factory()->create(['description' => 'Poisonous monster fang']);
+        Item::factory()->create(['description' => 'Cures Poison']);
 
         // Equals
         $request = new Request(['description' => 'Raises HP']);
@@ -226,10 +226,10 @@ class ItemControllerTest extends TestCase
     public function it_can_filter_items_by_the_menu_effect_column()
     {
         $item = new Item();
-        factory(Item::class)->create(['menu_effect' => 'One party member']);
-        factory(Item::class)->create(['menu_effect' => 'One GF']);
-        factory(Item::class)->create(['menu_effect' => 'All party members']);
-        factory(Item::class)->create(['menu_effect' => null]);
+        Item::factory()->create(['menu_effect' => 'One party member']);
+        Item::factory()->create(['menu_effect' => 'One GF']);
+        Item::factory()->create(['menu_effect' => 'All party members']);
+        Item::factory()->create(['menu_effect' => null]);
 
         // Equals
         $request = new Request(['menu_effect' => 'One party member']);
@@ -259,10 +259,10 @@ class ItemControllerTest extends TestCase
     public function it_can_filter_items_by_the_price_column()
     {
         $item = new Item();
-        factory(Item::class)->create(['price' => 25]);
-        factory(Item::class)->create(['price' => 125]);
-        factory(Item::class)->create(['price' => 750]);
-        factory(Item::class)->create(['price' => 20000]);
+        Item::factory()->create(['price' => 25]);
+        Item::factory()->create(['price' => 125]);
+        Item::factory()->create(['price' => 750]);
+        Item::factory()->create(['price' => 20000]);
 
         // Equals
         $request = new Request(['price' => 750]);
@@ -325,10 +325,10 @@ class ItemControllerTest extends TestCase
     public function it_can_filter_items_by_the_value_column()
     {
         $item = new Item();
-        factory(Item::class)->create(['value' => 25]);
-        factory(Item::class)->create(['value' => 125]);
-        factory(Item::class)->create(['value' => 750]);
-        factory(Item::class)->create(['value' => 20000]);
+        Item::factory()->create(['value' => 25]);
+        Item::factory()->create(['value' => 125]);
+        Item::factory()->create(['value' => 750]);
+        Item::factory()->create(['value' => 20000]);
 
         // Equals
         $request = new Request(['value' => 750]);
@@ -391,10 +391,10 @@ class ItemControllerTest extends TestCase
     public function it_can_filter_items_by_the_haggle_column()
     {
         $item = new Item();
-        factory(Item::class)->create(['haggle' => 25]);
-        factory(Item::class)->create(['haggle' => 125]);
-        factory(Item::class)->create(['haggle' => 750]);
-        factory(Item::class)->create(['haggle' => 20000]);
+        Item::factory()->create(['haggle' => 25]);
+        Item::factory()->create(['haggle' => 125]);
+        Item::factory()->create(['haggle' => 750]);
+        Item::factory()->create(['haggle' => 20000]);
 
         // Equals
         $request = new Request(['haggle' => 750]);
@@ -457,10 +457,10 @@ class ItemControllerTest extends TestCase
     public function it_can_filter_items_by_the_sell_high_column()
     {
         $item = new Item();
-        factory(Item::class)->create(['sell_high' => 25]);
-        factory(Item::class)->create(['sell_high' => 125]);
-        factory(Item::class)->create(['sell_high' => 750]);
-        factory(Item::class)->create(['sell_high' => 20000]);
+        Item::factory()->create(['sell_high' => 25]);
+        Item::factory()->create(['sell_high' => 125]);
+        Item::factory()->create(['sell_high' => 750]);
+        Item::factory()->create(['sell_high' => 20000]);
 
         // Equals
         $request = new Request(['sell_high' => 750]);
@@ -523,9 +523,9 @@ class ItemControllerTest extends TestCase
     public function it_can_filter_items_by_the_used_in_menu_column()
     {
         $item = new Item();
-        factory(Item::class)->create(['used_in_menu' => true]);
-        factory(Item::class)->create(['used_in_menu' => false]);
-        factory(Item::class)->create(['used_in_menu' => true]);
+        Item::factory()->create(['used_in_menu' => true]);
+        Item::factory()->create(['used_in_menu' => false]);
+        Item::factory()->create(['used_in_menu' => true]);
 
         // Equals
         $request = new Request(['used_in_menu' => 'true']);
@@ -553,9 +553,9 @@ class ItemControllerTest extends TestCase
     public function it_can_filter_items_by_the_used_in_battle_column()
     {
         $item = new Item();
-        factory(Item::class)->create(['used_in_battle' => true]);
-        factory(Item::class)->create(['used_in_battle' => false]);
-        factory(Item::class)->create(['used_in_battle' => true]);
+        Item::factory()->create(['used_in_battle' => true]);
+        Item::factory()->create(['used_in_battle' => false]);
+        Item::factory()->create(['used_in_battle' => true]);
 
         // Equals
         $request = new Request(['used_in_battle' => 'true']);
@@ -583,10 +583,10 @@ class ItemControllerTest extends TestCase
     public function it_can_filter_items_by_the_notes_column()
     {
         $item = new Item();
-        factory(Item::class)->create(['notes' => 'GF Compatibility: Ifrit +1']);
-        factory(Item::class)->create(['notes' => 'GF Compatibility: Ifrit +3']);
-        factory(Item::class)->create(['notes' => 'GF Compatibility: Shiva +3']);
-        factory(Item::class)->create(['notes' => 'All Guardian Forces +20']);
+        Item::factory()->create(['notes' => 'GF Compatibility: Ifrit +1']);
+        Item::factory()->create(['notes' => 'GF Compatibility: Ifrit +3']);
+        Item::factory()->create(['notes' => 'GF Compatibility: Shiva +3']);
+        Item::factory()->create(['notes' => 'All Guardian Forces +20']);
 
         // Equals
         $request = new Request(['notes' => 'All Guardian Forces +20']);

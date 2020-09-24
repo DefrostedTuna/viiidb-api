@@ -1,13 +1,29 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
 use App\Models\SeedRank;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(SeedRank::class, function (Faker $faker) {
-    return [
-        'rank' => $faker->numberBetween(1, 30),
-        'salary' => $faker->numberBetween(500, 30000),
-    ];
-});
+class SeedRankFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = SeedRank::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition(): array
+    {
+        return [
+            'rank' => $this->faker->numberBetween(1, 30),
+            'salary' => $this->faker->numberBetween(500, 30000),
+        ];
+    }
+}

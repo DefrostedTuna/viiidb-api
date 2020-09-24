@@ -1,15 +1,31 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
 use App\Models\Location;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Location::class, function (Faker $faker) {
-    return [
-        'name' => $faker->word,
-        'region_id' => null,
-        'description' => $faker->paragraph,
-        'area' => $faker->word,
-    ];
-});
+class LocationFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Location::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition(): array
+    {
+        return [
+            'name' => $this->faker->word,
+            'region_id' => null,
+            'description' => $this->faker->paragraph,
+            'area' => $this->faker->word,
+        ];
+    }
+}

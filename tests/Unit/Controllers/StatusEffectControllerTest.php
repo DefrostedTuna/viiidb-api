@@ -17,7 +17,7 @@ class StatusEffectControllerTest extends TestCase
     /** @test */
     public function it_can_return_a_list_of_status_effects()
     {
-        $statusEffects = factory(StatusEffect::class, 10)->create();
+        $statusEffects = StatusEffect::factory()->count(10)->create();
 
         $statusEffectController = new StatusEffectController(new StatusEffect());
 
@@ -31,7 +31,7 @@ class StatusEffectControllerTest extends TestCase
     /** @test */
     public function it_returns_an_individual_status_effect()
     {
-        $statusEffect = factory(StatusEffect::class)->create();
+        $statusEffect = StatusEffect::factory()->create();
 
         $statusEffectController = new StatusEffectController(new StatusEffect());
 
@@ -49,7 +49,7 @@ class StatusEffectControllerTest extends TestCase
     {
         $this->expectException(ModelNotFoundException::class);
 
-        $statusEffect = factory(StatusEffect::class)->create();
+        $statusEffect = StatusEffect::factory()->create();
 
         $statusEffectController = new StatusEffectController(new StatusEffect());
 
@@ -59,9 +59,9 @@ class StatusEffectControllerTest extends TestCase
     /** @test */
     public function the_filters_are_case_insensitive()
     {
-        factory(StatusEffect::class)->create([ 'name' => 'Death', 'type' => 'harmful' ]);
-        factory(StatusEffect::class)->create([ 'name' => 'Double', 'type' => 'beneficial' ]);
-        factory(StatusEffect::class)->create([ 'name' => 'Triple', 'type' => 'beneficial' ]);
+        StatusEffect::factory()->create([ 'name' => 'Death', 'type' => 'harmful' ]);
+        StatusEffect::factory()->create([ 'name' => 'Double', 'type' => 'beneficial' ]);
+        StatusEffect::factory()->create([ 'name' => 'Triple', 'type' => 'beneficial' ]);
 
         $request = new Request([ 'name' => 'death' ]);
         $statusEffectController = new StatusEffectController(new StatusEffect());
@@ -74,9 +74,9 @@ class StatusEffectControllerTest extends TestCase
     /** @test */
     public function the_name_column_can_be_filtered_by_the_equals_operator()
     {
-        factory(StatusEffect::class)->create([ 'name' => 'Death', 'type' => 'harmful' ]);
-        factory(StatusEffect::class)->create([ 'name' => 'Double', 'type' => 'beneficial' ]);
-        factory(StatusEffect::class)->create([ 'name' => 'Triple', 'type' => 'beneficial' ]);
+        StatusEffect::factory()->create([ 'name' => 'Death', 'type' => 'harmful' ]);
+        StatusEffect::factory()->create([ 'name' => 'Double', 'type' => 'beneficial' ]);
+        StatusEffect::factory()->create([ 'name' => 'Triple', 'type' => 'beneficial' ]);
 
         $request = new Request([ 'name' => 'Triple' ]);
         $statusEffectController = new StatusEffectController(new StatusEffect());
@@ -89,9 +89,9 @@ class StatusEffectControllerTest extends TestCase
     /** @test */
     public function the_name_column_can_be_filtered_by_the_like_operator()
     {
-        factory(StatusEffect::class)->create([ 'name' => 'Death', 'type' => 'harmful' ]);
-        factory(StatusEffect::class)->create([ 'name' => 'Double', 'type' => 'beneficial' ]);
-        factory(StatusEffect::class)->create([ 'name' => 'Triple', 'type' => 'beneficial' ]);
+        StatusEffect::factory()->create([ 'name' => 'Death', 'type' => 'harmful' ]);
+        StatusEffect::factory()->create([ 'name' => 'Double', 'type' => 'beneficial' ]);
+        StatusEffect::factory()->create([ 'name' => 'Triple', 'type' => 'beneficial' ]);
 
         $request = new Request([ 'name' => 'like:le' ]);
         $statusEffectController = new StatusEffectController(new StatusEffect());
@@ -105,9 +105,9 @@ class StatusEffectControllerTest extends TestCase
     /** @test */
     public function the_name_column_can_be_filtered_by_the_not_operator()
     {
-        factory(StatusEffect::class)->create([ 'name' => 'Death', 'type' => 'harmful' ]);
-        factory(StatusEffect::class)->create([ 'name' => 'Double', 'type' => 'beneficial' ]);
-        factory(StatusEffect::class)->create([ 'name' => 'Triple', 'type' => 'beneficial' ]);
+        StatusEffect::factory()->create([ 'name' => 'Death', 'type' => 'harmful' ]);
+        StatusEffect::factory()->create([ 'name' => 'Double', 'type' => 'beneficial' ]);
+        StatusEffect::factory()->create([ 'name' => 'Triple', 'type' => 'beneficial' ]);
 
         $request = new Request([ 'name' => 'not:Triple' ]);
         $statusEffectController = new StatusEffectController(new StatusEffect());
@@ -121,9 +121,9 @@ class StatusEffectControllerTest extends TestCase
     /** @test */
     public function the_type_column_can_be_filtered_by_the_equals_operator()
     {
-        factory(StatusEffect::class)->create([ 'name' => 'Death', 'type' => 'harmful' ]);
-        factory(StatusEffect::class)->create([ 'name' => 'Double', 'type' => 'beneficial' ]);
-        factory(StatusEffect::class)->create([ 'name' => 'Triple', 'type' => 'beneficial' ]);
+        StatusEffect::factory()->create([ 'name' => 'Death', 'type' => 'harmful' ]);
+        StatusEffect::factory()->create([ 'name' => 'Double', 'type' => 'beneficial' ]);
+        StatusEffect::factory()->create([ 'name' => 'Triple', 'type' => 'beneficial' ]);
 
         $request = new Request([ 'type' => 'harmful' ]);
         $statusEffectController = new StatusEffectController(new StatusEffect());
@@ -136,9 +136,9 @@ class StatusEffectControllerTest extends TestCase
     /** @test */
     public function the_type_column_can_be_filtered_by_the_like_operator()
     {
-        factory(StatusEffect::class)->create([ 'name' => 'Death', 'type' => 'harmful' ]);
-        factory(StatusEffect::class)->create([ 'name' => 'Double', 'type' => 'beneficial' ]);
-        factory(StatusEffect::class)->create([ 'name' => 'Triple', 'type' => 'beneficial' ]);
+        StatusEffect::factory()->create([ 'name' => 'Death', 'type' => 'harmful' ]);
+        StatusEffect::factory()->create([ 'name' => 'Double', 'type' => 'beneficial' ]);
+        StatusEffect::factory()->create([ 'name' => 'Triple', 'type' => 'beneficial' ]);
 
         $request = new Request([ 'type' => 'like:cial' ]);
         $statusEffectController = new StatusEffectController(new StatusEffect());
@@ -153,9 +153,9 @@ class StatusEffectControllerTest extends TestCase
     /** @test */
     public function the_type_column_can_be_filtered_by_the_not_operator()
     {
-        factory(StatusEffect::class)->create([ 'name' => 'Death', 'type' => 'harmful' ]);
-        factory(StatusEffect::class)->create([ 'name' => 'Double', 'type' => 'beneficial' ]);
-        factory(StatusEffect::class)->create([ 'name' => 'Triple', 'type' => 'beneficial' ]);
+        StatusEffect::factory()->create([ 'name' => 'Death', 'type' => 'harmful' ]);
+        StatusEffect::factory()->create([ 'name' => 'Double', 'type' => 'beneficial' ]);
+        StatusEffect::factory()->create([ 'name' => 'Triple', 'type' => 'beneficial' ]);
 
         $request = new Request([ 'type' => 'not:beneficial' ]);
         $statusEffectController = new StatusEffectController(new StatusEffect());
@@ -169,9 +169,9 @@ class StatusEffectControllerTest extends TestCase
     /** @test */
     public function the_name_and_type_columns_can_both_be_filtered_together()
     {
-        factory(StatusEffect::class)->create([ 'name' => 'Death', 'type' => 'harmful' ]);
-        factory(StatusEffect::class)->create([ 'name' => 'Double', 'type' => 'beneficial' ]);
-        factory(StatusEffect::class)->create([ 'name' => 'Triple', 'type' => 'beneficial' ]);
+        StatusEffect::factory()->create([ 'name' => 'Death', 'type' => 'harmful' ]);
+        StatusEffect::factory()->create([ 'name' => 'Double', 'type' => 'beneficial' ]);
+        StatusEffect::factory()->create([ 'name' => 'Triple', 'type' => 'beneficial' ]);
 
         $request = new Request([
             'name' => 'like:Dou',

@@ -1,15 +1,31 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
 use App\Models\TestQuestion;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(TestQuestion::class, function (Faker $faker) {
-    return [
-        'seed_test_id' => null,
-        'question_number' => $faker->numberBetween(1, 10),
-        'question' => $faker->paragraph,
-        'answer' => $faker->randomElement(['yes', 'no']),
-    ];
-});
+class TestQuestionFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = TestQuestion::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition(): array
+    {
+        return [
+            'seed_test_id' => null,
+            'question_number' => $this->faker->numberBetween(1, 10),
+            'question' => $this->faker->paragraph,
+            'answer' => $this->faker->randomElement(['yes', 'no']),
+        ];
+    }
+}

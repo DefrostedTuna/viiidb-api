@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Models\SeedTest;
 use App\Models\TestQuestion;
 use Carbon\Carbon;

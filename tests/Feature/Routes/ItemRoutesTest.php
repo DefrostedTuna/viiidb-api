@@ -13,7 +13,7 @@ class ItemRoutesTest extends TestCase
     /** @test */
     public function it_will_return_a_list_of_items()
     {
-        factory(Item::class, 10)->create();
+        Item::factory()->count(10)->create();
 
         $response = $this->get('/api/items');
 
@@ -24,7 +24,7 @@ class ItemRoutesTest extends TestCase
     /** @test */
     public function it_will_return_an_individual_item()
     {
-        $item = factory(Item::class)->create();
+        $item = Item::factory()->create();
 
         $response = $this->get("/api/items/{$item->name}");
 
@@ -43,10 +43,10 @@ class ItemRoutesTest extends TestCase
     /** @test */
     public function it_can_filter_items_by_the_position_column()
     {
-        factory(Item::class)->create(['position' => 1]);
-        factory(Item::class)->create(['position' => 2]);
-        factory(Item::class)->create(['position' => 3]);
-        factory(Item::class)->create(['position' => 13]);
+        Item::factory()->create(['position' => 1]);
+        Item::factory()->create(['position' => 2]);
+        Item::factory()->create(['position' => 3]);
+        Item::factory()->create(['position' => 13]);
 
         // Equals
         $response = $this->get('/api/items?position=1');
@@ -108,10 +108,10 @@ class ItemRoutesTest extends TestCase
     /** @test */
     public function it_can_filter_items_by_the_name_column()
     {
-        factory(Item::class)->create(['name' => 'Potion']);
-        factory(Item::class)->create(['name' => 'Potion+']);
-        factory(Item::class)->create(['name' => 'Elixir']);
-        factory(Item::class)->create(['name' => 'Phoenix Down']);
+        Item::factory()->create(['name' => 'Potion']);
+        Item::factory()->create(['name' => 'Potion+']);
+        Item::factory()->create(['name' => 'Elixir']);
+        Item::factory()->create(['name' => 'Phoenix Down']);
 
         // Equals
         $response = $this->get('/api/items?name=Potion');
@@ -141,10 +141,10 @@ class ItemRoutesTest extends TestCase
     /** @test */
     public function it_can_filter_items_by_the_type_column()
     {
-        factory(Item::class)->create(['type' => 'Medicine']);
-        factory(Item::class)->create(['type' => 'Ammo']);
-        factory(Item::class)->create(['type' => 'Tool']);
-        factory(Item::class)->create(['type' => 'Magazine']);
+        Item::factory()->create(['type' => 'Medicine']);
+        Item::factory()->create(['type' => 'Ammo']);
+        Item::factory()->create(['type' => 'Tool']);
+        Item::factory()->create(['type' => 'Magazine']);
 
         // Equals
         $response = $this->get('/api/items?type=Medicine');
@@ -174,10 +174,10 @@ class ItemRoutesTest extends TestCase
     /** @test */
     public function it_can_filter_items_by_the_description_column()
     {
-        factory(Item::class)->create(['description' => 'Restores HP by 200']);
-        factory(Item::class)->create(['description' => 'Raises HP']);
-        factory(Item::class)->create(['description' => 'Poisonous monster fang']);
-        factory(Item::class)->create(['description' => 'Cures Poison']);
+        Item::factory()->create(['description' => 'Restores HP by 200']);
+        Item::factory()->create(['description' => 'Raises HP']);
+        Item::factory()->create(['description' => 'Poisonous monster fang']);
+        Item::factory()->create(['description' => 'Cures Poison']);
 
         // Equals
         $response = $this->get('/api/items?description=Raises HP');
@@ -204,10 +204,10 @@ class ItemRoutesTest extends TestCase
     /** @test */
     public function it_can_filter_items_by_the_menu_effect_column()
     {
-        factory(Item::class)->create(['menu_effect' => 'One party member']);
-        factory(Item::class)->create(['menu_effect' => 'One GF']);
-        factory(Item::class)->create(['menu_effect' => 'All party members']);
-        factory(Item::class)->create(['menu_effect' => null]);
+        Item::factory()->create(['menu_effect' => 'One party member']);
+        Item::factory()->create(['menu_effect' => 'One GF']);
+        Item::factory()->create(['menu_effect' => 'All party members']);
+        Item::factory()->create(['menu_effect' => null]);
 
         // Equals
         $response = $this->get('/api/items?menu_effect=One party member');
@@ -233,10 +233,10 @@ class ItemRoutesTest extends TestCase
     /** @test */
     public function it_can_filter_items_by_the_price_column()
     {
-        factory(Item::class)->create(['price' => 25]);
-        factory(Item::class)->create(['price' => 125]);
-        factory(Item::class)->create(['price' => 750]);
-        factory(Item::class)->create(['price' => 20000]);
+        Item::factory()->create(['price' => 25]);
+        Item::factory()->create(['price' => 125]);
+        Item::factory()->create(['price' => 750]);
+        Item::factory()->create(['price' => 20000]);
 
         // Equals
         $response = $this->get('/api/items?price=750');
@@ -291,10 +291,10 @@ class ItemRoutesTest extends TestCase
     /** @test */
     public function it_can_filter_items_by_the_value_column()
     {
-        factory(Item::class)->create(['value' => 25]);
-        factory(Item::class)->create(['value' => 125]);
-        factory(Item::class)->create(['value' => 750]);
-        factory(Item::class)->create(['value' => 20000]);
+        Item::factory()->create(['value' => 25]);
+        Item::factory()->create(['value' => 125]);
+        Item::factory()->create(['value' => 750]);
+        Item::factory()->create(['value' => 20000]);
 
         // Equals
         $response = $this->get('/api/items?value=750');
@@ -349,10 +349,10 @@ class ItemRoutesTest extends TestCase
     /** @test */
     public function it_can_filter_items_by_the_haggle_column()
     {
-        factory(Item::class)->create(['haggle' => 25]);
-        factory(Item::class)->create(['haggle' => 125]);
-        factory(Item::class)->create(['haggle' => 750]);
-        factory(Item::class)->create(['haggle' => 20000]);
+        Item::factory()->create(['haggle' => 25]);
+        Item::factory()->create(['haggle' => 125]);
+        Item::factory()->create(['haggle' => 750]);
+        Item::factory()->create(['haggle' => 20000]);
 
         // Equals
         $response = $this->get('/api/items?haggle=750');
@@ -407,10 +407,10 @@ class ItemRoutesTest extends TestCase
     /** @test */
     public function it_can_filter_items_by_the_sell_high_column()
     {
-        factory(Item::class)->create(['sell_high' => 25]);
-        factory(Item::class)->create(['sell_high' => 125]);
-        factory(Item::class)->create(['sell_high' => 750]);
-        factory(Item::class)->create(['sell_high' => 20000]);
+        Item::factory()->create(['sell_high' => 25]);
+        Item::factory()->create(['sell_high' => 125]);
+        Item::factory()->create(['sell_high' => 750]);
+        Item::factory()->create(['sell_high' => 20000]);
 
         // Equals
         $response = $this->get('/api/items?sell_high=750');
@@ -465,9 +465,9 @@ class ItemRoutesTest extends TestCase
     /** @test */
     public function it_can_filter_items_by_the_used_in_menu_column()
     {
-        factory(Item::class)->create(['used_in_menu' => true]);
-        factory(Item::class)->create(['used_in_menu' => false]);
-        factory(Item::class)->create(['used_in_menu' => true]);
+        Item::factory()->create(['used_in_menu' => true]);
+        Item::factory()->create(['used_in_menu' => false]);
+        Item::factory()->create(['used_in_menu' => true]);
 
         // Equals
         $response = $this->get('/api/items?used_in_menu=true');
@@ -491,9 +491,9 @@ class ItemRoutesTest extends TestCase
     /** @test */
     public function it_can_filter_items_by_the_used_in_battle_column()
     {
-        factory(Item::class)->create(['used_in_battle' => true]);
-        factory(Item::class)->create(['used_in_battle' => false]);
-        factory(Item::class)->create(['used_in_battle' => true]);
+        Item::factory()->create(['used_in_battle' => true]);
+        Item::factory()->create(['used_in_battle' => false]);
+        Item::factory()->create(['used_in_battle' => true]);
 
         // Equals
         $response = $this->get('/api/items?used_in_battle=true');
@@ -517,10 +517,10 @@ class ItemRoutesTest extends TestCase
     /** @test */
     public function it_can_filter_items_by_the_notes_column_1()
     {
-        factory(Item::class)->create(['notes' => 'GF Compatibility: Ifrit +1']);
-        factory(Item::class)->create(['notes' => 'GF Compatibility: Ifrit +3']);
-        factory(Item::class)->create(['notes' => 'GF Compatibility: Shiva +3']);
-        factory(Item::class)->create(['notes' => 'All Guardian Forces +20']);
+        Item::factory()->create(['notes' => 'GF Compatibility: Ifrit +1']);
+        Item::factory()->create(['notes' => 'GF Compatibility: Ifrit +3']);
+        Item::factory()->create(['notes' => 'GF Compatibility: Shiva +3']);
+        Item::factory()->create(['notes' => 'All Guardian Forces +20']);
 
         // Equals
         $response = $this->get('/api/items?notes=All Guardian Forces +20');

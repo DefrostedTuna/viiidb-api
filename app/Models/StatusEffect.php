@@ -4,14 +4,16 @@ namespace App\Models;
 
 use App\Traits\Filterable;
 use App\Traits\Uuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class StatusEffect extends Model
 {
     use Uuids;
     use Filterable;
+    use HasFactory;
 
-    /** 
+    /**
      * The table associated with the model.
      *
      * @var string

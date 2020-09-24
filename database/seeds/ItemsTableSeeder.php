@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Models\Item;
 use App\Models\StatusEffect;
 use Carbon\Carbon;

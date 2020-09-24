@@ -17,7 +17,7 @@ class ElementControllerTest extends TestCase
     /** @test */
     public function it_can_return_a_list_of_elements()
     {
-        $elements = factory(Element::class, 10)->create();
+        $elements = Element::factory()->count(10)->create();
 
         $elementController = new ElementController(new Element());
 
@@ -31,7 +31,7 @@ class ElementControllerTest extends TestCase
     /** @test */
     public function it_returns_an_individual_element()
     {
-        $element = factory(Element::class)->create();
+        $element = Element::factory()->create();
 
         $elementController = new ElementController(new Element());
 
@@ -49,7 +49,7 @@ class ElementControllerTest extends TestCase
     {
         $this->expectException(ModelNotFoundException::class);
 
-        $element = factory(Element::class)->create();
+        $element = Element::factory()->create();
 
         $elementController = new ElementController(new Element());
 
@@ -59,9 +59,9 @@ class ElementControllerTest extends TestCase
     /** @test */
     public function the_filters_are_case_insensitive()
     {
-        factory(Element::class)->create([ 'name' => 'fire' ]);
-        factory(Element::class)->create([ 'name' => 'water' ]);
-        factory(Element::class)->create([ 'name' => 'thunder' ]);
+        Element::factory()->create([ 'name' => 'fire' ]);
+        Element::factory()->create([ 'name' => 'water' ]);
+        Element::factory()->create([ 'name' => 'thunder' ]);
 
         $request = new Request([ 'name' => 'FiRe' ]);
         $elementController = new ElementController(new Element());
@@ -74,9 +74,9 @@ class ElementControllerTest extends TestCase
     /** @test */
     public function the_name_column_can_be_filtered_by_the_equals_operator()
     {
-        factory(Element::class)->create([ 'name' => 'fire' ]);
-        factory(Element::class)->create([ 'name' => 'water' ]);
-        factory(Element::class)->create([ 'name' => 'thunder' ]);
+        Element::factory()->create([ 'name' => 'fire' ]);
+        Element::factory()->create([ 'name' => 'water' ]);
+        Element::factory()->create([ 'name' => 'thunder' ]);
 
         $request = new Request([ 'name' => 'thunder' ]);
         $elementController = new ElementController(new Element());
@@ -89,9 +89,9 @@ class ElementControllerTest extends TestCase
     /** @test */
     public function the_name_column_can_be_filtered_by_the_like_operator()
     {
-        factory(Element::class)->create([ 'name' => 'fire' ]);
-        factory(Element::class)->create([ 'name' => 'water' ]);
-        factory(Element::class)->create([ 'name' => 'thunder' ]);
+        Element::factory()->create([ 'name' => 'fire' ]);
+        Element::factory()->create([ 'name' => 'water' ]);
+        Element::factory()->create([ 'name' => 'thunder' ]);
 
         $request = new Request([ 'name' => 'like:er' ]);
         $elementController = new ElementController(new Element());
@@ -105,9 +105,9 @@ class ElementControllerTest extends TestCase
     /** @test */
     public function the_name_column_can_be_filtered_by_the_not_operator()
     {
-        factory(Element::class)->create([ 'name' => 'fire' ]);
-        factory(Element::class)->create([ 'name' => 'water' ]);
-        factory(Element::class)->create([ 'name' => 'thunder' ]);
+        Element::factory()->create([ 'name' => 'fire' ]);
+        Element::factory()->create([ 'name' => 'water' ]);
+        Element::factory()->create([ 'name' => 'thunder' ]);
 
         $request = new Request([ 'name' => 'not:water' ]);
         $elementController = new ElementController(new Element());

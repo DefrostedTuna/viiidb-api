@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\Filterable;
 use App\Traits\Uuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -11,8 +12,9 @@ class TestQuestion extends Model
 {
     use Uuids;
     use Filterable;
+    use HasFactory;
 
-    /** 
+    /**
      * The table associated with the model.
      *
      * @var string $table
@@ -126,9 +128,9 @@ class TestQuestion extends Model
         'not' => '<>',
     ];
 
-    /** 
+    /**
      * The SeedTest that the record belongs to.
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function test()
