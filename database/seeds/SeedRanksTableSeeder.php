@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Models\SeedRank;
 use Illuminate\Database\Seeder;
 use Webpatser\Uuid\Uuid;

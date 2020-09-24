@@ -13,7 +13,7 @@ class SeedRankRoutesTest extends TestCase
     /** @test */
     public function it_returns_a_list_of_seed_ranks()
     {
-        $seedRanks = factory(SeedRank::class, 10)->create();
+        $seedRanks = SeedRank::factory()->count(10)->create();
 
         $response = $this->get('/api/seed-ranks');
 
@@ -24,7 +24,7 @@ class SeedRankRoutesTest extends TestCase
     /** @test */
     public function it_returns_an_individual_seed_rank()
     {
-        $seedRank = factory(SeedRank::class)->create();
+        $seedRank = SeedRank::factory()->create();
 
         $response = $this->get("/api/seed-ranks/{$seedRank->id}");
 
@@ -43,9 +43,9 @@ class SeedRankRoutesTest extends TestCase
     /** @test */
     public function the_rank_column_can_be_filtered_by_the_equals_operator()
     {
-        factory(SeedRank::class)->create([ 'rank' => 1 ]);
-        factory(SeedRank::class)->create([ 'rank' => 5 ]);
-        factory(SeedRank::class)->create([ 'rank' => 10 ]);
+        SeedRank::factory()->create([ 'rank' => 1 ]);
+        SeedRank::factory()->create([ 'rank' => 5 ]);
+        SeedRank::factory()->create([ 'rank' => 10 ]);
 
         $response = $this->get('/api/seed-ranks?rank=5');
 
@@ -57,9 +57,9 @@ class SeedRankRoutesTest extends TestCase
     /** @test */
     public function the_rank_column_can_be_filtered_by_the_gt_operator()
     {
-        factory(SeedRank::class)->create([ 'rank' => 1 ]);
-        factory(SeedRank::class)->create([ 'rank' => 5 ]);
-        factory(SeedRank::class)->create([ 'rank' => 10 ]);
+        SeedRank::factory()->create([ 'rank' => 1 ]);
+        SeedRank::factory()->create([ 'rank' => 5 ]);
+        SeedRank::factory()->create([ 'rank' => 10 ]);
 
         $response = $this->get('/api/seed-ranks?rank=gt:5');
 
@@ -71,9 +71,9 @@ class SeedRankRoutesTest extends TestCase
     /** @test */
     public function the_rank_column_can_be_filtered_by_the_gte_operator()
     {
-        factory(SeedRank::class)->create([ 'rank' => 1 ]);
-        factory(SeedRank::class)->create([ 'rank' => 5 ]);
-        factory(SeedRank::class)->create([ 'rank' => 10 ]);
+        SeedRank::factory()->create([ 'rank' => 1 ]);
+        SeedRank::factory()->create([ 'rank' => 5 ]);
+        SeedRank::factory()->create([ 'rank' => 10 ]);
 
         $response = $this->get('/api/seed-ranks?rank=gte:5');
 
@@ -86,9 +86,9 @@ class SeedRankRoutesTest extends TestCase
     /** @test */
     public function the_rank_column_can_be_filtered_by_the_lt_operator()
     {
-        factory(SeedRank::class)->create([ 'rank' => 1 ]);
-        factory(SeedRank::class)->create([ 'rank' => 5 ]);
-        factory(SeedRank::class)->create([ 'rank' => 10 ]);
+        SeedRank::factory()->create([ 'rank' => 1 ]);
+        SeedRank::factory()->create([ 'rank' => 5 ]);
+        SeedRank::factory()->create([ 'rank' => 10 ]);
 
         $response = $this->get('/api/seed-ranks?rank=lt:5');
 
@@ -100,9 +100,9 @@ class SeedRankRoutesTest extends TestCase
     /** @test */
     public function the_rank_column_can_be_filtered_by_the_lte_operator()
     {
-        factory(SeedRank::class)->create([ 'rank' => 1 ]);
-        factory(SeedRank::class)->create([ 'rank' => 5 ]);
-        factory(SeedRank::class)->create([ 'rank' => 10 ]);
+        SeedRank::factory()->create([ 'rank' => 1 ]);
+        SeedRank::factory()->create([ 'rank' => 5 ]);
+        SeedRank::factory()->create([ 'rank' => 10 ]);
 
         $response = $this->get('/api/seed-ranks?rank=lte:5');
 
@@ -115,9 +115,9 @@ class SeedRankRoutesTest extends TestCase
     /** @test */
     public function the_rank_column_can_be_filtered_by_the_like_operator()
     {
-        factory(SeedRank::class)->create([ 'rank' => 1 ]);
-        factory(SeedRank::class)->create([ 'rank' => 5 ]);
-        factory(SeedRank::class)->create([ 'rank' => 10 ]);
+        SeedRank::factory()->create([ 'rank' => 1 ]);
+        SeedRank::factory()->create([ 'rank' => 5 ]);
+        SeedRank::factory()->create([ 'rank' => 10 ]);
 
         $response = $this->get('/api/seed-ranks?rank=like:1');
 
@@ -130,9 +130,9 @@ class SeedRankRoutesTest extends TestCase
     /** @test */
     public function the_rank_column_can_be_filtered_by_the_not_operator()
     {
-        factory(SeedRank::class)->create([ 'rank' => 1 ]);
-        factory(SeedRank::class)->create([ 'rank' => 5 ]);
-        factory(SeedRank::class)->create([ 'rank' => 10 ]);
+        SeedRank::factory()->create([ 'rank' => 1 ]);
+        SeedRank::factory()->create([ 'rank' => 5 ]);
+        SeedRank::factory()->create([ 'rank' => 10 ]);
 
         $response = $this->get('/api/seed-ranks?rank=not:10');
 
@@ -145,9 +145,9 @@ class SeedRankRoutesTest extends TestCase
     /** @test */
     public function the_salary_column_can_be_filtered_by_the_equals_operator()
     {
-        factory(SeedRank::class)->create([ 'rank' => 1, 'salary' => 500 ]);
-        factory(SeedRank::class)->create([ 'rank' => 5, 'salary' =>  3000 ]);
-        factory(SeedRank::class)->create([ 'rank' => 10, 'salary' => 8000 ]);
+        SeedRank::factory()->create([ 'rank' => 1, 'salary' => 500 ]);
+        SeedRank::factory()->create([ 'rank' => 5, 'salary' =>  3000 ]);
+        SeedRank::factory()->create([ 'rank' => 10, 'salary' => 8000 ]);
 
         $response = $this->get('/api/seed-ranks?salary=3000');
 
@@ -159,9 +159,9 @@ class SeedRankRoutesTest extends TestCase
     /** @test */
     public function the_salary_column_can_be_filtered_by_the_gt_operator()
     {
-        factory(SeedRank::class)->create([ 'rank' => 1, 'salary' => 500 ]);
-        factory(SeedRank::class)->create([ 'rank' => 5, 'salary' =>  3000 ]);
-        factory(SeedRank::class)->create([ 'rank' => 10, 'salary' => 8000 ]);
+        SeedRank::factory()->create([ 'rank' => 1, 'salary' => 500 ]);
+        SeedRank::factory()->create([ 'rank' => 5, 'salary' =>  3000 ]);
+        SeedRank::factory()->create([ 'rank' => 10, 'salary' => 8000 ]);
 
         $response = $this->get('/api/seed-ranks?salary=gt:3000');
 
@@ -173,9 +173,9 @@ class SeedRankRoutesTest extends TestCase
     /** @test */
     public function the_salary_column_can_be_filtered_by_the_gte_operator()
     {
-        factory(SeedRank::class)->create([ 'rank' => 1, 'salary' => 500 ]);
-        factory(SeedRank::class)->create([ 'rank' => 5, 'salary' =>  3000 ]);
-        factory(SeedRank::class)->create([ 'rank' => 10, 'salary' => 8000 ]);
+        SeedRank::factory()->create([ 'rank' => 1, 'salary' => 500 ]);
+        SeedRank::factory()->create([ 'rank' => 5, 'salary' =>  3000 ]);
+        SeedRank::factory()->create([ 'rank' => 10, 'salary' => 8000 ]);
 
         $response = $this->get('/api/seed-ranks?salary=gte:3000');
 
@@ -188,9 +188,9 @@ class SeedRankRoutesTest extends TestCase
     /** @test */
     public function the_salary_column_can_be_filtered_by_the_lt_operator()
     {
-        factory(SeedRank::class)->create([ 'rank' => 1, 'salary' => 500 ]);
-        factory(SeedRank::class)->create([ 'rank' => 5, 'salary' =>  3000 ]);
-        factory(SeedRank::class)->create([ 'rank' => 10, 'salary' => 8000 ]);
+        SeedRank::factory()->create([ 'rank' => 1, 'salary' => 500 ]);
+        SeedRank::factory()->create([ 'rank' => 5, 'salary' =>  3000 ]);
+        SeedRank::factory()->create([ 'rank' => 10, 'salary' => 8000 ]);
 
         $response = $this->get('/api/seed-ranks?salary=lt:3000');
 
@@ -202,9 +202,9 @@ class SeedRankRoutesTest extends TestCase
     /** @test */
     public function the_salary_column_can_be_filtered_by_the_lte_operator()
     {
-        factory(SeedRank::class)->create([ 'rank' => 1, 'salary' => 500 ]);
-        factory(SeedRank::class)->create([ 'rank' => 5, 'salary' =>  3000 ]);
-        factory(SeedRank::class)->create([ 'rank' => 10, 'salary' => 8000 ]);
+        SeedRank::factory()->create([ 'rank' => 1, 'salary' => 500 ]);
+        SeedRank::factory()->create([ 'rank' => 5, 'salary' =>  3000 ]);
+        SeedRank::factory()->create([ 'rank' => 10, 'salary' => 8000 ]);
 
         $response = $this->get('/api/seed-ranks?salary=lte:3000');
 
@@ -217,9 +217,9 @@ class SeedRankRoutesTest extends TestCase
     /** @test */
     public function the_salary_column_can_be_filtered_by_the_like_operator()
     {
-        factory(SeedRank::class)->create([ 'rank' => 1, 'salary' => 500 ]);
-        factory(SeedRank::class)->create([ 'rank' => 5, 'salary' =>  3000 ]);
-        factory(SeedRank::class)->create([ 'rank' => 10, 'salary' => 8000 ]);
+        SeedRank::factory()->create([ 'rank' => 1, 'salary' => 500 ]);
+        SeedRank::factory()->create([ 'rank' => 5, 'salary' =>  3000 ]);
+        SeedRank::factory()->create([ 'rank' => 10, 'salary' => 8000 ]);
 
         $response = $this->get('/api/seed-ranks?salary=like:000');
 
@@ -232,9 +232,9 @@ class SeedRankRoutesTest extends TestCase
     /** @test */
     public function the_salary_column_can_be_filtered_by_the_not_operator()
     {
-        factory(SeedRank::class)->create([ 'rank' => 1, 'salary' => 500 ]);
-        factory(SeedRank::class)->create([ 'rank' => 5, 'salary' =>  3000 ]);
-        factory(SeedRank::class)->create([ 'rank' => 10, 'salary' => 8000 ]);
+        SeedRank::factory()->create([ 'rank' => 1, 'salary' => 500 ]);
+        SeedRank::factory()->create([ 'rank' => 5, 'salary' =>  3000 ]);
+        SeedRank::factory()->create([ 'rank' => 10, 'salary' => 8000 ]);
 
         $response = $this->get('/api/seed-ranks?salary=not:3000');
 
@@ -247,9 +247,9 @@ class SeedRankRoutesTest extends TestCase
     /** @test */
     public function the_name_and_salary_columns_can_both_be_filtered_together()
     {
-        factory(SeedRank::class)->create([ 'rank' => 1, 'salary' => 500 ]);
-        factory(SeedRank::class)->create([ 'rank' => 5, 'salary' =>  3000 ]);
-        factory(SeedRank::class)->create([ 'rank' => 10, 'salary' => 8000 ]);
+        SeedRank::factory()->create([ 'rank' => 1, 'salary' => 500 ]);
+        SeedRank::factory()->create([ 'rank' => 5, 'salary' =>  3000 ]);
+        SeedRank::factory()->create([ 'rank' => 10, 'salary' => 8000 ]);
 
         $response = $this->get('/api/seed-ranks?salary=not:8000');
 

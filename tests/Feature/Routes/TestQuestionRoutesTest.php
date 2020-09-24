@@ -14,7 +14,7 @@ class TestQuestionRoutesTest extends TestCase
     /** @test */
     public function it_can_return_a_list_of_test_questions()
     {
-        $testQuestions = factory(TestQuestion::class, 10)->create();
+        $testQuestions = TestQuestion::factory()->count(10)->create();
 
         $response = $this->get('/api/test-questions');
 
@@ -25,7 +25,7 @@ class TestQuestionRoutesTest extends TestCase
     /** @test */
     public function it_returns_an_individual_test_question()
     {
-        $testQuestion = factory(TestQuestion::class)->create();
+        $testQuestion = TestQuestion::factory()->create();
 
         $response = $this->get("/api/test-questions/{$testQuestion->id}");
 
@@ -36,10 +36,10 @@ class TestQuestionRoutesTest extends TestCase
     /** @test */
     public function it_can_load_relations_on_individual_records()
     {
-        $seedTest = factory(SeedTest::class)->create([
+        $seedTest = SeedTest::factory()->create([
             'level' => 5,
         ]);
-        $testQuestion = factory(TestQuestion::class)->create([
+        $testQuestion = TestQuestion::factory()->create([
             'seed_test_id' => $seedTest->id,
             'question_number' => 1,
             'question' => 'Will this work?',
@@ -57,10 +57,10 @@ class TestQuestionRoutesTest extends TestCase
     /** @test */
     public function it_can_load_relation_properties_on_individual_records()
     {
-        $seedTest = factory(SeedTest::class)->create([
+        $seedTest = SeedTest::factory()->create([
             'level' => 5,
         ]);
-        $testQuestion = factory(TestQuestion::class)->create([
+        $testQuestion = TestQuestion::factory()->create([
             'seed_test_id' => $seedTest->id,
             'question_number' => 1,
             'question' => 'Will this work?',
@@ -89,17 +89,17 @@ class TestQuestionRoutesTest extends TestCase
     /** @test */
     public function the_filters_are_case_insensitive()
     {
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 1,
             'question' => 'What is your favorite color?',
             'answer' => 'yes',
         ]);
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 2,
             'question' => 'What Is the airspeed velocity of an unladen swallow?',
             'answer' => 'no',
         ]);
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 3,
             'question' => 'What is your quest?',
             'answer' => 'yes',
@@ -116,17 +116,17 @@ class TestQuestionRoutesTest extends TestCase
     /** @test */
     public function the_question_number_column_can_be_filtered_by_the_equals_operator()
     {
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 1,
             'question' => 'What is your favorite color?',
             'answer' => 'yes',
         ]);
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 2,
             'question' => 'What Is the airspeed velocity of an unladen swallow?',
             'answer' => 'no',
         ]);
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 3,
             'question' => 'What is your quest?',
             'answer' => 'yes',
@@ -142,17 +142,17 @@ class TestQuestionRoutesTest extends TestCase
     /** @test */
     public function the_question_number_column_can_be_filtered_by_the_lt_operator()
     {
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 1,
             'question' => 'What is your favorite color?',
             'answer' => 'yes',
         ]);
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 2,
             'question' => 'What Is the airspeed velocity of an unladen swallow?',
             'answer' => 'no',
         ]);
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 3,
             'question' => 'What is your quest?',
             'answer' => 'yes',
@@ -169,17 +169,17 @@ class TestQuestionRoutesTest extends TestCase
     /** @test */
     public function the_question_number_column_can_be_filtered_by_the_lte_operator()
     {
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 1,
             'question' => 'What is your favorite color?',
             'answer' => 'yes',
         ]);
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 2,
             'question' => 'What Is the airspeed velocity of an unladen swallow?',
             'answer' => 'no',
         ]);
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 3,
             'question' => 'What is your quest?',
             'answer' => 'yes',
@@ -196,17 +196,17 @@ class TestQuestionRoutesTest extends TestCase
     /** @test */
     public function the_question_number_column_can_be_filtered_by_the_gt_operator()
     {
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 1,
             'question' => 'What is your favorite color?',
             'answer' => 'yes',
         ]);
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 2,
             'question' => 'What Is the airspeed velocity of an unladen swallow?',
             'answer' => 'no',
         ]);
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 3,
             'question' => 'What is your quest?',
             'answer' => 'yes',
@@ -222,17 +222,17 @@ class TestQuestionRoutesTest extends TestCase
     /** @test */
     public function the_question_number_column_can_be_filtered_by_the_gte_operator()
     {
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 1,
             'question' => 'What is your favorite color?',
             'answer' => 'yes',
         ]);
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 2,
             'question' => 'What Is the airspeed velocity of an unladen swallow?',
             'answer' => 'no',
         ]);
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 3,
             'question' => 'What is your quest?',
             'answer' => 'yes',
@@ -249,17 +249,17 @@ class TestQuestionRoutesTest extends TestCase
     /** @test */
     public function the_question_number_column_can_be_filtered_by_the_like_operator()
     {
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 1,
             'question' => 'What is your favorite color?',
             'answer' => 'yes',
         ]);
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 2,
             'question' => 'What Is the airspeed velocity of an unladen swallow?',
             'answer' => 'no',
         ]);
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 10,
             'question' => 'What is your quest?',
             'answer' => 'yes',
@@ -276,17 +276,17 @@ class TestQuestionRoutesTest extends TestCase
     /** @test */
     public function the_question_number_column_can_be_filtered_by_the_not_operator()
     {
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 1,
             'question' => 'What is your favorite color?',
             'answer' => 'yes',
         ]);
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 2,
             'question' => 'What Is the airspeed velocity of an unladen swallow?',
             'answer' => 'no',
         ]);
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 3,
             'question' => 'What is your quest?',
             'answer' => 'yes',
@@ -303,17 +303,17 @@ class TestQuestionRoutesTest extends TestCase
     /** @test */
     public function the_question_column_can_be_filtered_by_the_equals_operator()
     {
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 1,
             'question' => 'What is your favorite color?',
             'answer' => 'yes',
         ]);
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 2,
             'question' => 'What Is the airspeed velocity of an unladen swallow?',
             'answer' => 'no',
         ]);
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 3,
             'question' => 'What is your quest?',
             'answer' => 'yes',
@@ -329,17 +329,17 @@ class TestQuestionRoutesTest extends TestCase
     /** @test */
     public function the_question_column_can_be_filtered_by_the_like_operator()
     {
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 1,
             'question' => 'What is your favorite color?',
             'answer' => 'yes',
         ]);
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 2,
             'question' => 'What Is the airspeed velocity of an unladen swallow?',
             'answer' => 'no',
         ]);
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 3,
             'question' => 'What is your quest?',
             'answer' => 'yes',
@@ -356,17 +356,17 @@ class TestQuestionRoutesTest extends TestCase
     /** @test */
     public function the_question_column_can_be_filtered_by_the_not_operator()
     {
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 1,
             'question' => 'What is your favorite color?',
             'answer' => 'yes',
         ]);
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 2,
             'question' => 'What Is the airspeed velocity of an unladen swallow?',
             'answer' => 'no',
         ]);
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 3,
             'question' => 'What is your quest?',
             'answer' => 'yes',
@@ -383,17 +383,17 @@ class TestQuestionRoutesTest extends TestCase
     /** @test */
     public function the_answer_column_can_be_filtered_by_the_equals_operator()
     {
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 1,
             'question' => 'What is your favorite color?',
             'answer' => 'yes',
         ]);
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 2,
             'question' => 'What Is the airspeed velocity of an unladen swallow?',
             'answer' => 'no',
         ]);
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 3,
             'question' => 'What is your quest?',
             'answer' => 'yes',
@@ -410,17 +410,17 @@ class TestQuestionRoutesTest extends TestCase
     /** @test */
     public function the_answer_column_can_be_filtered_by_the_like_operator()
     {
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 1,
             'question' => 'What is your favorite color?',
             'answer' => 'yes',
         ]);
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 2,
             'question' => 'What Is the airspeed velocity of an unladen swallow?',
             'answer' => 'no',
         ]);
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 3,
             'question' => 'What is your quest?',
             'answer' => 'yes',
@@ -437,17 +437,17 @@ class TestQuestionRoutesTest extends TestCase
     /** @test */
     public function the_answer_column_can_be_filtered_by_the_not_operator()
     {
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 1,
             'question' => 'What is your favorite color?',
             'answer' => 'yes',
         ]);
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 2,
             'question' => 'What Is the airspeed velocity of an unladen swallow?',
             'answer' => 'no',
         ]);
-        factory(TestQuestion::class)->create([
+        TestQuestion::factory()->create([
             'question_number' => 3,
             'question' => 'What is your quest?',
             'answer' => 'yes',
@@ -463,10 +463,10 @@ class TestQuestionRoutesTest extends TestCase
     /** @test */
     public function it_can_load_the_test_without_additional_filters()
     {
-        $seedTest = factory(SeedTest::class)->create([
+        $seedTest = SeedTest::factory()->create([
             'level' => 5,
         ]);
-        $testQuestion = factory(TestQuestion::class)->create([
+        $testQuestion = TestQuestion::factory()->create([
             'seed_test_id' => $seedTest->id,
             'question_number' => 1,
             'question' => 'Will this work?',
@@ -484,10 +484,10 @@ class TestQuestionRoutesTest extends TestCase
     /** @test */
     public function it_can_load_the_level_column_on_the_test_relation()
     {
-        $seedTest = factory(SeedTest::class)->create([
+        $seedTest = SeedTest::factory()->create([
             'level' => 5,
         ]);
-        $testQuestion = factory(TestQuestion::class)->create([
+        $testQuestion = TestQuestion::factory()->create([
             'seed_test_id' => $seedTest->id,
             'question_number' => 1,
             'question' => 'Will this work?',

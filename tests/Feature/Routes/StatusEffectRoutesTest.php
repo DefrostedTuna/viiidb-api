@@ -13,7 +13,7 @@ class StatusEffectRoutesTest extends TestCase
     /** @test */
     public function it_returns_a_list_of_status_effects()
     {
-        $statusEffects = factory(StatusEffect::class, 10)->create();
+        $statusEffects = StatusEffect::factory()->count(10)->create();
 
         $response = $this->get('/api/status-effects');
 
@@ -24,7 +24,7 @@ class StatusEffectRoutesTest extends TestCase
     /** @test */
     public function it_returns_an_individual_statusEffect()
     {
-        $statusEffect = factory(StatusEffect::class)->create();
+        $statusEffect = StatusEffect::factory()->create();
 
         $response = $this->get("/api/status-effects/{$statusEffect->id}");
 
@@ -43,9 +43,9 @@ class StatusEffectRoutesTest extends TestCase
     /** @test */
     public function the_name_column_can_be_filtered_by_the_equals_operator()
     {
-        factory(StatusEffect::class)->create([ 'name' => 'Death', 'type' => 'harmful' ]);
-        factory(StatusEffect::class)->create([ 'name' => 'Double', 'type' => 'beneficial' ]);
-        factory(StatusEffect::class)->create([ 'name' => 'Triple', 'type' => 'beneficial' ]);
+        StatusEffect::factory()->create([ 'name' => 'Death', 'type' => 'harmful' ]);
+        StatusEffect::factory()->create([ 'name' => 'Double', 'type' => 'beneficial' ]);
+        StatusEffect::factory()->create([ 'name' => 'Triple', 'type' => 'beneficial' ]);
 
         $response = $this->get('/api/status-effects?name=Death');
 
@@ -57,9 +57,9 @@ class StatusEffectRoutesTest extends TestCase
     /** @test */
     public function the_name_column_can_be_filtered_by_the_like_operator()
     {
-        factory(StatusEffect::class)->create([ 'name' => 'Death', 'type' => 'harmful' ]);
-        factory(StatusEffect::class)->create([ 'name' => 'Double', 'type' => 'beneficial' ]);
-        factory(StatusEffect::class)->create([ 'name' => 'Triple', 'type' => 'beneficial' ]);
+        StatusEffect::factory()->create([ 'name' => 'Death', 'type' => 'harmful' ]);
+        StatusEffect::factory()->create([ 'name' => 'Double', 'type' => 'beneficial' ]);
+        StatusEffect::factory()->create([ 'name' => 'Triple', 'type' => 'beneficial' ]);
 
         $response = $this->get('/api/status-effects?name=like:le');
 
@@ -72,9 +72,9 @@ class StatusEffectRoutesTest extends TestCase
     /** @test */
     public function the_name_column_can_be_filtered_by_the_not_operator()
     {
-        factory(StatusEffect::class)->create([ 'name' => 'Death', 'type' => 'harmful' ]);
-        factory(StatusEffect::class)->create([ 'name' => 'Double', 'type' => 'beneficial' ]);
-        factory(StatusEffect::class)->create([ 'name' => 'Triple', 'type' => 'beneficial' ]);
+        StatusEffect::factory()->create([ 'name' => 'Death', 'type' => 'harmful' ]);
+        StatusEffect::factory()->create([ 'name' => 'Double', 'type' => 'beneficial' ]);
+        StatusEffect::factory()->create([ 'name' => 'Triple', 'type' => 'beneficial' ]);
 
         $response = $this->get('/api/status-effects?name=not:Double');
 
@@ -87,9 +87,9 @@ class StatusEffectRoutesTest extends TestCase
     /** @test */
     public function the_type_column_can_be_filtered_by_the_equals_operator()
     {
-        factory(StatusEffect::class)->create([ 'name' => 'Death', 'type' => 'harmful' ]);
-        factory(StatusEffect::class)->create([ 'name' => 'Double', 'type' => 'beneficial' ]);
-        factory(StatusEffect::class)->create([ 'name' => 'Triple', 'type' => 'beneficial' ]);
+        StatusEffect::factory()->create([ 'name' => 'Death', 'type' => 'harmful' ]);
+        StatusEffect::factory()->create([ 'name' => 'Double', 'type' => 'beneficial' ]);
+        StatusEffect::factory()->create([ 'name' => 'Triple', 'type' => 'beneficial' ]);
 
         $response = $this->get('/api/status-effects?type=harmful');
 
@@ -102,9 +102,9 @@ class StatusEffectRoutesTest extends TestCase
     /** @test */
     public function the_type_column_can_be_filtered_by_the_like_operator()
     {
-        factory(StatusEffect::class)->create([ 'name' => 'Death', 'type' => 'harmful' ]);
-        factory(StatusEffect::class)->create([ 'name' => 'Double', 'type' => 'beneficial' ]);
-        factory(StatusEffect::class)->create([ 'name' => 'Triple', 'type' => 'beneficial' ]);
+        StatusEffect::factory()->create([ 'name' => 'Death', 'type' => 'harmful' ]);
+        StatusEffect::factory()->create([ 'name' => 'Double', 'type' => 'beneficial' ]);
+        StatusEffect::factory()->create([ 'name' => 'Triple', 'type' => 'beneficial' ]);
 
         $response = $this->get('/api/status-effects?type=like:cial');
 
@@ -117,9 +117,9 @@ class StatusEffectRoutesTest extends TestCase
     /** @test */
     public function the_type_column_can_be_filtered_by_the_not_operator()
     {
-        factory(StatusEffect::class)->create([ 'name' => 'Death', 'type' => 'harmful' ]);
-        factory(StatusEffect::class)->create([ 'name' => 'Double', 'type' => 'beneficial' ]);
-        factory(StatusEffect::class)->create([ 'name' => 'Triple', 'type' => 'beneficial' ]);
+        StatusEffect::factory()->create([ 'name' => 'Death', 'type' => 'harmful' ]);
+        StatusEffect::factory()->create([ 'name' => 'Double', 'type' => 'beneficial' ]);
+        StatusEffect::factory()->create([ 'name' => 'Triple', 'type' => 'beneficial' ]);
 
         $response = $this->get('/api/status-effects?type=not:beneficial');
 
@@ -132,9 +132,9 @@ class StatusEffectRoutesTest extends TestCase
     /** @test */
     public function the_name_and_type_columns_can_both_be_filtered_together()
     {
-        factory(StatusEffect::class)->create([ 'name' => 'Death', 'type' => 'harmful' ]);
-        factory(StatusEffect::class)->create([ 'name' => 'Double', 'type' => 'beneficial' ]);
-        factory(StatusEffect::class)->create([ 'name' => 'Triple', 'type' => 'beneficial' ]);
+        StatusEffect::factory()->create([ 'name' => 'Death', 'type' => 'harmful' ]);
+        StatusEffect::factory()->create([ 'name' => 'Double', 'type' => 'beneficial' ]);
+        StatusEffect::factory()->create([ 'name' => 'Triple', 'type' => 'beneficial' ]);
 
         $response = $this->get('/api/status-effects?name=like:Dou&type=like:ficial');
 

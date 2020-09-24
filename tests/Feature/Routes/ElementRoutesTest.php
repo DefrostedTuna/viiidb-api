@@ -13,7 +13,7 @@ class ElementRoutesTest extends TestCase
     /** @test */
     public function it_returns_a_list_of_elements()
     {
-        $elements = factory(Element::class, 10)->create();
+        $elements = Element::factory()->count(10)->create();
 
         $response = $this->get('/api/elements');
 
@@ -24,7 +24,7 @@ class ElementRoutesTest extends TestCase
     /** @test */
     public function it_returns_an_individual_element()
     {
-        $element = factory(Element::class)->create();
+        $element = Element::factory()->create();
 
         $response = $this->get("/api/elements/{$element->id}");
 
@@ -43,9 +43,9 @@ class ElementRoutesTest extends TestCase
     /** @test */
     public function the_name_column_can_be_filtered_by_the_equals_operator()
     {
-        factory(Element::class)->create([ 'name' => 'fire' ]);
-        factory(Element::class)->create([ 'name' => 'water' ]);
-        factory(Element::class)->create([ 'name' => 'thunder' ]);
+        Element::factory()->create([ 'name' => 'fire' ]);
+        Element::factory()->create([ 'name' => 'water' ]);
+        Element::factory()->create([ 'name' => 'thunder' ]);
 
         $response = $this->get('/api/elements?name=thunder');
 
@@ -57,9 +57,9 @@ class ElementRoutesTest extends TestCase
     /** @test */
     public function the_name_column_can_be_filtered_by_the_like_operator()
     {
-        factory(Element::class)->create([ 'name' => 'fire' ]);
-        factory(Element::class)->create([ 'name' => 'water' ]);
-        factory(Element::class)->create([ 'name' => 'thunder' ]);
+        Element::factory()->create([ 'name' => 'fire' ]);
+        Element::factory()->create([ 'name' => 'water' ]);
+        Element::factory()->create([ 'name' => 'thunder' ]);
 
         $response = $this->get('/api/elements?name=like:er');
 
@@ -72,9 +72,9 @@ class ElementRoutesTest extends TestCase
     /** @test */
     public function the_name_column_can_be_filtered_by_the_not_operator()
     {
-        factory(Element::class)->create([ 'name' => 'fire' ]);
-        factory(Element::class)->create([ 'name' => 'water' ]);
-        factory(Element::class)->create([ 'name' => 'thunder' ]);
+        Element::factory()->create([ 'name' => 'fire' ]);
+        Element::factory()->create([ 'name' => 'water' ]);
+        Element::factory()->create([ 'name' => 'thunder' ]);
 
         $response = $this->get('/api/elements?name=not:water');
 
