@@ -57,70 +57,70 @@ class SeedRankControllerTest extends TestCase
     /** @test */
     public function it_can_filter_seed_ranks_by_the_rank_column()
     {
-        SeedRank::factory()->create([ 'rank' => 1 ]);
-        SeedRank::factory()->create([ 'rank' => 5 ]);
-        SeedRank::factory()->create([ 'rank' => 10 ]);
+        SeedRank::factory()->create([ 'rank' => '1' ]);
+        SeedRank::factory()->create([ 'rank' => '5' ]);
+        SeedRank::factory()->create([ 'rank' => '10' ]);
 
         // Equals
-        $request = new Request([ 'rank' => 5 ]);
+        $request = new Request([ 'rank' => '5' ]);
         $seedRankController = new SeedRankController(new SeedRank());
         $response = $seedRankController->index($request);
         $this->assertCount(1, $response);
-        $this->assertTrue($response->contains('rank', 5));
+        $this->assertTrue($response->contains('rank', '5'));
 
         // Less Than
         $request = new Request([ 'rank' => 'lt:5' ]);
         $seedRankController = new SeedRankController(new SeedRank());
         $response = $seedRankController->index($request);
         $this->assertCount(1, $response);
-        $this->assertTrue($response->contains('rank', 1));
+        $this->assertTrue($response->contains('rank', '1'));
 
         // Less Than or Equal To
         $request = new Request([ 'rank' => 'lte:5' ]);
         $seedRankController = new SeedRankController(new SeedRank());
         $response = $seedRankController->index($request);
         $this->assertCount(2, $response);
-        $this->assertTrue($response->contains('rank', 1));
-        $this->assertTrue($response->contains('rank', 5));
+        $this->assertTrue($response->contains('rank', '1'));
+        $this->assertTrue($response->contains('rank', '5'));
 
         // Greater Than
         $request = new Request([ 'rank' => 'gt:5' ]);
         $seedRankController = new SeedRankController(new SeedRank());
         $response = $seedRankController->index($request);
         $this->assertCount(1, $response);
-        $this->assertTrue($response->contains('rank', 10));
+        $this->assertTrue($response->contains('rank', '10'));
 
         // Greater Than or Equal To
         $request = new Request([ 'rank' => 'gte:5' ]);
         $seedRankController = new SeedRankController(new SeedRank());
         $response = $seedRankController->index($request);
         $this->assertCount(2, $response);
-        $this->assertTrue($response->contains('rank', 5));
-        $this->assertTrue($response->contains('rank', 10));
+        $this->assertTrue($response->contains('rank', '5'));
+        $this->assertTrue($response->contains('rank', '10'));
 
         // Like
         $request = new Request([ 'rank' => 'like:1' ]);
         $seedRankController = new SeedRankController(new SeedRank());
         $response = $seedRankController->index($request);
         $this->assertCount(2, $response);
-        $this->assertTrue($response->contains('rank', 1));
-        $this->assertTrue($response->contains('rank', 10));
+        $this->assertTrue($response->contains('rank', '1'));
+        $this->assertTrue($response->contains('rank', '10'));
 
         // Not
         $request = new Request([ 'rank' => 'not:10' ]);
         $seedRankController = new SeedRankController(new SeedRank());
         $response = $seedRankController->index($request);
         $this->assertCount(2, $response);
-        $this->assertTrue($response->contains('rank', 1));
-        $this->assertTrue($response->contains('rank', 5));
+        $this->assertTrue($response->contains('rank', '1'));
+        $this->assertTrue($response->contains('rank', '5'));
     }
 
     /** @test */
     public function it_can_filter_seed_ranks_by_the_salary_column()
     {
-        SeedRank::factory()->create([ 'rank' => 1, 'salary' => 500 ]);
-        SeedRank::factory()->create([ 'rank' => 5, 'salary' =>  3000 ]);
-        SeedRank::factory()->create([ 'rank' => 10, 'salary' => 8000 ]);
+        SeedRank::factory()->create([ 'rank' => '1', 'salary' => 500 ]);
+        SeedRank::factory()->create([ 'rank' => '5', 'salary' =>  3000 ]);
+        SeedRank::factory()->create([ 'rank' => '10', 'salary' => 8000 ]);
 
         // Equals
         $request = new Request([ 'salary' => 500 ]);
