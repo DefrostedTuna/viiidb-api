@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\StatusEffect;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class StatusEffectController extends Controller
@@ -17,8 +18,8 @@ class StatusEffectController extends Controller
     /**
      * Sets the StatusEffectRepository instance to be used throughout the controller.
      *
-     * @param \App\Models\StatusEffect $statusEffect
-     * 
+     * @param  \App\Models\StatusEffect  $statusEffect
+     *
      * @return void
      */
     public function __construct(StatusEffect $statusEffect)
@@ -29,11 +30,11 @@ class StatusEffectController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param \Illuminate\Http\Request $request
-     * 
+     * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function index(Request $request): \Illuminate\Database\Eloquent\Collection
+    public function index(Request $request): Collection
     {
         return $this->statusEffectRepository->getFilteredRecords($request->input());
     }
@@ -41,13 +42,13 @@ class StatusEffectController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param string $statusEffectId
-     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string                    $statusEffectName
+     *
      * @return \App\Models\StatusEffect
      */
-    public function show(Request $request, string $statusEffectId): \App\Models\StatusEffect
+    public function show(Request $request, string $statusEffectName): StatusEffect
     {
-        return $this->statusEffectRepository->getRecordWithRelations($statusEffectId, $request->input());
+        return $this->statusEffectRepository->getRecordWithRelations($statusEffectName, $request->input(), 'name');
     }
 }

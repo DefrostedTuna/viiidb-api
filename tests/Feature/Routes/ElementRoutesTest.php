@@ -11,9 +11,9 @@ class ElementRoutesTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function it_returns_a_list_of_elements()
+    public function it_will_return_a_list_of_elements()
     {
-        $elements = Element::factory()->count(10)->create();
+        Element::factory()->count(10)->create();
 
         $response = $this->get('/api/elements');
 
@@ -22,18 +22,18 @@ class ElementRoutesTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_an_individual_element()
+    public function it_will_return_an_individual_element()
     {
         $element = Element::factory()->create();
 
-        $response = $this->get("/api/elements/{$element->id}");
+        $response = $this->get("/api/elements/{$element->name}");
 
         $response->assertStatus(200);
         $response->assertJson($element->toArray());
     }
 
     /** @test */
-    public function it_throws_an_exception_when_an_individual_record_is_not_found()
+    public function it_will_throw_an_exception_when_an_individual_record_is_not_found()
     {
         $response = $this->get('/api/elements/invalid');
 
@@ -41,41 +41,28 @@ class ElementRoutesTest extends TestCase
     }
 
     /** @test */
-    public function the_name_column_can_be_filtered_by_the_equals_operator()
+    public function it_can_filter_elements_by_the_name_column()
     {
         Element::factory()->create([ 'name' => 'fire' ]);
         Element::factory()->create([ 'name' => 'water' ]);
         Element::factory()->create([ 'name' => 'thunder' ]);
 
+        // Equals
         $response = $this->get('/api/elements?name=thunder');
 
         $response->assertStatus(200);
         $response->assertJsonCount(1);
-        $response->assertJsonFragment([ 'name' => 'thunder' ]);
-    }
+        $response->assertJsonFragment([ 'name' =>  'thunder' ]);
 
-    /** @test */
-    public function the_name_column_can_be_filtered_by_the_like_operator()
-    {
-        Element::factory()->create([ 'name' => 'fire' ]);
-        Element::factory()->create([ 'name' => 'water' ]);
-        Element::factory()->create([ 'name' => 'thunder' ]);
-
+        // Like
         $response = $this->get('/api/elements?name=like:er');
-
+        
         $response->assertStatus(200);
         $response->assertJsonCount(2);
-        $response->assertJsonFragment([ 'name' => 'water' ]);
-        $response->assertJsonFragment([ 'name' => 'thunder' ]);
-    }
+        $response->assertJsonFragment([ 'name' =>  'water' ]);
+        $response->assertJsonFragment([ 'name' =>  'thunder' ]);
 
-    /** @test */
-    public function the_name_column_can_be_filtered_by_the_not_operator()
-    {
-        Element::factory()->create([ 'name' => 'fire' ]);
-        Element::factory()->create([ 'name' => 'water' ]);
-        Element::factory()->create([ 'name' => 'thunder' ]);
-
+        // Not
         $response = $this->get('/api/elements?name=not:water');
 
         $response->assertStatus(200);

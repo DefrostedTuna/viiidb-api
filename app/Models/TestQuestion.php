@@ -129,11 +129,21 @@ class TestQuestion extends Model
     ];
 
     /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'id';
+    }
+
+    /**
      * The SeedTest that the record belongs to.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function test()
+    public function test(): BelongsTo
     {
         return $this->belongsTo(SeedTest::class, 'seed_test_id', 'id');
     }

@@ -4,10 +4,10 @@ namespace Tests\Unit\Controllers;
 
 use App\Http\Controllers\ElementController;
 use App\Models\Element;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Tests\TestCase;
 
 class ElementControllerTest extends TestCase
@@ -15,7 +15,7 @@ class ElementControllerTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function it_can_return_a_list_of_elements()
+    public function it_will_return_a_list_of_elements()
     {
         $elements = Element::factory()->count(10)->create();
 
@@ -29,15 +29,15 @@ class ElementControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_an_individual_element()
+    public function it_will_return_an_individual_element()
     {
         $element = Element::factory()->create();
 
         $elementController = new ElementController(new Element());
 
-        $response = $elementController->show(new Request(), $element->id);
+        $response = $elementController->show(new Request(), $element->name);
 
-        // The controller should return the instance of a Element that was found via
+        // The controller should return the instance of an Element that was found via
         // route model binding. Since we are mocking this result by injecting the
         // Element into the method, we should get the same Element back.
         $this->assertInstanceOf(Element::class, $response);
@@ -45,74 +45,42 @@ class ElementControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_throws_an_exception_when_an_individual_record_is_not_found()
+    public function it_will_throw_an_exception_when_an_individual_record_is_not_found()
     {
         $this->expectException(ModelNotFoundException::class);
 
-        $element = Element::factory()->create();
-
         $elementController = new ElementController(new Element());
 
-        $response = $elementController->show(new Request(), 'invalid');
+        $elementController->show(new Request(), 'not-found');
     }
 
     /** @test */
-    public function the_filters_are_case_insensitive()
+    public function it_can_filter_elements_by_the_name_column()
     {
+        $element = new Element();
         Element::factory()->create([ 'name' => 'fire' ]);
         Element::factory()->create([ 'name' => 'water' ]);
         Element::factory()->create([ 'name' => 'thunder' ]);
 
-        $request = new Request([ 'name' => 'FiRe' ]);
-        $elementController = new ElementController(new Element());
-        $response = $elementController->index($request);
-
-        $this->assertCount(1, $response);
-        $this->assertTrue($response->contains('name', 'fire'));
-    }
-
-    /** @test */
-    public function the_name_column_can_be_filtered_by_the_equals_operator()
-    {
-        Element::factory()->create([ 'name' => 'fire' ]);
-        Element::factory()->create([ 'name' => 'water' ]);
-        Element::factory()->create([ 'name' => 'thunder' ]);
-
+        // Equals
         $request = new Request([ 'name' => 'thunder' ]);
         $elementController = new ElementController(new Element());
         $response = $elementController->index($request);
-
         $this->assertCount(1, $response);
         $this->assertTrue($response->contains('name', 'thunder'));
-    }
 
-    /** @test */
-    public function the_name_column_can_be_filtered_by_the_like_operator()
-    {
-        Element::factory()->create([ 'name' => 'fire' ]);
-        Element::factory()->create([ 'name' => 'water' ]);
-        Element::factory()->create([ 'name' => 'thunder' ]);
-
+        // Like
         $request = new Request([ 'name' => 'like:er' ]);
         $elementController = new ElementController(new Element());
         $response = $elementController->index($request);
-
         $this->assertCount(2, $response);
         $this->assertTrue($response->contains('name', 'water'));
         $this->assertTrue($response->contains('name', 'thunder'));
-    }
 
-    /** @test */
-    public function the_name_column_can_be_filtered_by_the_not_operator()
-    {
-        Element::factory()->create([ 'name' => 'fire' ]);
-        Element::factory()->create([ 'name' => 'water' ]);
-        Element::factory()->create([ 'name' => 'thunder' ]);
-
+        // Not
         $request = new Request([ 'name' => 'not:water' ]);
         $elementController = new ElementController(new Element());
         $response = $elementController->index($request);
-
         $this->assertCount(2, $response);
         $this->assertTrue($response->contains('name', 'fire'));
         $this->assertTrue($response->contains('name', 'thunder'));

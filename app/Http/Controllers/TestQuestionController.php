@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TestQuestion;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class TestQuestionController extends Controller
@@ -17,8 +18,8 @@ class TestQuestionController extends Controller
     /**
      * Sets the TestQuestionRepository instance to be used throughout the controller.
      *
-     * @param \App\Models\TestQuestion $testQuestion
-     * 
+     * @param  \App\Models\TestQuestion  $testQuestion
+     *
      * @return void
      */
     public function __construct(TestQuestion $testQuestion)
@@ -29,11 +30,11 @@ class TestQuestionController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param \Illuminate\Http\Request $request
-     * 
+     * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function index(Request $request): \Illuminate\Database\Eloquent\Collection
+    public function index(Request $request): Collection
     {
         return $this->testQuestionRepository->getFilteredRecords($request->input());
     }
@@ -41,13 +42,13 @@ class TestQuestionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param string $testQuestionId
-     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string                    $testQuestionId
+     *
      * @return \App\Models\TestQuestion
      */
-    public function show(Request $request, string $testQuestionId): \App\Models\TestQuestion
+    public function show(Request $request, string $testQuestionId): TestQuestion
     {
-        return $this->testQuestionRepository->getRecordWithRelations($testQuestionId, $request->input());
+        return $this->testQuestionRepository->getRecordWithRelations($testQuestionId, $request->input(), 'id');
     }
 }

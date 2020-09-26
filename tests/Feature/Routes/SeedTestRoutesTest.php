@@ -12,9 +12,9 @@ class SeedTestRoutesTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function it_can_return_a_list_of_seed_tests()
+    public function it_will_return_a_list_of_seed_tests()
     {
-        $seedTests = SeedTest::factory()->count(10)->create();
+        SeedTest::factory()->count(10)->create();
 
         $response = $this->get('/api/seed-tests');
 
@@ -23,96 +23,18 @@ class SeedTestRoutesTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_an_individual_seed_test()
+    public function it_will_return_an_individual_seedTest()
     {
         $seedTest = SeedTest::factory()->create();
 
-        $response = $this->get("/api/seed-tests/{$seedTest->id}");
+        $response = $this->get("/api/seed-tests/{$seedTest->level}");
 
         $response->assertStatus(200);
         $response->assertJson($seedTest->toArray());
     }
 
     /** @test */
-    public function it_can_load_relations_on_individual_records()
-    {
-        $seedTest = SeedTest::factory()->create([
-            'level' => 5,
-        ]);
-        $testQuestion = TestQuestion::factory()->create([
-            'seed_test_id' => $seedTest->id,
-            'question_number' => 1,
-            'question' => 'Will this work?',
-            'answer' => 'yes',
-        ]);
-
-        $response = $this->get("/api/seed-tests/{$seedTest->id}?with=questions");
-
-        $response->assertStatus(200);
-        $response->assertJsonFragment([
-            'questions' => [
-                $testQuestion->toArray(),
-            ]
-        ]);
-    }
-
-    /** @test */
-    public function it_can_load_relation_properties_on_individual_records()
-    {
-        $seedTest = SeedTest::factory()->create([
-            'level' => 5,
-        ]);
-        $testQuestion = TestQuestion::factory()->create([
-            'seed_test_id' => $seedTest->id,
-            'question_number' => 1,
-            'question' => 'Will this work?',
-            'answer' => 'yes',
-        ]);
-
-        $response = $this->get("/api/seed-tests/{$seedTest->id}?with=questions.question_number");
-
-        $response->assertStatus(200);
-        $response->assertJsonFragment([
-            'questions' => [
-                [
-                    'id' => $testQuestion->id,
-                    'seed_test_id' => $seedTest->id,
-                    'question_number' => $testQuestion->question_number,
-                ]
-            ],
-        ]);
-    }
-
-    /** @test */
-    public function it_can_load_multiple_relation_properties_on_individual_records()
-    {
-        $seedTest = SeedTest::factory()->create([
-            'level' => 5,
-        ]);
-        $testQuestion = TestQuestion::factory()->create([
-            'seed_test_id' => $seedTest->id,
-            'question_number' => 1,
-            'question' => 'Will this work?',
-            'answer' => 'yes',
-        ]);
-
-        $response = $this->get("/api/seed-tests/{$seedTest->id}?with=questions.question_number,questions.question");
-
-        $response->assertStatus(200);
-        $response->assertJsonFragment([
-            'questions' => [
-                [
-                    'id' => $testQuestion->id,
-                    'seed_test_id' => $seedTest->id,
-                    'question_number' => $testQuestion->question_number,
-                    'question' => $testQuestion->question,
-                ]
-            ],
-        ]);
-    }
-
-    /** @test */
-    public function it_throws_an_exception_when_an_individual_record_is_not_found()
+    public function it_will_throw_an_exception_when_an_individual_record_is_not_found()
     {
         $response = $this->get('/api/seed-tests/invalid');
 
@@ -120,41 +42,59 @@ class SeedTestRoutesTest extends TestCase
     }
 
     /** @test */
-    public function the_level_column_can_be_filtered_by_the_equals_operator()
+    public function it_can_filter_seed_tests_by_the_level_column()
     {
         SeedTest::factory()->create([ 'level' => 1 ]);
         SeedTest::factory()->create([ 'level' => 5 ]);
         SeedTest::factory()->create([ 'level' => 10 ]);
 
+        // Equals
         $response = $this->get('/api/seed-tests?level=1');
 
         $response->assertStatus(200);
         $response->assertJsonCount(1);
         $response->assertJsonFragment([ 'level' => 1 ]);
-    }
 
-    /** @test */
-    public function the_level_column_can_be_filtered_by_the_like_operator()
-    {
-        SeedTest::factory()->create([ 'level' => 1 ]);
-        SeedTest::factory()->create([ 'level' => 5 ]);
-        SeedTest::factory()->create([ 'level' => 10 ]);
+        // Less Than
+        $response = $this->get('/api/seed-tests?level=lt:5');
 
+        $response->assertStatus(200);
+        $response->assertJsonCount(1);
+        $response->assertJsonFragment([ 'level' =>  1]);
+
+        // Less Than or Equal To
+        $response = $this->get('/api/seed-tests?level=lte:5');
+
+        $response->assertStatus(200);
+        $response->assertJsonCount(2);
+        $response->assertJsonFragment([ 'level' => 1 ]);
+        $response->assertJsonFragment([ 'level' => 5 ]);
+
+        // Greater Than
+        $response = $this->get('/api/seed-tests?level=gt:5');
+
+        $response->assertStatus(200);
+        $response->assertJsonCount(1);
+        $response->assertJsonFragment([ 'level' => 10 ]);
+
+        // Greater Than or Equal To
+        $response = $this->get('/api/seed-tests?level=gte:5');
+
+        $response->assertStatus(200);
+        $response->assertJsonCount(2);
+        $response->assertJsonFragment([ 'level' => 5 ]);
+        $response->assertJsonFragment([ 'level' => 10 ]);
+        ;
+
+        // Like
         $response = $this->get('/api/seed-tests?level=like:1');
 
         $response->assertStatus(200);
         $response->assertJsonCount(2);
         $response->assertJsonFragment([ 'level' => 1 ]);
         $response->assertJsonFragment([ 'level' => 10 ]);
-    }
 
-    /** @test */
-    public function the_level_column_can_be_filtered_by_the_not_operator()
-    {
-        SeedTest::factory()->create([ 'level' => 1 ]);
-        SeedTest::factory()->create([ 'level' => 5 ]);
-        SeedTest::factory()->create([ 'level' => 10 ]);
-
+        // Not
         $response = $this->get('/api/seed-tests?level=not:10');
 
         $response->assertStatus(200);
@@ -164,7 +104,7 @@ class SeedTestRoutesTest extends TestCase
     }
 
     /** @test */
-    public function it_can_load_the_questions_without_additional_filters()
+    public function it_can_load_relations_on_a_list_of_resources()
     {
         $seedTest = SeedTest::factory()->create([
             'level' => 5,
@@ -176,18 +116,18 @@ class SeedTestRoutesTest extends TestCase
             'answer' => 'yes',
         ]);
 
-        $response = $this->get("/api/seed-tests?with=questions");
-
+        $response = $this->get('/api/seed-tests?with=questions');
         $response->assertStatus(200);
+        $response->assertJsonCount(1);
+
+        // Test Question.
         $response->assertJsonFragment([
-            'questions' => [
-                $testQuestion->toArray(),
-            ],
+            'questions' => [ $testQuestion->toArray() ],
         ]);
     }
 
     /** @test */
-    public function it_can_load_the_question_number_column_on_the_questions_relation()
+    public function it_can_load_relations_on_an_individual_resource()
     {
         $seedTest = SeedTest::factory()->create([
             'level' => 5,
@@ -199,68 +139,40 @@ class SeedTestRoutesTest extends TestCase
             'answer' => 'yes',
         ]);
 
-        $response = $this->get("/api/seed-tests?with=questions.question_number");
-
+        $response = $this->get('/api/seed-tests/5?with=questions');
         $response->assertStatus(200);
+
+        // Test Question.
+        $response->assertJsonFragment([
+            'questions' => [ $testQuestion->toArray() ],
+        ]);
+    }
+
+    /** @test */
+    public function it_can_load_relation_properties_on_a_list_of_resources()
+    {
+        $seedTest = SeedTest::factory()->create([
+            'level' => 5,
+        ]);
+        $testQuestion = TestQuestion::factory()->create([
+            'seed_test_id' => $seedTest->id,
+            'question_number' => 1,
+            'question' => 'Will this work?',
+            'answer' => 'yes',
+        ]);
+
+        $response = $this->get('/api/seed-tests?with=questions.question_number,questions.question,questions.answer');
+        $response->assertStatus(200);
+        $response->assertJsonCount(1);
+
+        // Test Question.
         $response->assertJsonFragment([
             'questions' => [
                 [
                     'id' => $testQuestion->id,
-                    'seed_test_id' => $seedTest->id,
+                    'seed_test_id' => $testQuestion->seed_test_id,
                     'question_number' => $testQuestion->question_number,
-                ],
-            ],
-        ]);
-    }
-
-    /** @test */
-    public function it_can_load_the_question_column_on_the_questions_relation()
-    {
-        $seedTest = SeedTest::factory()->create([
-            'level' => 5,
-        ]);
-        $testQuestion = TestQuestion::factory()->create([
-            'seed_test_id' => $seedTest->id,
-            'question_number' => 1,
-            'question' => 'Will this work?',
-            'answer' => 'yes',
-        ]);
-
-        $response = $this->get("/api/seed-tests/{$seedTest->id}?with=questions.question");
-
-        $response->assertStatus(200);
-        $response->assertJsonFragment([
-            'questions' => [
-                [
-                    'id' => $testQuestion->id,
-                    'seed_test_id' => $seedTest->id,
                     'question' => $testQuestion->question,
-                ],
-            ],
-        ]);
-    }
-
-    /** @test */
-    public function it_can_load_the_answer_column_on_the_questions_relation()
-    {
-        $seedTest = SeedTest::factory()->create([
-            'level' => 5,
-        ]);
-        $testQuestion = TestQuestion::factory()->create([
-            'seed_test_id' => $seedTest->id,
-            'question_number' => 1,
-            'question' => 'Will this work?',
-            'answer' => 'yes',
-        ]);
-
-        $response = $this->get("/api/seed-tests/{$seedTest->id}?with=questions.answer");
-
-        $response->assertStatus(200);
-        $response->assertJsonFragment([
-            'questions' => [
-                [
-                    'id' => $testQuestion->id,
-                    'seed_test_id' => $seedTest->id,
                     'answer' => $testQuestion->answer,
                 ],
             ],
@@ -268,7 +180,7 @@ class SeedTestRoutesTest extends TestCase
     }
 
     /** @test */
-    public function it_can_load_multiple_relation_columns_explicitly()
+    public function it_can_load_relation_properties_on_an_individual_resource()
     {
         $seedTest = SeedTest::factory()->create([
             'level' => 5,
@@ -280,17 +192,19 @@ class SeedTestRoutesTest extends TestCase
             'answer' => 'yes',
         ]);
 
-        $response = $this->get("/api/seed-tests/{$seedTest->id}?with=questions.question_number,questions.question");
-
+        $response = $this->get('/api/seed-tests/5?with=questions.question_number,questions.question,questions.answer');
         $response->assertStatus(200);
+
+        // Test Question.
         $response->assertJsonFragment([
             'questions' => [
                 [
                     'id' => $testQuestion->id,
-                    'seed_test_id' => $seedTest->id,
+                    'seed_test_id' => $testQuestion->seed_test_id,
                     'question_number' => $testQuestion->question_number,
                     'question' => $testQuestion->question,
-                ]
+                    'answer' => $testQuestion->answer,
+                ],
             ],
         ]);
     }

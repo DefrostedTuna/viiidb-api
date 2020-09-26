@@ -109,4 +109,14 @@ class StatusEffect extends Model
         'like' => 'like',
         'not' => '<>',
     ];
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'name';
+    }
 }

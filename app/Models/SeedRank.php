@@ -6,7 +6,6 @@ use App\Traits\Filterable;
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Webpatser\Uuid\Uuid;
 
 class SeedRank extends Model
 {
@@ -84,9 +83,9 @@ class SeedRank extends Model
      * @var array $casts
      */
     protected $casts = [
-        'id' => 'string',
-        'rank' => 'string',
-        'salary' => 'integer',
+        'id'        => 'string',
+        'rank'      => 'string',
+        'salary'    => 'integer',
     ];
 
     /**
@@ -112,4 +111,14 @@ class SeedRank extends Model
         'like' => 'like',
         'not' => '<>',
     ];
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'rank';
+    }
 }

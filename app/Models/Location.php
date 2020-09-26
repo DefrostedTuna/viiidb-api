@@ -6,6 +6,7 @@ use App\Traits\Filterable;
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Location extends Model
 {
@@ -123,11 +124,21 @@ class Location extends Model
     ];
 
     /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'name';
+    }
+
+    /**
      * The region that the location belongs to.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function region(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function region(): BelongsTo
     {
         return $this->belongsTo(Location::class, 'region_id', 'id');
     }

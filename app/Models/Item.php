@@ -93,19 +93,19 @@ class Item extends Model
      * @var array $casts
      */
     protected $casts = [
-        'id'                        => 'string',
-        'position'                  => 'integer',
-        'name'                      => 'string',
-        'type'                      => 'string',
-        'description'               => 'string',
-        'menu_effect'               => 'string',
-        'price'                     => 'integer',
-        'value'                     => 'integer',
-        'haggle'                    => 'integer',
-        'sell_high'                 => 'integer',
-        'used_in_menu'              => 'boolean',
-        'used_in_battle'            => 'boolean',
-        'notes'                     => 'string',
+        'id'                => 'string',
+        'position'          => 'integer',
+        'name'              => 'string',
+        'type'              => 'string',
+        'description'       => 'string',
+        'menu_effect'       => 'string',
+        'price'             => 'integer',
+        'value'             => 'integer',
+        'haggle'            => 'integer',
+        'sell_high'         => 'integer',
+        'used_in_menu'      => 'boolean',
+        'used_in_battle'    => 'boolean',
+        'notes'             => 'string',
     ];
 
     /**
@@ -156,7 +156,7 @@ class Item extends Model
      *
      * @return string
      */
-    public function getRouteKeyName()
+    public function getRouteKeyName(): string
     {
         return 'name';
     }

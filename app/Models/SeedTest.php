@@ -121,11 +121,21 @@ class SeedTest extends Model
     ];
 
     /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'level';
+    }
+
+    /**
      * The questions that relate to the test.
      *
-     * @return
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function questions()
+    public function questions(): HasMany
     {
         return $this->hasMany(TestQuestion::class, 'seed_test_id', 'id');
     }
