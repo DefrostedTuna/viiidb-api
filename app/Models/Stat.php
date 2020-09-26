@@ -71,4 +71,14 @@ class Stat extends Model
         'name'          => 'string',
         'abbreviation'  => 'string',
     ];
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'name';
+    }
 }

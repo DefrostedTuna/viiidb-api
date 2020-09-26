@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Location;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class LocationController extends Controller
@@ -17,8 +18,8 @@ class LocationController extends Controller
     /**
      * Sets the LocationRepository instance to be used throughout the controller.
      *
-     * @param \App\Models\Location $location
-     * 
+     * @param  \App\Models\Location  $location
+     *
      * @return void
      */
     public function __construct(Location $location)
@@ -29,11 +30,11 @@ class LocationController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param \Illuminate\Http\Request $request
-     * 
+     * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function index(Request $request): \Illuminate\Database\Eloquent\Collection
+    public function index(Request $request): Collection
     {
         return $this->locationRepository->getFilteredRecords($request->input());
     }
@@ -41,13 +42,13 @@ class LocationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param string $locationId
-     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string                    $locationName
+     *
      * @return \App\Models\Location
      */
-    public function show(Request $request, string $locationId): \App\Models\Location
+    public function show(Request $request, string $locationName): Location
     {
-        return $this->locationRepository->getRecordWithRelations($locationId, $request->input());
+        return $this->locationRepository->getRecordWithRelations($locationName, $request->input(), 'name');
     }
 }

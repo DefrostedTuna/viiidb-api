@@ -75,15 +75,15 @@ class Element extends Model
         'updated_at',
         'deleted_at',
     ];
-
+    
     /**
      * The attributes that should be casted to native types.
      *
      * @var array $casts
      */
     protected $casts = [
-        'id' => 'string',
-        'name' => 'string',
+        'id'    => 'string',
+        'name'  => 'string',
     ];
 
     /**
@@ -104,4 +104,14 @@ class Element extends Model
         'like' => 'like',
         'not' => '<>',
     ];
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'name';
+    }
 }

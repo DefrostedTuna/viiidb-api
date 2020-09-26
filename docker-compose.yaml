@@ -9,6 +9,8 @@ services:
     volumes:
       - ./:/app
     working_dir: /app
+    environment:
+      - VIRTUAL_HOST=${VIRTUAL_HOST}
     networks:
       - viiidb
 

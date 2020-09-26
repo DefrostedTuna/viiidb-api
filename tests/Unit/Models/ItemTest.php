@@ -26,6 +26,14 @@ class ItemTest extends TestCase
     
         $this->assertEquals('string', $item->getKeyType());
     }
+
+    /** @test */
+    public function it_explicitly_defines_the_route_key_name()
+    {
+        $item = new Item();
+
+        $this->assertEquals('name', $item->getRouteKeyName());
+    }
     
     /** @test */
     public function it_does_not_allow_properties_to_be_assigned_in_mass()

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Element;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class ElementController extends Controller
@@ -17,8 +18,8 @@ class ElementController extends Controller
     /**
      * Sets the ElementRepository instance to be used throughout the controller.
      *
-     * @param \App\Models\Element $element
-     * 
+     * @param  \App\Models\Element  $element
+     *
      * @return void
      */
     public function __construct(Element $element)
@@ -29,11 +30,11 @@ class ElementController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param \Illuminate\Http\Request $request
-     * 
+     * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function index(Request $request): \Illuminate\Database\Eloquent\Collection
+    public function index(Request $request): Collection
     {
         return $this->elementRepository->getFilteredRecords($request->input());
     }
@@ -41,13 +42,13 @@ class ElementController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param string $elementId
-     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string                    $elementName
+     *
      * @return \App\Models\Element
      */
-    public function show(Request $request, string $elementId): \App\Models\Element
+    public function show(Request $request, string $elementName): Element
     {
-        return $this->elementRepository->getRecordWithRelations($elementId, $request->input());
+        return $this->elementRepository->getRecordWithRelations($elementName, $request->input(), 'name');
     }
 }

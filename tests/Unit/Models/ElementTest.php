@@ -28,6 +28,14 @@ class ElementTest extends TestCase
     }
 
     /** @test */
+    public function it_explicitly_defines_the_route_key_name()
+    {
+        $element = new Element();
+
+        $this->assertEquals('name', $element->getRouteKeyName());
+    }
+
+    /** @test */
     public function it_does_not_allow_properties_to_be_assigned_in_mass()
     {
         $element = new Element();
@@ -42,7 +50,7 @@ class ElementTest extends TestCase
 
         $visibleFields = [
             'id',
-            'name',      
+            'name',
         ];
 
         $this->assertEquals($visibleFields, $element->getVisible());
@@ -56,7 +64,7 @@ class ElementTest extends TestCase
         $hiddenFields = [
             'created_at',
             'updated_at',
-            'deleted_at',    
+            'deleted_at',
         ];
 
         $this->assertEquals($hiddenFields, $element->getHidden());
@@ -76,7 +84,7 @@ class ElementTest extends TestCase
     public function it_is_able_to_filter_records()
     {
         $this->assertTrue(in_array(
-            Filterable::class, 
+            Filterable::class,
             class_uses(Element::class)
         ));
     }
@@ -107,5 +115,4 @@ class ElementTest extends TestCase
 
         $this->assertEquals('asc', $element->getOrderByDirection());
     }
-
 }
