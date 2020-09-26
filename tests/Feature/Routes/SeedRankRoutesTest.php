@@ -43,70 +43,70 @@ class SeedRankRoutesTest extends TestCase
     /** @test */
     public function it_can_filter_seed_rank_by_the_rank_column()
     {
-        SeedRank::factory()->create([ 'rank' => 1 ]);
-        SeedRank::factory()->create([ 'rank' => 5 ]);
-        SeedRank::factory()->create([ 'rank' => 10 ]);
+        SeedRank::factory()->create([ 'rank' => '1' ]);
+        SeedRank::factory()->create([ 'rank' => '5' ]);
+        SeedRank::factory()->create([ 'rank' => '10' ]);
 
         // Equals
         $response = $this->get('/api/seed-ranks?rank=5');
 
         $response->assertStatus(200);
         $response->assertJsonCount(1);
-        $response->assertJsonFragment([ 'rank' => 5 ]);
+        $response->assertJsonFragment([ 'rank' => '5' ]);
 
         // Less Than
         $response = $this->get('/api/seed-ranks?rank=lt:5');
 
         $response->assertStatus(200);
         $response->assertJsonCount(1);
-        $response->assertJsonFragment([ 'rank' => 1 ]);
+        $response->assertJsonFragment([ 'rank' => '1' ]);
 
         // Less Than or Equal To
         $response = $this->get('/api/seed-ranks?rank=lte:5');
 
         $response->assertStatus(200);
         $response->assertJsonCount(2);
-        $response->assertJsonFragment([ 'rank' => 1 ]);
-        $response->assertJsonFragment([ 'rank' => 5 ]);
+        $response->assertJsonFragment([ 'rank' => '1' ]);
+        $response->assertJsonFragment([ 'rank' => '5' ]);
 
         // Greater Than
         $response = $this->get('/api/seed-ranks?rank=gt:5');
 
         $response->assertStatus(200);
         $response->assertJsonCount(1);
-        $response->assertJsonFragment([ 'rank' => 10 ]);
+        $response->assertJsonFragment([ 'rank' => '10' ]);
 
         // Greater Than or Equal To
         $response = $this->get('/api/seed-ranks?rank=gte:5');
 
         $response->assertStatus(200);
         $response->assertJsonCount(2);
-        $response->assertJsonFragment([ 'rank' => 5 ]);
-        $response->assertJsonFragment([ 'rank' => 10 ]);
+        $response->assertJsonFragment([ 'rank' => '5' ]);
+        $response->assertJsonFragment([ 'rank' => '10' ]);
 
         // Like
         $response = $this->get('/api/seed-ranks?rank=like:1');
 
         $response->assertStatus(200);
         $response->assertJsonCount(2);
-        $response->assertJsonFragment([ 'rank' => 1 ]);
-        $response->assertJsonFragment([ 'rank' => 10 ]);
+        $response->assertJsonFragment([ 'rank' => '1' ]);
+        $response->assertJsonFragment([ 'rank' => '10' ]);
 
         // Not
         $response = $this->get('/api/seed-ranks?rank=not:10');
 
         $response->assertStatus(200);
         $response->assertJsonCount(2);
-        $response->assertJsonFragment([ 'rank' => 1 ]);
-        $response->assertJsonFragment([ 'rank' => 5 ]);
+        $response->assertJsonFragment([ 'rank' => '1' ]);
+        $response->assertJsonFragment([ 'rank' => '5' ]);
     }
 
     /** @test */
     public function it_can_filter_seed_ranks_by_the_salary_column()
     {
-        SeedRank::factory()->create([ 'rank' => 1, 'salary' => 500 ]);
-        SeedRank::factory()->create([ 'rank' => 5, 'salary' =>  3000 ]);
-        SeedRank::factory()->create([ 'rank' => 10, 'salary' => 8000 ]);
+        SeedRank::factory()->create([ 'rank' => '1', 'salary' => 500 ]);
+        SeedRank::factory()->create([ 'rank' => '5', 'salary' =>  3000 ]);
+        SeedRank::factory()->create([ 'rank' => '10', 'salary' => 8000 ]);
 
         // Equals
         $response = $this->get('/api/seed-ranks?salary=3000');
