@@ -12,6 +12,7 @@
         "laravel/tinker": "^2.5"
     },
     "require-dev": {
+        "dms/phpunit-arraysubset-asserts": "^0.3.0",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.0.1",

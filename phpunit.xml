@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
-         bootstrap="vendor/autoload.php"
-         colors="true"
+<phpunit  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
+          bootstrap="vendor/autoload.php"
+          colors="true"
 >
     <testsuites>
         <testsuite name="Unit">
@@ -16,6 +16,16 @@
         <include>
             <directory suffix=".php">./app</directory>
         </include>
+        <exclude>
+          <!-- Exclude the default, unmodified Laravel files until they are used. -->
+          <!-- These files do not have code coverage out of the box -->
+          <directory suffix=".php">./app/Http/Middleware</directory>
+          <directory suffix=".php">./app/Providers</directory>
+          <file>./app/Exceptions/Handler.php</file>
+          <file>./app/Console/Kernel.php</file>
+          <file>./app/Http/Controllers/Controller.php</file>
+          <file>./app/Http/Kernel.php</file>
+        </exclude>
     </coverage>
     <php>
         <server name="APP_ENV" value="testing"/>
