@@ -1,6 +1,6 @@
 FROM defrostedtuna/php-nginx:8.0
 
-# Add Sqlite and Xdebug  for development purposes.
+# Add Sqlite and Xdebug for development purposes.
 RUN apk add --no-cache \
   php8-pdo_sqlite \
   php8-sqlite3 \
