@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Unit\V0\Controllers;
+namespace Tests\Unit\Controllers\V0;
 
-use App\Http\Controllers\Api\V0\HealthCheckController;
+use App\Http\Controllers\V0\HealthCheckController;
 use Tests\TestCase;
 
 class HealthCheckControllerTest extends TestCase
