@@ -13,10 +13,18 @@ class HealthCheckController extends Controller
     /**
      * Check the server's status.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function status(): JsonResponse
     {
-        return $this->respondWithSuccess('OK');
+        $baseUrl = config('app.url');
+        $currentApiVersion = config('app.current_api_version');
+
+        return $this->respondWithSuccess('VIIIDB API is running.', [
+            'message' => 'VIIIDB API is currently under construction and is subject to frequent major changes. The following resources are currently available for consumption.',
+            'resources' => [
+                'seed_ranks' => "{$baseUrl}/v{$currentApiVersion}/seed-ranks",
+            ],
+        ]);
     }
 }
