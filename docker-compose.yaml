@@ -2,14 +2,12 @@ version: '3.5'
 
 services:
   viiidb-api:
-    build:
-      context: .
-      dockerfile: dev.Dockerfile
+    image: defrostedtuna/php-nginx:8.0-dev
     container_name: viiidb-api
     volumes:
       - ./:/app
-    env_file:
-      - .env
+    environment:
+      - VIRTUAL_HOST=${VIRTUAL_HOST}
     networks:
       - viiidb
 

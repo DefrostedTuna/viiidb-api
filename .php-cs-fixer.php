@@ -98,6 +98,14 @@ $rules = [
     'phpdoc_types_order' => [
         'null_adjustment' => 'always_last',
     ],
+    'not_operator_with_successor_space' => true,
+    'binary_operator_spaces' => [
+        'operators' => [
+            // This is broken, I'll have to align arrays myself.
+            '=>' => null,
+        ],
+    ],
+    'yoda_style' => false,
 ];
 
 $excludes = [
