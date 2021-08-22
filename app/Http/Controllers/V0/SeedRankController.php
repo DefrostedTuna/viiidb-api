@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V0;
+namespace App\Http\Controllers\V0;
 
 use App\Contracts\Services\SeedRankService;
 use App\Http\Controllers\Controller;

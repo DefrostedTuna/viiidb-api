@@ -15,7 +15,7 @@ class SeedRankEndpointTest extends TestCase
     {
         $seedRanks = SeedRank::factory()->count(10)->create();
 
-        $response = $this->get('/api/v0/seed-ranks');
+        $response = $this->get('/v0/seed-ranks');
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
@@ -37,7 +37,7 @@ class SeedRankEndpointTest extends TestCase
     {
         $seedRank = SeedRank::factory()->create();
 
-        $response = $this->get("/api/v0/seed-ranks/{$seedRank->id}");
+        $response = $this->get("/v0/seed-ranks/{$seedRank->id}");
 
         $response->assertStatus(200);
         $response->assertExactJson([
@@ -57,7 +57,7 @@ class SeedRankEndpointTest extends TestCase
     {
         $seedRank = SeedRank::factory()->create();
 
-        $response = $this->get("/api/v0/seed-ranks/{$seedRank->rank}");
+        $response = $this->get("/v0/seed-ranks/{$seedRank->rank}");
 
         $response->assertStatus(200);
         $response->assertExactJson([
@@ -75,7 +75,7 @@ class SeedRankEndpointTest extends TestCase
     /** @test */
     public function it_will_throw_an_exception_when_an_individual_record_is_not_found()
     {
-        $response = $this->get('/api/v0/seed-ranks/invalid');
+        $response = $this->get('/v0/seed-ranks/invalid');
 
         $response->assertStatus(404);
         $response->assertExactJson([
@@ -95,7 +95,7 @@ class SeedRankEndpointTest extends TestCase
         SeedRank::factory()->create(['rank' => '5', 'salary' => 3000]);
         $three = SeedRank::factory()->create(['rank' => '10', 'salary' => 8000]);
 
-        $response = $this->get('/api/v0/seed-ranks?search=1');
+        $response = $this->get('/v0/seed-ranks?search=1');
 
         $response->assertStatus(200);
         $response->assertExactJson([
@@ -124,7 +124,7 @@ class SeedRankEndpointTest extends TestCase
         SeedRank::factory()->create(['rank' => '5', 'salary' => 3000]);
         SeedRank::factory()->create(['rank' => '10', 'salary' => 8000]);
 
-        $response = $this->get('/api/v0/seed-ranks?search=500');
+        $response = $this->get('/v0/seed-ranks?search=500');
 
         $response->assertStatus(200);
         $response->assertExactJson([

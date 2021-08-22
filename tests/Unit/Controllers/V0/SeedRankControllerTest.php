@@ -3,7 +3,7 @@
 namespace Tests\Unit\Controllers\V0;
 
 use App\Contracts\Services\SeedRankService;
-use App\Http\Controllers\Api\V0\SeedRankController;
+use App\Http\Controllers\V0\SeedRankController;
 use App\Http\Transformers\V0\SeedRankTransformer;
 use App\Models\SeedRank;
 use Illuminate\Foundation\Testing\RefreshDatabase;
