@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.1](https://github.com/DefrostedTuna/viiidb-api/compare/0.2.0...0.2.1) (2021-08-22)
+
+
+### Bug Fixes
+
+* allow release containers to be built (API-71) ([#13](https://github.com/DefrostedTuna/viiidb-api/issues/13)) ([e2c2d70](https://github.com/DefrostedTuna/viiidb-api/commit/e2c2d7076b10e1b7b32b73eb0edc643fc2fbaab5))
+
 ## [0.2.0](https://github.com/DefrostedTuna/viiidb-api/compare/0.1.0...0.2.0) (2021-08-22)
 
 
