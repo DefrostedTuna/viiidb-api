@@ -8,8 +8,8 @@ services:
     container_name: viiidb-api
     volumes:
       - ./:/app
-    env_file:
-      - .env
+    environment:
+      - VIRTUAL_HOST=${VIRTUAL_HOST}
     networks:
       - viiidb
 
