@@ -38,14 +38,18 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         $this->routes(function () {
+            $currentApiVersion = config('app.current_api_version');
+
+            // Forward requests that are not versioned to the latest stable version.
             Route::prefix('api')
                 ->middleware('api')
                 ->namespace($this->namespace)
-                ->group(base_path('routes/api.php'));
+                ->group(base_path("routes/api/v{$currentApiVersion}.php"));
 
-            Route::middleware('web')
+            Route::prefix('api/v0')
+                ->middleware('api')
                 ->namespace($this->namespace)
-                ->group(base_path('routes/web.php'));
+                ->group(base_path('routes/api/v0.php'));
         });
     }
 

@@ -1,0 +1,17 @@
+version: '3.5'
+
+services:
+  viiidb-api:
+    image: defrostedtuna/php-nginx:8.0-dev
+    container_name: viiidb-api
+    volumes:
+      - ./:/app
+    environment:
+      - VIRTUAL_HOST=${VIRTUAL_HOST}
+    networks:
+      - viiidb
+
+networks:
+  viiidb:
+    external:
+      name: viiidb
