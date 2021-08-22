@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Api\V0\HealthCheckController;
-use App\Http\Controllers\Api\V0\SeedRankController;
+use App\Http\Controllers\V0\HealthCheckController;
+use App\Http\Controllers\V0\SeedRankController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/')->uses([HealthCheckController::class, 'status']);

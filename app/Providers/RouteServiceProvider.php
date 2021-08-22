@@ -41,15 +41,15 @@ class RouteServiceProvider extends ServiceProvider
             $currentApiVersion = config('app.current_api_version');
 
             // Forward requests that are not versioned to the latest stable version.
-            Route::prefix('api')
+            Route::prefix('')
                 ->middleware('api')
                 ->namespace($this->namespace)
-                ->group(base_path("routes/api/v{$currentApiVersion}.php"));
+                ->group(base_path("routes/v{$currentApiVersion}.php"));
 
-            Route::prefix('api/v0')
+            Route::prefix('v0')
                 ->middleware('api')
                 ->namespace($this->namespace)
-                ->group(base_path('routes/api/v0.php'));
+                ->group(base_path('routes/v0.php'));
         });
     }
 
