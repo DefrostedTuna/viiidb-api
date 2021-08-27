@@ -3,6 +3,7 @@
 namespace Tests\Unit\Models;
 
 use App\Models\SeedRank;
+use App\Traits\FiltersRecordsByFields;
 use App\Traits\OrdersQueryResults;
 use App\Traits\Searchable;
 use App\Traits\Uuids;
@@ -126,6 +127,19 @@ class SeedRankTest extends TestCase
     }
 
     /** @test */
+    public function it_explicitly_defines_the_fields_that_are_filterable()
+    {
+        $seedRank = new SeedRank();
+
+        $expected = [
+            'rank',
+            'salary',
+        ];
+
+        $this->assertEquals($expected, $seedRank->getFilterableFields());
+    }
+
+    /** @test */
     public function it_explicitly_defines_the_route_key_name()
     {
         $seedRank = new SeedRank();
@@ -167,6 +181,15 @@ class SeedRankTest extends TestCase
     {
         $this->assertTrue(in_array(
             Searchable::class,
+            class_uses(SeedRank::class)
+        ));
+    }
+
+    /** @test */
+    public function it_includes_the_ability_to_filter_records_by_fields()
+    {
+        $this->assertTrue(in_array(
+            FiltersRecordsByFields::class,
             class_uses(SeedRank::class)
         ));
     }
