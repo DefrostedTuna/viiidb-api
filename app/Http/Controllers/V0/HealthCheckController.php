@@ -24,6 +24,7 @@ class HealthCheckController extends Controller
             'message' => 'VIIIDB API is currently under construction and is subject to frequent major changes. The following resources are currently available for consumption.',
             'resources' => [
                 'seed_ranks' => "{$baseUrl}/v{$currentApiVersion}/seed-ranks",
+                'seed_tests' => "{$baseUrl}/v{$currentApiVersion}/seed-tests",
             ],
         ]);
     }

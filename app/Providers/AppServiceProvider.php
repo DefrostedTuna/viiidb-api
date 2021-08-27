@@ -17,6 +17,11 @@ class AppServiceProvider extends ServiceProvider
             \App\Contracts\Services\SeedRankService::class,
             \App\Services\SeedRankService::class
         );
+
+        $this->app->bind(
+            \App\Contracts\Services\SeedTestService::class,
+            \App\Services\SeedTestService::class
+        );
     }
 
     /**
