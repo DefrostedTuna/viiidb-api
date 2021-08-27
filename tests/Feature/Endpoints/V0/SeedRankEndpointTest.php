@@ -140,4 +140,116 @@ class SeedRankEndpointTest extends TestCase
             ],
         ]);
     }
+
+    /** @test */
+    public function it_can_filter_seed_ranks_via_the_rank_column()
+    {
+        $one = SeedRank::factory()->create(['rank' => '1', 'salary' => 500]);
+        SeedRank::factory()->create(['rank' => '5', 'salary' => 3000]);
+        SeedRank::factory()->create(['rank' => '10', 'salary' => 8000]);
+
+        $response = $this->get('/v0/seed-ranks?rank=1');
+
+        $response->assertStatus(200);
+        $response->assertExactJson([
+            'success' => true,
+            'message' => 'Successfully retrieved data.',
+            'status_code' => 200,
+            'data' => [
+                [
+                    'id' => $one->id,
+                    'rank' => $one->rank,
+                    'salary' => $one->salary,
+                ],
+            ],
+        ]);
+    }
+
+    /** @test */
+    public function it_can_filter_seed_ranks_via_the_rank_column_using_the_like_statement()
+    {
+        $one = SeedRank::factory()->create(['rank' => '1', 'salary' => 500]);
+        SeedRank::factory()->create(['rank' => '5', 'salary' => 3000]);
+        $three = SeedRank::factory()->create(['rank' => '10', 'salary' => 8000]);
+
+        $response = $this->get('/v0/seed-ranks?rank=like:1');
+
+        $response->assertStatus(200);
+        $response->assertExactJson([
+            'success' => true,
+            'message' => 'Successfully retrieved data.',
+            'status_code' => 200,
+            'data' => [
+                [
+                    'id' => $one->id,
+                    'rank' => $one->rank,
+                    'salary' => $one->salary,
+                ],
+                [
+                    'id' => $three->id,
+                    'rank' => $three->rank,
+                    'salary' => $three->salary,
+                ],
+            ],
+        ]);
+    }
+
+    /** @test */
+    public function it_can_filter_seed_ranks_via_the_salary_column()
+    {
+        $one = SeedRank::factory()->create(['rank' => '1', 'salary' => 500]);
+        SeedRank::factory()->create(['rank' => '3', 'salary' => 1500]);
+        SeedRank::factory()->create(['rank' => '10', 'salary' => 8000]);
+
+        $response = $this->get('/v0/seed-ranks?salary=500');
+
+        $response->assertStatus(200);
+        $response->assertExactJson([
+            'success' => true,
+            'message' => 'Successfully retrieved data.',
+            'status_code' => 200,
+            'data' => [
+                [
+                    'id' => $one->id,
+                    'rank' => $one->rank,
+                    'salary' => $one->salary,
+                ],
+            ],
+        ]);
+    }
+
+    /** @test */
+    public function it_can_filter_seed_ranks_via_the_salary_column_using_the_like_statement()
+    {
+        $one = SeedRank::factory()->create(['rank' => '1', 'salary' => 500]);
+        $two = SeedRank::factory()->create(['rank' => '3', 'salary' => 1500]);
+        SeedRank::factory()->create(['rank' => '10', 'salary' => 8000]);
+        $four = SeedRank::factory()->create(['rank' => '20', 'salary' => 15000]);
+
+        $response = $this->get('/v0/seed-ranks?salary=like:500');
+
+        $response->assertStatus(200);
+        $response->assertExactJson([
+            'success' => true,
+            'message' => 'Successfully retrieved data.',
+            'status_code' => 200,
+            'data' => [
+                [
+                    'id' => $one->id,
+                    'rank' => $one->rank,
+                    'salary' => $one->salary,
+                ],
+                [
+                    'id' => $two->id,
+                    'rank' => $two->rank,
+                    'salary' => $two->salary,
+                ],
+                [
+                    'id' => $four->id,
+                    'rank' => $four->rank,
+                    'salary' => $four->salary,
+                ],
+            ],
+        ]);
+    }
 }

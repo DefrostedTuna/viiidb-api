@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\FiltersRecordsByFields;
 use App\Traits\OrdersQueryResults;
 use App\Traits\Searchable;
 use App\Traits\Uuids;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SeedRank extends Model
 {
+    use FiltersRecordsByFields;
     use HasFactory;
     use OrdersQueryResults;
     use Searchable;
@@ -103,6 +105,16 @@ class SeedRank extends Model
      * @var array
      */
     protected $searchableFields = [
+        'rank',
+        'salary',
+    ];
+
+    /**
+     * The fields that can be used as a filter on the resource.
+     *
+     * @return array
+     */
+    protected $filterableFields = [
         'rank',
         'salary',
     ];

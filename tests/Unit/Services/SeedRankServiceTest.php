@@ -113,4 +113,104 @@ class SeedRankServiceTest extends TestCase
             ],
         ], $records);
     }
+
+    /** @test */
+    public function it_can_filter_seed_ranks_via_the_rank_column()
+    {
+        $one = SeedRank::factory()->create(['rank' => '1', 'salary' => 500]);
+        SeedRank::factory()->create(['rank' => '5', 'salary' => 3000]);
+        SeedRank::factory()->create(['rank' => '10', 'salary' => 8000]);
+
+        $model = new SeedRank();
+        $service = new SeedRankService($model);
+
+        $records = $service->all(new Request(['rank' => 1]));
+
+        $this->assertEquals([
+            [
+                'id' => $one->id,
+                'rank' => $one->rank,
+                'salary' => $one->salary,
+            ],
+        ], $records);
+    }
+
+    /** @test */
+    public function it_can_filter_seed_ranks_via_the_rank_column_using_the_like_statement()
+    {
+        $one = SeedRank::factory()->create(['rank' => '1', 'salary' => 500]);
+        SeedRank::factory()->create(['rank' => '5', 'salary' => 3000]);
+        $three = SeedRank::factory()->create(['rank' => '10', 'salary' => 8000]);
+
+        $model = new SeedRank();
+        $service = new SeedRankService($model);
+
+        $records = $service->all(new Request(['rank' => 'like:1']));
+
+        $this->assertEquals([
+            [
+                'id' => $one->id,
+                'rank' => $one->rank,
+                'salary' => $one->salary,
+            ],
+            [
+                'id' => $three->id,
+                'rank' => $three->rank,
+                'salary' => $three->salary,
+            ],
+        ], $records);
+    }
+
+    /** @test */
+    public function it_can_filter_seed_ranks_via_the_salary_column()
+    {
+        $one = SeedRank::factory()->create(['rank' => '1', 'salary' => 500]);
+        SeedRank::factory()->create(['rank' => '3', 'salary' => 1500]);
+        SeedRank::factory()->create(['rank' => '10', 'salary' => 8000]);
+
+        $model = new SeedRank();
+        $service = new SeedRankService($model);
+
+        $records = $service->all(new Request(['salary' => 500]));
+
+        $this->assertEquals([
+            [
+                'id' => $one->id,
+                'rank' => $one->rank,
+                'salary' => $one->salary,
+            ],
+        ], $records);
+    }
+
+    /** @test */
+    public function it_can_filter_seed_ranks_via_the_salary_column_using_the_like_statement()
+    {
+        $one = SeedRank::factory()->create(['rank' => '1', 'salary' => 500]);
+        $two = SeedRank::factory()->create(['rank' => '3', 'salary' => 1500]);
+        SeedRank::factory()->create(['rank' => '10', 'salary' => 8000]);
+        $four = SeedRank::factory()->create(['rank' => '20', 'salary' => 15000]);
+
+        $model = new SeedRank();
+        $service = new SeedRankService($model);
+
+        $records = $service->all(new Request(['salary' => 'like:500']));
+
+        $this->assertEquals([
+            [
+                'id' => $one->id,
+                'rank' => $one->rank,
+                'salary' => $one->salary,
+            ],
+            [
+                'id' => $two->id,
+                'rank' => $two->rank,
+                'salary' => $two->salary,
+            ],
+            [
+                'id' => $four->id,
+                'rank' => $four->rank,
+                'salary' => $four->salary,
+            ],
+        ], $records);
+    }
 }
