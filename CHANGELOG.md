@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.2](https://github.com/DefrostedTuna/viiidb-api/compare/0.2.1...0.2.2) (2021-08-27)
+
+
+### Features
+
+* allow records to be filtered by the value of a given field (API-67) ([#18](https://github.com/DefrostedTuna/viiidb-api/issues/18)) ([24d92e0](https://github.com/DefrostedTuna/viiidb-api/commit/24d92e0e1d80936e6f742cd954d6153e8603b1a9))
+
 ## [0.2.1](https://github.com/DefrostedTuna/viiidb-api/compare/0.2.0...0.2.1) (2021-08-22)
 
 
