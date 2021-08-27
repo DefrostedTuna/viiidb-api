@@ -41,10 +41,13 @@ class SeedRankService implements SeedRankServiceContract
             $query->search($request->search);
         }
 
-        return $query->orderBy(
-            $this->model->getOrderByField(),
-            $this->model->getOrderByDirection()
-        )->get()->toArray();
+        return $query->filter($request->query())
+            ->orderBy(
+                $this->model->getOrderByField(),
+                $this->model->getOrderByDirection()
+            )
+            ->get()
+            ->toArray();
     }
 
     /**
