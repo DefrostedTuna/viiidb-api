@@ -4,6 +4,7 @@ namespace Tests\Unit\Models;
 
 use App\Models\TestQuestion;
 use App\Traits\FiltersRecordsByFields;
+use App\Traits\LoadsRelationsThroughServices;
 use App\Traits\OrdersQueryResults;
 use App\Traits\Searchable;
 use App\Traits\Uuids;
@@ -82,6 +83,7 @@ class TestQuestionTest extends TestCase
             'question_number',
             'question',
             'answer',
+            'seedTest',
         ];
 
         $this->assertEquals($visibleFields, $testQuestion->getVisible());
@@ -148,6 +150,28 @@ class TestQuestionTest extends TestCase
     }
 
     /** @test */
+    public function it_explicitly_defines_the_relations_that_are_available_to_include_with_the_resource()
+    {
+        $testQuestion = new TestQuestion();
+
+        $expected = [
+            'seedTest',
+        ];
+
+        $this->assertEquals($expected, $testQuestion->getAvailableIncludes());
+    }
+
+    /** @test */
+    public function it_explicitly_defines_the_default_relations_to_include_with_the_resource()
+    {
+        $testQuestion = new TestQuestion();
+
+        $expected = [];
+
+        $this->assertEquals($expected, $testQuestion->getDefaultIncludes());
+    }
+
+    /** @test */
     public function it_explicitly_defines_the_route_key_name()
     {
         $testQuestion = new TestQuestion();
@@ -198,6 +222,14 @@ class TestQuestionTest extends TestCase
     {
         $this->assertTrue(in_array(
             FiltersRecordsByFields::class,
+            class_uses(TestQuestion::class)
+        ));
+    }
+
+    public function it_loads_relations_through_services()
+    {
+        $this->assertTrue(in_array(
+            LoadsRelationsThroughServices::class,
             class_uses(TestQuestion::class)
         ));
     }

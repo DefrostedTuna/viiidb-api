@@ -2,7 +2,9 @@
 
 namespace Tests\Unit\Transformers\V0;
 
+use App\Http\Transformers\V0\SeedTestTransformer;
 use App\Http\Transformers\V0\TestQuestionTransformer;
+use App\Models\SeedTest;
 use App\Models\TestQuestion;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Tests\TestCase;
@@ -21,7 +23,7 @@ class TestQuestionTransformerTest extends TestCase
             'arbitrary' => 'data',
         ]);
 
-        $transformer = new TestQuestionTransformer();
+        $transformer = $this->app->make(TestQuestionTransformer::class);
 
         $transformedRecord = $transformer->transformRecord($testQuestion->toArray());
 
@@ -44,7 +46,7 @@ class TestQuestionTransformerTest extends TestCase
             ['id' => 'three', 'sort_id' => 3]
         ));
 
-        $transformer = new TestQuestionTransformer();
+        $transformer = $this->app->make(TestQuestionTransformer::class);
 
         $transformedRecords = $transformer->transformCollection($testQuestions->toArray());
 
@@ -74,5 +76,56 @@ class TestQuestionTransformerTest extends TestCase
                 'answer' => $testQuestions[2]->answer,
             ],
         ], $transformedRecords);
+    }
+
+    /** @test */
+    public function it_will_transform_the_seed_test_record_if_it_is_present()
+    {
+        $seedTest = SeedTest::factory()->make(['id' => 'some-uuid'])->toArray();
+        $testQuestion = TestQuestion::factory()->make([
+            'id' => 'some-random-uuid',
+            'sort_id' => 1,
+            'question_number' => 1,
+            'question' => "Potions can restore a GF's HP.",
+            'answer' => false,
+            'arbitrary' => 'data',
+        ])->toArray();
+
+        // Manually append the SeeD Test to the record since we're not using the database.
+        $testQuestion['seed_test'] = $seedTest;
+
+        $seedTestTransformer = $this->app->make(SeedTestTransformer::class);
+        $testQuestionTransformer = $this->app->make(TestQuestionTransformer::class);
+
+        $transformedSeedTest = $seedTestTransformer->transformRecord($seedTest);
+        $transformedTestQuestion = $testQuestionTransformer->transformRecord($testQuestion);
+
+        $this->assertArraySubset([
+            'seed_test' => $transformedSeedTest,
+        ], $transformedTestQuestion);
+    }
+
+    /** @test */
+    public function it_will_include_the_seed_test_key_in_the_event_no_records_are_returned_from_the_relation()
+    {
+        $testQuestion = TestQuestion::factory()->make([
+            'id' => 'some-random-uuid',
+            'sort_id' => 1,
+            'question_number' => 1,
+            'question' => "Potions can restore a GF's HP.",
+            'answer' => false,
+            'arbitrary' => 'data',
+        ])->toArray();
+
+        // Manually append the SeeD Test to the record since we're not using the database.
+        $testQuestion['seed_test'] = null;
+
+        $testQuestionTransformer = $this->app->make(TestQuestionTransformer::class);
+
+        $transformedTestQuestion = $testQuestionTransformer->transformRecord($testQuestion);
+
+        $this->assertArraySubset([
+            'seed_test' => null,
+        ], $transformedTestQuestion);
     }
 }

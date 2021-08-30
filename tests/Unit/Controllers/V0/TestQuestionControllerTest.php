@@ -4,7 +4,9 @@ namespace Tests\Unit\Controllers\V0;
 
 use App\Contracts\Services\TestQuestionService;
 use App\Http\Controllers\V0\TestQuestionController;
+use App\Http\Transformers\V0\SeedTestTransformer;
 use App\Http\Transformers\V0\TestQuestionTransformer;
+use App\Models\SeedTest;
 use App\Models\TestQuestion;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
@@ -21,7 +23,7 @@ class TestQuestionControllerTest extends TestCase
         $testQuestions = TestQuestion::factory()->count(10)->create();
 
         $service = $this->app->make(TestQuestionService::class);
-        $transformer = new TestQuestionTransformer();
+        $transformer = $this->app->make(TestQuestionTransformer::class);
         $controller = new TestQuestionController($service, $transformer);
 
         $response = $controller->index(new Request());
@@ -40,7 +42,7 @@ class TestQuestionControllerTest extends TestCase
         $testQuestion = TestQuestion::factory()->create();
 
         $service = $this->app->make(TestQuestionService::class);
-        $transformer = new TestQuestionTransformer();
+        $transformer = $this->app->make(TestQuestionTransformer::class);
         $controller = new TestQuestionController($service, $transformer);
 
         $response = $controller->show(new Request(), $testQuestion->id);
@@ -66,7 +68,7 @@ class TestQuestionControllerTest extends TestCase
         $this->expectException(NotFoundHttpException::class);
 
         $service = $this->app->make(TestQuestionService::class);
-        $transformer = new TestQuestionTransformer();
+        $transformer = $this->app->make(TestQuestionTransformer::class);
         $controller = new TestQuestionController($service, $transformer);
 
         $controller->show(new Request(), 'not-found');
@@ -94,7 +96,7 @@ class TestQuestionControllerTest extends TestCase
         ]);
 
         $service = $this->app->make(TestQuestionService::class);
-        $transformer = new TestQuestionTransformer();
+        $transformer = $this->app->make(TestQuestionTransformer::class);
         $controller = new TestQuestionController($service, $transformer);
 
         $response = $controller->index(new Request(['search' => 1]));
@@ -147,7 +149,7 @@ class TestQuestionControllerTest extends TestCase
         ]);
 
         $service = $this->app->make(TestQuestionService::class);
-        $transformer = new TestQuestionTransformer();
+        $transformer = $this->app->make(TestQuestionTransformer::class);
         $controller = new TestQuestionController($service, $transformer);
 
         $response = $controller->index(new Request(['search' => 'can']));
@@ -200,7 +202,7 @@ class TestQuestionControllerTest extends TestCase
         ]);
 
         $service = $this->app->make(TestQuestionService::class);
-        $transformer = new TestQuestionTransformer();
+        $transformer = $this->app->make(TestQuestionTransformer::class);
         $controller = new TestQuestionController($service, $transformer);
 
         $response = $controller->index(new Request(['search' => false]));
@@ -253,7 +255,7 @@ class TestQuestionControllerTest extends TestCase
         ]);
 
         $service = $this->app->make(TestQuestionService::class);
-        $transformer = new TestQuestionTransformer();
+        $transformer = $this->app->make(TestQuestionTransformer::class);
         $controller = new TestQuestionController($service, $transformer);
 
         $response = $controller->index(new Request(['question_number' => 1]));
@@ -298,7 +300,7 @@ class TestQuestionControllerTest extends TestCase
         ]);
 
         $service = $this->app->make(TestQuestionService::class);
-        $transformer = new TestQuestionTransformer();
+        $transformer = $this->app->make(TestQuestionTransformer::class);
         $controller = new TestQuestionController($service, $transformer);
 
         $response = $controller->index(new Request(['question_number' => 'like:1']));
@@ -351,7 +353,7 @@ class TestQuestionControllerTest extends TestCase
         ]);
 
         $service = $this->app->make(TestQuestionService::class);
-        $transformer = new TestQuestionTransformer();
+        $transformer = $this->app->make(TestQuestionTransformer::class);
         $controller = new TestQuestionController($service, $transformer);
 
         $response = $controller->index(new Request(['question' => "Potions can restore a GF's HP."]));
@@ -396,7 +398,7 @@ class TestQuestionControllerTest extends TestCase
         ]);
 
         $service = $this->app->make(TestQuestionService::class);
-        $transformer = new TestQuestionTransformer();
+        $transformer = $this->app->make(TestQuestionTransformer::class);
         $controller = new TestQuestionController($service, $transformer);
 
         $response = $controller->index(new Request(['question' => 'like:can']));
@@ -449,7 +451,7 @@ class TestQuestionControllerTest extends TestCase
         ]);
 
         $service = $this->app->make(TestQuestionService::class);
-        $transformer = new TestQuestionTransformer();
+        $transformer = $this->app->make(TestQuestionTransformer::class);
         $controller = new TestQuestionController($service, $transformer);
 
         $response = $controller->index(new Request(['answer' => true]));
@@ -494,7 +496,7 @@ class TestQuestionControllerTest extends TestCase
         ]);
 
         $service = $this->app->make(TestQuestionService::class);
-        $transformer = new TestQuestionTransformer();
+        $transformer = $this->app->make(TestQuestionTransformer::class);
         $controller = new TestQuestionController($service, $transformer);
 
         $response = $controller->index(new Request(['answer' => 'like:f']));
@@ -520,6 +522,65 @@ class TestQuestionControllerTest extends TestCase
                     'question' => $three->question,
                     'answer' => $three->answer,
                 ],
+            ],
+        ], $response->getData(true));
+    }
+
+    /** @test */
+    public function it_can_load_the_seed_test_relation_on_a_list_of_test_questions()
+    {
+        $testQuestions = TestQuestion::factory()
+            ->count(10)
+            ->for(SeedTest::factory())
+            ->create();
+
+        $service = $this->app->make(TestQuestionService::class);
+        $transformer = $this->app->make(TestQuestionTransformer::class);
+        $controller = new TestQuestionController($service, $transformer);
+
+        $response = $controller->index(new Request(['include' => 'seed-test']));
+
+        $this->assertArraySubset([
+            'success' => true,
+            'message' => 'Successfully retrieved data.',
+            'status_code' => 200,
+            'data' => [
+                [
+                    'seed_test' => [
+                        // An array of SeeD Test data on each record...
+                    ],
+                ],
+            ],
+        ], $response->getData(true));
+        $this->assertCount(10, $response->getData(true)['data']);
+    }
+
+    /** @test */
+    public function it_can_load_the_seed_test_relation_on_an_individual_test_question()
+    {
+        $testQuestion = TestQuestion::factory()
+            ->for(SeedTest::factory())
+            ->create();
+
+        $service = $this->app->make(TestQuestionService::class);
+        $seedTestTransformer = $this->app->make(SeedTestTransformer::class);
+        $testQuestionTransformer = $this->app->make(TestQuestionTransformer::class);
+        $controller = new TestQuestionController($service, $testQuestionTransformer);
+
+        $response = $controller->show(new Request(['include' => 'seed-test']), $testQuestion->id);
+
+        $this->assertEquals([
+            'success' => true,
+            'message' => 'Successfully retrieved data.',
+            'status_code' => 200,
+            'data' => [
+                'id' => $testQuestion->id,
+                'sort_id' => $testQuestion->sort_id,
+                'seed_test_id' => $testQuestion->seed_test_id,
+                'question_number' => $testQuestion->question_number,
+                'question' => $testQuestion->question,
+                'answer' => $testQuestion->answer,
+                'seed_test' => $seedTestTransformer->transformRecord($testQuestion->seedTest->toArray()),
             ],
         ], $response->getData(true));
     }

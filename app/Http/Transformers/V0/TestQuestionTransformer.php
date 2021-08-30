@@ -7,6 +7,13 @@ use App\Contracts\Transformers\RecordTransformer;
 class TestQuestionTransformer implements RecordTransformer
 {
     /**
+     * Instance of the SeedTestTransformer.
+     *
+     * @var SeedTestTransformer
+     */
+    protected $seedTestTransformer;
+
+    /**
      * Transforms an individual record to standardize the output.
      *
      * @param array $record The record to be transformed
@@ -15,7 +22,7 @@ class TestQuestionTransformer implements RecordTransformer
      */
     public function transformRecord(array $record): array
     {
-        return [
+        $data = [
             'id' => $record['id'],
             'sort_id' => $record['sort_id'],
             'seed_test_id' => $record['seed_test_id'],
@@ -23,6 +30,14 @@ class TestQuestionTransformer implements RecordTransformer
             'question' => $record['question'],
             'answer' => $record['answer'],
         ];
+
+        if (array_key_exists('seed_test', $record)) {
+            $data['seed_test'] = $record['seed_test']
+                ? $this->getSeedTestTransformer()->transformRecord($record['seed_test'])
+                : null;
+        }
+
+        return $data;
     }
 
     /**
@@ -41,5 +56,21 @@ class TestQuestionTransformer implements RecordTransformer
         }
 
         return $data;
+    }
+
+    /**
+     * Get the instance of the SeedTestTransformer.
+     *
+     * If an existing instance does not exist, a new instance will be created.
+     *
+     * @return SeedTestTransformer
+     */
+    protected function getSeedTestTransformer(): SeedTestTransformer
+    {
+        if (! $this->seedTestTransformer) {
+            $this->seedTestTransformer = new SeedTestTransformer();
+        }
+
+        return $this->seedTestTransformer;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Services;
 
+use App\Models\SeedTest;
 use App\Models\TestQuestion;
 use App\Services\TestQuestionService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -27,7 +28,7 @@ class TestQuestionServiceTest extends TestCase
             [$model->getOrderByField(), $model->getOrderByDirection()],
         ]);
 
-        $this->assertEquals($sortedTestQuestions->toArray(), $records);
+        $this->assertCount(10, $records);
     }
 
     /** @test */
@@ -40,7 +41,14 @@ class TestQuestionServiceTest extends TestCase
 
         $records = $service->findOrFail($testQuestion->id, new Request());
 
-        $this->assertEquals($testQuestion->toArray(), $records);
+        $this->assertEquals([
+            'id' => $testQuestion->id,
+            'sort_id' => $testQuestion->sort_id,
+            'seed_test_id' => $testQuestion->seed_test_id,
+            'question_number' => $testQuestion->question_number,
+            'question' => $testQuestion->question,
+            'answer' => $testQuestion->answer,
+        ], $records);
     }
 
     /** @test */
@@ -450,6 +458,53 @@ class TestQuestionServiceTest extends TestCase
                 'question' => $three->question,
                 'answer' => $three->answer,
             ],
+        ], $records);
+    }
+
+    /** @test */
+    public function it_can_load_the_seed_test_relation_on_a_list_of_test_questions()
+    {
+        $testQuestions = TestQuestion::factory()
+            ->count(10)
+            ->for(SeedTest::factory())
+            ->create();
+
+        $model = new TestQuestion();
+        $service = new TestQuestionService($model);
+
+        $records = $service->all(new Request(['include' => 'seed-test']));
+
+        $sortedTestQuestions = $testQuestions->sortBy([
+            [$model->getOrderByField(), $model->getOrderByDirection()],
+        ]);
+
+        $this->assertArraySubset([
+            [
+                'seed_test' => [],
+            ],
+        ], $records);
+    }
+
+    /** @test */
+    public function it_can_load_the_seed_test_relation_on_an_individual_test_question()
+    {
+        $testQuestion = TestQuestion::factory()
+            ->for(SeedTest::factory())
+            ->create();
+
+        $model = new TestQuestion();
+        $service = new TestQuestionService($model);
+
+        $records = $service->findOrFail($testQuestion->id, new Request(['include' => 'seed-test']));
+
+        $this->assertEquals([
+            'id' => $testQuestion->id,
+            'sort_id' => $testQuestion->sort_id,
+            'seed_test_id' => $testQuestion->seed_test_id,
+            'question_number' => $testQuestion->question_number,
+            'question' => $testQuestion->question,
+            'answer' => $testQuestion->answer,
+            'seed_test' => $testQuestion->seedTest->toArray(),
         ], $records);
     }
 }

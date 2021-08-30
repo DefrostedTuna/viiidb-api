@@ -35,19 +35,21 @@ class TestQuestionService implements TestQuestionServiceContract
      */
     public function all(Request $request): array
     {
-        $query = $this->model->newModelQuery();
+        $query = $this->model->newQuery();
 
         if ($request->has('search')) {
             $query->search($request->search);
         }
 
-        return $query->filter($request->query())
-            ->orderBy(
-                $this->model->getOrderByField(),
-                $this->model->getOrderByDirection()
-            )
-            ->get()
-            ->toArray();
+        $includes = $this->model->parseIncludes(
+            $request->include ?: ''
+        );
+
+        $results = $query->with($includes)
+            ->filter($request->query())
+            ->get();
+
+        return $results->toArray();
     }
 
     /**
@@ -62,7 +64,12 @@ class TestQuestionService implements TestQuestionServiceContract
      */
     public function findOrFail(string $testQuestionId, Request $request): array
     {
+        $includes = $this->model->parseIncludes(
+            $request->include ?: ''
+        );
+
         $data = $this->model
+            ->with($includes)
             ->where($this->model->getKeyName(), $testQuestionId)
             ->orWhere($this->model->getRouteKeyName(), $testQuestionId)
             ->first();

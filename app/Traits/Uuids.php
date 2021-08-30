@@ -7,12 +7,10 @@ use Webpatser\Uuid\Uuid;
 trait Uuids
 {
     /**
-     * Bootstrap the model and its traits.
+     * Bootstrap the trait on the model.
      */
-    protected static function boot()
+    protected static function bootUuids()
     {
-        parent::boot();
-
         static::creating(function ($model) {
             $model->{$model->getKeyName()} = Uuid::generate(4)->string;
         });

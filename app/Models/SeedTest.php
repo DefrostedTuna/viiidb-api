@@ -3,16 +3,19 @@
 namespace App\Models;
 
 use App\Traits\FiltersRecordsByFields;
+use App\Traits\LoadsRelationsThroughServices;
 use App\Traits\OrdersQueryResults;
 use App\Traits\Searchable;
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class SeedTest extends Model
 {
     use FiltersRecordsByFields;
     use HasFactory;
+    use LoadsRelationsThroughServices;
     use OrdersQueryResults;
     use Searchable;
     use Uuids;
@@ -74,6 +77,7 @@ class SeedTest extends Model
     protected $visible = [
         'id',
         'level',
+        'testQuestions',
     ];
 
     /**
@@ -115,6 +119,22 @@ class SeedTest extends Model
         'level',
     ];
 
+    /**
+     * The relations that are available to include with the resource.
+     *
+     * @var array
+     */
+    protected $availableIncludes = [
+        'testQuestions',
+    ];
+
+    /**
+     * The default relations to include with the resource.
+     *
+     * @var array
+     */
+    protected $defaultIncludes = [];
+
     /*
      * Get the route key for the model.
      *
@@ -123,5 +143,15 @@ class SeedTest extends Model
     public function getRouteKeyName(): string
     {
         return 'level';
+    }
+
+    /**
+     * The Test Questions that are associated with the record.
+     *
+     * @return HasMany
+     */
+    public function testQuestions(): HasMany
+    {
+        return $this->hasMany(TestQuestion::class, 'seed_test_id', 'id');
     }
 }

@@ -4,6 +4,7 @@ namespace Tests\Unit\Models;
 
 use App\Models\SeedTest;
 use App\Traits\FiltersRecordsByFields;
+use App\Traits\LoadsRelationsThroughServices;
 use App\Traits\OrdersQueryResults;
 use App\Traits\Searchable;
 use App\Traits\Uuids;
@@ -78,6 +79,7 @@ class SeedTestTest extends TestCase
         $visibleFields = [
             'id',
             'level',
+            'testQuestions',
         ];
 
         $this->assertEquals($visibleFields, $seedTest->getVisible());
@@ -104,7 +106,7 @@ class SeedTestTest extends TestCase
         $fields = $seedTest->getCasts();
 
         $expected = [
-            'id' => 'string',
+            'id'    => 'string',
             'level' => 'int',
         ];
 
@@ -133,6 +135,28 @@ class SeedTestTest extends TestCase
         ];
 
         $this->assertEquals($expected, $seedTest->getFilterableFields());
+    }
+
+    /** @test */
+    public function it_explicitly_defines_the_relations_that_are_available_to_include_with_the_resource()
+    {
+        $seedTest = new SeedTest();
+
+        $expected = [
+            'testQuestions',
+        ];
+
+        $this->assertEquals($expected, $seedTest->getAvailableIncludes());
+    }
+
+    /** @test */
+    public function it_explicitly_defines_the_default_relations_to_include_with_the_resource()
+    {
+        $seedTest = new SeedTest();
+
+        $expected = [];
+
+        $this->assertEquals($expected, $seedTest->getDefaultIncludes());
     }
 
     /** @test */
@@ -186,6 +210,14 @@ class SeedTestTest extends TestCase
     {
         $this->assertTrue(in_array(
             FiltersRecordsByFields::class,
+            class_uses(SeedTest::class)
+        ));
+    }
+
+    public function it_loads_relations_through_services()
+    {
+        $this->assertTrue(in_array(
+            LoadsRelationsThroughServices::class,
             class_uses(SeedTest::class)
         ));
     }

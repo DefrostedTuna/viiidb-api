@@ -92,9 +92,7 @@ $rules = [
     'ordered_imports' => [
         'sort_algorithm' => 'alpha',
     ],
-    'php_unit_method_casing' => [
-        'case' => 'snake_case',
-    ],
+    'php_unit_method_casing' => false,
     'phpdoc_types_order' => [
         'null_adjustment' => 'always_last',
     ],

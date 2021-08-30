@@ -3,16 +3,19 @@
 namespace App\Models;
 
 use App\Traits\FiltersRecordsByFields;
+use App\Traits\LoadsRelationsThroughServices;
 use App\Traits\OrdersQueryResults;
 use App\Traits\Searchable;
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class TestQuestion extends Model
 {
     use FiltersRecordsByFields;
     use HasFactory;
+    use LoadsRelationsThroughServices;
     use OrdersQueryResults;
     use Searchable;
     use Uuids;
@@ -78,6 +81,7 @@ class TestQuestion extends Model
         'question_number',
         'question',
         'answer',
+        'seedTest',
     ];
 
     /**
@@ -127,6 +131,22 @@ class TestQuestion extends Model
         'answer',
     ];
 
+    /**
+     * The relations that are available to include with the resource.
+     *
+     * @var array
+     */
+    protected $availableIncludes = [
+        'seedTest',
+    ];
+
+    /**
+     * The default relations to include with the resource.
+     *
+     * @var array
+     */
+    protected $defaultIncludes = [];
+
     /*
      * Get the route key for the model.
      *
@@ -135,5 +155,15 @@ class TestQuestion extends Model
     public function getRouteKeyName(): string
     {
         return 'id';
+    }
+
+    /**
+     * The SeeD Test that the record belongs to.
+     *
+     * @return BelongsTo
+     */
+    public function seedTest(): BelongsTo
+    {
+        return $this->belongsTo(SeedTest::class, 'seed_test_id', 'id');
     }
 }
