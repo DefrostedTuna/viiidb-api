@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.3](https://github.com/DefrostedTuna/viiidb-api/compare/0.2.2...0.2.3) (2021-08-30)
+
+
+### Features
+
+* add seed test resource (API-10) ([#20](https://github.com/DefrostedTuna/viiidb-api/issues/20)) ([6b21f80](https://github.com/DefrostedTuna/viiidb-api/commit/6b21f800138c12ebc1a18c1ac129097a56e23c2e))
+* add test questions resource & relationship scaffolding (API-9) ([#21](https://github.com/DefrostedTuna/viiidb-api/issues/21)) ([0cae402](https://github.com/DefrostedTuna/viiidb-api/commit/0cae402f6071b1af6f493a2235f6c0db4dcca69f))
+
 ## [0.2.2](https://github.com/DefrostedTuna/viiidb-api/compare/0.2.1...0.2.2) (2021-08-27)
 
 
