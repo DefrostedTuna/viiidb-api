@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use App\Scopes\OrderQueryResults;
+
 trait OrdersQueryResults
 {
     /**
@@ -21,6 +23,14 @@ trait OrdersQueryResults
      */
     public function getOrderByDirection(): string
     {
-        return isset($this->orderByDirection) ? $this->orderByDirection : 'desc';
+        return isset($this->orderByDirection) ? $this->orderByDirection : 'asc';
+    }
+
+    /**
+     * Bootstrap the trait on the model.
+     */
+    protected static function bootOrdersQueryResults()
+    {
+        static::addGlobalScope(new OrderQueryResults());
     }
 }
