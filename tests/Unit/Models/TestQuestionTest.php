@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Models;
 
-use App\Models\SeedTest;
+use App\Models\TestQuestion;
 use App\Traits\FiltersRecordsByFields;
 use App\Traits\LoadsRelationsThroughServices;
 use App\Traits\OrdersQueryResults;
@@ -11,84 +11,88 @@ use App\Traits\Uuids;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase as TestCase;
 
-class SeedTestTest extends TestCase
+class TestQuestionTest extends TestCase
 {
     use RefreshDatabase;
 
     /** @test */
     public function it_explicitly_disables_incrementing_primary_keys()
     {
-        $seedTest = new SeedTest();
+        $testQuestion = new TestQuestion();
 
-        $this->assertFalse($seedTest->getIncrementing());
+        $this->assertFalse($testQuestion->getIncrementing());
     }
 
     /** @test */
     public function it_uses_the_proper_database_table()
     {
-        $seedTest = new SeedTest();
+        $testQuestion = new TestQuestion();
 
-        $this->assertEquals('seed_tests', $seedTest->getTable());
+        $this->assertEquals('test_questions', $testQuestion->getTable());
     }
 
     /** @test */
     public function it_sets_the_primary_key_column_explicitly()
     {
-        $seedTest = new SeedTest();
+        $testQuestion = new TestQuestion();
 
-        $this->assertEquals('id', $seedTest->getKeyName());
+        $this->assertEquals('id', $testQuestion->getKeyName());
     }
 
     /** @test */
     public function it_sets_the_primary_key_type_to_string()
     {
-        $seedTest = new SeedTest();
+        $testQuestion = new TestQuestion();
 
-        $this->assertEquals('string', $seedTest->getKeyType());
+        $this->assertEquals('string', $testQuestion->getKeyType());
     }
 
     /** @test */
     public function it_explicitly_defines_the_column_that_results_should_use_for_ordering()
     {
-        $seedTest = new SeedTest();
+        $testQuestion = new TestQuestion();
 
-        $this->assertEquals('level', $seedTest->getOrderByField());
+        $this->assertEquals('sort_id', $testQuestion->getOrderByField());
     }
 
     /** @test */
     public function it_explicitly_defines_the_order_results_should_be_returned_by()
     {
-        $seedTest = new SeedTest();
+        $testQuestion = new TestQuestion();
 
-        $this->assertEquals('asc', $seedTest->getOrderByDirection());
+        $this->assertEquals('asc', $testQuestion->getOrderByDirection());
     }
 
     /** @test */
     public function it_does_not_allow_properties_to_be_assigned_in_mass()
     {
-        $seedTest = new SeedTest();
+        $testQuestion = new TestQuestion();
 
-        $this->assertEquals([], $seedTest->getFillable());
+        $this->assertEquals([], $testQuestion->getFillable());
     }
 
     /** @test */
     public function it_explicitly_defines_the_visible_fields_for_api_consumption()
     {
-        $seedTest = new SeedTest();
+        $testQuestion = new TestQuestion();
 
         $visibleFields = [
             'id',
-            'level',
-            'testQuestions',
+            'sort_id',
+            'seed_test_id',
+            'question_number',
+            'question',
+            'answer',
+            'seedTest',
         ];
 
-        $this->assertEquals($visibleFields, $seedTest->getVisible());
+        $this->assertEquals($visibleFields, $testQuestion->getVisible());
     }
 
     /** @test */
     public function it_explicitly_defines_the_hidden_fields_for_api_consumption()
     {
-        $seedTest = new SeedTest();
+        $testQuestion = new TestQuestion();
 
         $hiddenFields = [
             'created_at',
@@ -96,18 +100,22 @@ class SeedTestTest extends TestCase
             'deleted_at',
         ];
 
-        $this->assertEquals($hiddenFields, $seedTest->getHidden());
+        $this->assertEquals($hiddenFields, $testQuestion->getHidden());
     }
 
     /** @test */
     public function it_explicitly_defines_the_cast_type_for_each_field()
     {
-        $seedTest = new SeedTest();
-        $fields = $seedTest->getCasts();
+        $testQuestion = new TestQuestion();
+        $fields = $testQuestion->getCasts();
 
         $expected = [
-            'id'    => 'string',
-            'level' => 'int',
+            'id'              => 'string',
+            'sort_id'         => 'integer',
+            'seed_test_id'    => 'string',
+            'question_number' => 'integer',
+            'question'        => 'string',
+            'answer'          => 'boolean',
         ];
 
         $this->assertEquals($expected, $fields);
@@ -116,55 +124,59 @@ class SeedTestTest extends TestCase
     /** @test */
     public function it_explicitly_defines_the_fields_that_are_searchable()
     {
-        $seedTest = new SeedTest();
+        $testQuestion = new TestQuestion();
 
         $expected = [
-            'level',
+            'question_number',
+            'question',
+            'answer',
         ];
 
-        $this->assertEquals($expected, $seedTest->getSearchableFields());
+        $this->assertEquals($expected, $testQuestion->getSearchableFields());
     }
 
     /** @test */
     public function it_explicitly_defines_the_fields_that_are_filterable()
     {
-        $seedTest = new SeedTest();
+        $testQuestion = new TestQuestion();
 
         $expected = [
-            'level',
+            'question_number',
+            'question',
+            'answer',
         ];
 
-        $this->assertEquals($expected, $seedTest->getFilterableFields());
+        $this->assertEquals($expected, $testQuestion->getFilterableFields());
     }
 
     /** @test */
     public function it_explicitly_defines_the_relations_that_are_available_to_include_with_the_resource()
     {
-        $seedTest = new SeedTest();
+        $testQuestion = new TestQuestion();
 
         $expected = [
-            'testQuestions',
+            'seedTest',
         ];
 
-        $this->assertEquals($expected, $seedTest->getAvailableIncludes());
+        $this->assertEquals($expected, $testQuestion->getAvailableIncludes());
     }
 
     /** @test */
     public function it_explicitly_defines_the_default_relations_to_include_with_the_resource()
     {
-        $seedTest = new SeedTest();
+        $testQuestion = new TestQuestion();
 
         $expected = [];
 
-        $this->assertEquals($expected, $seedTest->getDefaultIncludes());
+        $this->assertEquals($expected, $testQuestion->getDefaultIncludes());
     }
 
     /** @test */
     public function it_explicitly_defines_the_route_key_name()
     {
-        $seedTest = new SeedTest();
+        $testQuestion = new TestQuestion();
 
-        $this->assertEquals('level', $seedTest->getRouteKeyName());
+        $this->assertEquals('id', $testQuestion->getRouteKeyName());
     }
 
     /** @test */
@@ -172,19 +184,19 @@ class SeedTestTest extends TestCase
     {
         $this->assertTrue(in_array(
             Uuids::class,
-            class_uses(SeedTest::class)
+            class_uses(TestQuestion::class)
         ));
     }
 
     /** @test */
     public function it_will_not_allow_the_uuid_to_be_changed()
     {
-        $seedTest = SeedTest::factory()->create();
+        $testQuestion = TestQuestion::factory()->create();
 
-        $seedTest->id = 'not-original-value';
-        $seedTest->save();
+        $testQuestion->id = 'not-original-value';
+        $testQuestion->save();
 
-        $this->assertFalse($seedTest->id === 'not-original-value');
+        $this->assertFalse($testQuestion->id === 'not-original-value');
     }
 
     /** @test */
@@ -192,7 +204,7 @@ class SeedTestTest extends TestCase
     {
         $this->assertTrue(in_array(
             OrdersQueryResults::class,
-            class_uses(SeedTest::class)
+            class_uses(TestQuestion::class)
         ));
     }
 
@@ -201,7 +213,7 @@ class SeedTestTest extends TestCase
     {
         $this->assertTrue(in_array(
             Searchable::class,
-            class_uses(SeedTest::class)
+            class_uses(TestQuestion::class)
         ));
     }
 
@@ -210,7 +222,7 @@ class SeedTestTest extends TestCase
     {
         $this->assertTrue(in_array(
             FiltersRecordsByFields::class,
-            class_uses(SeedTest::class)
+            class_uses(TestQuestion::class)
         ));
     }
 
@@ -218,7 +230,7 @@ class SeedTestTest extends TestCase
     {
         $this->assertTrue(in_array(
             LoadsRelationsThroughServices::class,
-            class_uses(SeedTest::class)
+            class_uses(TestQuestion::class)
         ));
     }
 }

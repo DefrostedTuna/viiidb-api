@@ -4,14 +4,14 @@ namespace App\Http\Transformers\V0;
 
 use App\Contracts\Transformers\RecordTransformer;
 
-class SeedTestTransformer implements RecordTransformer
+class TestQuestionTransformer implements RecordTransformer
 {
     /**
-     * Instance of the TestQuestionTransformer.
+     * Instance of the SeedTestTransformer.
      *
-     * @var TestQuestionTransformer
+     * @var SeedTestTransformer
      */
-    protected $testQuestionTransformer;
+    protected $seedTestTransformer;
 
     /**
      * Transforms an individual record to standardize the output.
@@ -24,12 +24,16 @@ class SeedTestTransformer implements RecordTransformer
     {
         $data = [
             'id' => $record['id'],
-            'level' => $record['level'],
+            'sort_id' => $record['sort_id'],
+            'seed_test_id' => $record['seed_test_id'],
+            'question_number' => $record['question_number'],
+            'question' => $record['question'],
+            'answer' => $record['answer'],
         ];
 
-        if (array_key_exists('test_questions', $record)) {
-            $data['test_questions'] = $record['test_questions']
-                ? $this->getTestQuestionTransformer()->transformCollection($record['test_questions'])
+        if (array_key_exists('seed_test', $record)) {
+            $data['seed_test'] = $record['seed_test']
+                ? $this->getSeedTestTransformer()->transformRecord($record['seed_test'])
                 : null;
         }
 
@@ -55,18 +59,18 @@ class SeedTestTransformer implements RecordTransformer
     }
 
     /**
-     * Get the instance of the TestQuestionTransformer.
+     * Get the instance of the SeedTestTransformer.
      *
      * If an existing instance does not exist, a new instance will be created.
      *
-     * @return TestQuestionTransformer
+     * @return SeedTestTransformer
      */
-    protected function getTestQuestionTransformer(): TestQuestionTransformer
+    protected function getSeedTestTransformer(): SeedTestTransformer
     {
-        if (! $this->testQuestionTransformer) {
-            $this->testQuestionTransformer = new TestQuestionTransformer();
+        if (! $this->seedTestTransformer) {
+            $this->seedTestTransformer = new SeedTestTransformer();
         }
 
-        return $this->testQuestionTransformer;
+        return $this->seedTestTransformer;
     }
 }

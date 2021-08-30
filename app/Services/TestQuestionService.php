@@ -2,26 +2,26 @@
 
 namespace App\Services;
 
-use App\Contracts\Services\SeedTestService as SeedTestServiceContract;
-use App\Models\SeedTest;
+use App\Contracts\Services\TestQuestionService as TestQuestionServiceContract;
+use App\Models\TestQuestion;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class SeedTestService implements SeedTestServiceContract
+class TestQuestionService implements TestQuestionServiceContract
 {
     /**
      * The instance of the model to use for the service.
      *
-     * @var SeedTest
+     * @var TestQuestion
      */
     protected $model;
 
     /**
-     * Create a new SeedTestService instance.
+     * Create a new TestQuestionService instance.
      *
-     * @param SeedTest $model The instance of the model to use for the service
+     * @param TestQuestion $model The instance of the model to use for the service
      */
-    public function __construct(SeedTest $model)
+    public function __construct(TestQuestion $model)
     {
         $this->model = $model;
     }
@@ -55,14 +55,14 @@ class SeedTestService implements SeedTestServiceContract
     /**
      * Retrieve a specific record from the database, or fail if a record was not found.
      *
-     * @param string  $seedTestId The ID of the requested SeedTest
-     * @param Request $request    The HTTP request from the client
+     * @param string  $testQuestionId The ID of the requested TestQuestion
+     * @param Request $request        The HTTP request from the client
      *
      * @throws NotFoundHttpException
      *
      * @return array
      */
-    public function findOrFail(string $seedTestId, Request $request): array
+    public function findOrFail(string $testQuestionId, Request $request): array
     {
         $includes = $this->model->parseIncludes(
             $request->include ?: ''
@@ -70,8 +70,8 @@ class SeedTestService implements SeedTestServiceContract
 
         $data = $this->model
             ->with($includes)
-            ->where($this->model->getKeyName(), $seedTestId)
-            ->orWhere($this->model->getRouteKeyName(), $seedTestId)
+            ->where($this->model->getKeyName(), $testQuestionId)
+            ->orWhere($this->model->getRouteKeyName(), $testQuestionId)
             ->first();
 
         if (! $data) {

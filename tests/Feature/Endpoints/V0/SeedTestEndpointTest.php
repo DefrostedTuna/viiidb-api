@@ -2,7 +2,9 @@
 
 namespace Tests\Feature\Endpoints\V0;
 
+use App\Http\Transformers\V0\TestQuestionTransformer;
 use App\Models\SeedTest;
+use App\Models\TestQuestion;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -159,6 +161,60 @@ class SeedTestEndpointTest extends TestCase
                     'id' => $three->id,
                     'level' => $three->level,
                 ],
+            ],
+        ]);
+    }
+
+    /** @test */
+    public function it_can_load_the_test_questions_relation_on_a_list_of_seed_tests()
+    {
+        $seedTests = SeedTest::factory()
+            ->count(10)
+            ->has(TestQuestion::factory()->count(10))
+            ->create();
+
+        $response = $this->get('/v0/seed-tests?include=test-questions');
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'success',
+            'message',
+            'status_code',
+            'data' => [
+                [
+                    'test_questions' => [
+                        // An array of Test Questions on each record...
+                    ],
+                ],
+            ],
+        ]);
+        $response->assertJson([
+            'success' => true,
+            'message' => 'Successfully retrieved data.',
+            'status_code' => 200,
+        ]);
+        $response->assertJsonCount(10, 'data');
+    }
+
+    /** @test */
+    public function it_can_load_the_test_questions_relation_on_an_individual_seed_test()
+    {
+        $seedTest = SeedTest::factory()
+            ->has(TestQuestion::factory()->count(1))
+            ->create();
+
+        $testQuestionTransformer = $this->app->make(TestQuestionTransformer::class);
+        $response = $this->get("/v0/seed-tests/{$seedTest->id}?include=test-questions");
+
+        $response->assertStatus(200);
+        $response->assertExactJson([
+            'success' => true,
+            'message' => 'Successfully retrieved data.',
+            'status_code' => 200,
+            'data' => [
+                'id' => $seedTest->id,
+                'level' => $seedTest->level,
+                'test_questions' => $testQuestionTransformer->transformCollection($seedTest->testQuestions->toArray()),
             ],
         ]);
     }

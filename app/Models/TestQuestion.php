@@ -9,9 +9,9 @@ use App\Traits\Searchable;
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class SeedTest extends Model
+class TestQuestion extends Model
 {
     use FiltersRecordsByFields;
     use HasFactory;
@@ -32,7 +32,7 @@ class SeedTest extends Model
      *
      * @var string
      */
-    protected $table = 'seed_tests';
+    protected $table = 'test_questions';
 
     /**
      * The primary key for the model.
@@ -53,7 +53,7 @@ class SeedTest extends Model
      *
      * @var array
      */
-    protected $orderByField = 'level';
+    protected $orderByField = 'sort_id';
 
     /**
      * The default direction used to order query results by.
@@ -76,8 +76,12 @@ class SeedTest extends Model
      */
     protected $visible = [
         'id',
-        'level',
-        'testQuestions',
+        'sort_id',
+        'seed_test_id',
+        'question_number',
+        'question',
+        'answer',
+        'seedTest',
     ];
 
     /**
@@ -97,8 +101,12 @@ class SeedTest extends Model
      * @var array
      */
     protected $casts = [
-        'id'    => 'string',
-        'level' => 'int',
+        'id'              => 'string',
+        'sort_id'         => 'integer',
+        'seed_test_id'    => 'string',
+        'question_number' => 'integer',
+        'question'        => 'string',
+        'answer'          => 'boolean',
     ];
 
     /**
@@ -107,7 +115,9 @@ class SeedTest extends Model
      * @var array
      */
     protected $searchableFields = [
-        'level',
+        'question_number',
+        'question',
+        'answer',
     ];
 
     /**
@@ -116,7 +126,9 @@ class SeedTest extends Model
      * @return array
      */
     protected $filterableFields = [
-        'level',
+        'question_number',
+        'question',
+        'answer',
     ];
 
     /**
@@ -125,7 +137,7 @@ class SeedTest extends Model
      * @var array
      */
     protected $availableIncludes = [
-        'testQuestions',
+        'seedTest',
     ];
 
     /**
@@ -142,16 +154,16 @@ class SeedTest extends Model
      */
     public function getRouteKeyName(): string
     {
-        return 'level';
+        return 'id';
     }
 
     /**
-     * The Test Questions that are associated with the record.
+     * The SeeD Test that the record belongs to.
      *
-     * @return HasMany
+     * @return BelongsTo
      */
-    public function testQuestions(): HasMany
+    public function seedTest(): BelongsTo
     {
-        return $this->hasMany(TestQuestion::class, 'seed_test_id', 'id');
+        return $this->belongsTo(SeedTest::class, 'seed_test_id', 'id');
     }
 }
