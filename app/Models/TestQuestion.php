@@ -20,14 +20,14 @@ class TestQuestion extends Model
     /**
      * The default field used to order query results by.
      *
-     * @var array
+     * @var string
      */
     protected $orderByField = 'sort_id';
 
     /**
      * The default direction used to order query results by.
      *
-     * @var array
+     * @var string
      */
     protected $orderByDirection = 'asc';
 
