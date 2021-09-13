@@ -7,13 +7,27 @@ use App\Scopes\OrderQueryResults;
 trait OrdersQueryResults
 {
     /**
+     * The default field used to order query results by.
+     *
+     * @var string
+     */
+    protected $orderByField = '';
+
+    /**
+     * The default direction used to order query results by.
+     *
+     * @var string
+     */
+    protected $orderByDirection = 'asc';
+
+    /**
      * The default field which the records should be sorted by.
      *
      * @return string
      */
     public function getOrderByField(): string
     {
-        return isset($this->orderByField) ? $this->orderByField : $this->getKeyName;
+        return $this->orderByField ?: $this->getKeyName;
     }
 
     /**
@@ -23,7 +37,7 @@ trait OrdersQueryResults
      */
     public function getOrderByDirection(): string
     {
-        return isset($this->orderByDirection) ? $this->orderByDirection : 'asc';
+        return $this->orderByDirection;
     }
 
     /**
