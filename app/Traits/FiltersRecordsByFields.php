@@ -11,9 +11,16 @@ trait FiltersRecordsByFields
      *
      * @return array
      */
+    protected $filterableFields = [];
+
+    /**
+     * The fields that can be used as a filter on the resource.
+     *
+     * @return array
+     */
     public function getFilterableFields(): array
     {
-        return isset($this->filterableFields) ? $this->filterableFields : [];
+        return $this->filterableFields;
     }
 
     /**

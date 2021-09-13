@@ -8,13 +8,27 @@ use Illuminate\Support\Str;
 trait LoadsRelationsThroughServices
 {
     /**
+     * The relations that are available to include with the resource.
+     *
+     * @var array
+     */
+    protected $availableIncludes = [];
+
+    /**
+     * The default relations to include with the resource.
+     *
+     * @var array
+     */
+    protected $defaultIncludes = [];
+
+    /**
      * Get the relations that are available to include with the resource.
      *
      * @return array
      */
     public function getAvailableIncludes(): array
     {
-        return isset($this->availableIncludes) ? $this->availableIncludes : [];
+        return $this->availableIncludes;
     }
 
     /**
@@ -24,7 +38,7 @@ trait LoadsRelationsThroughServices
      */
     public function getDefaultIncludes(): array
     {
-        return isset($this->defaultIncludes) ? $this->defaultIncludes : [];
+        return $this->defaultIncludes;
     }
 
     /**

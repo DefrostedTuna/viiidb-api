@@ -2,27 +2,12 @@
 
 namespace App\Models;
 
-use App\Traits\FiltersRecordsByFields;
-use App\Traits\OrdersQueryResults;
 use App\Traits\Searchable;
-use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 class SeedRank extends Model
 {
-    use FiltersRecordsByFields;
     use HasFactory;
-    use OrdersQueryResults;
-    use Searchable;
-    use Uuids;
-
-    /**
-     * Indicates if the IDs are auto-incrementing.
-     *
-     * @var bool
-     */
-    public $incrementing = false;
 
     /**
      * The table associated with the model.
@@ -32,39 +17,18 @@ class SeedRank extends Model
     protected $table = 'seed_ranks';
 
     /**
-     * The primary key for the model.
-     *
-     * @var string
-     */
-    protected $primaryKey = 'id';
-
-    /**
-     * The 'type' of the primary key ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'string';
-
-    /**
      * The default field used to order query results by.
      *
-     * @var array
+     * @var string
      */
     protected $orderByField = 'salary';
 
     /**
      * The default direction used to order query results by.
      *
-     * @var array
+     * @var string
      */
     protected $orderByDirection = 'asc';
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [];
 
     /**
      * The attributes that should be visible in serialization.
@@ -75,17 +39,6 @@ class SeedRank extends Model
         'id',
         'rank',
         'salary',
-    ];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
     ];
 
     /**
