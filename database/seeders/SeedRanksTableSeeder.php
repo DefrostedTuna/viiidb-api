@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\SeedRank;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Webpatser\Uuid\Uuid;
 
@@ -49,10 +50,10 @@ class SeedRanksTableSeeder extends Seeder
             ['rank' => 'A', 'salary' => 30000],
         ];
 
-        // Assign a UUID to each record.
-        // Do this in bulk to maintain readability.
         foreach ($seedRanks as $key => $value) {
             $seedRanks[$key]['id'] = Uuid::generate(4);
+            $seedRanks[$key]['created_at'] = Carbon::now();
+            $seedRanks[$key]['updated_at'] = Carbon::now();
         }
 
         $seedRank = new SeedRank();
