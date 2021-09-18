@@ -43,6 +43,22 @@ class Handler extends ExceptionHandler
     }
 
     /**
+     * Report or log an exception.
+     *
+     * @param Throwable $e
+     *
+     * @return void
+     */
+    public function report(Throwable $e)
+    {
+        if (app()->bound('sentry') && $this->shouldReport($e)) {
+            app('sentry')->captureException($e);
+        }
+
+        parent::report($e);
+    }
+
+    /**
      * Render an exception into an HTTP response.
      *
      * @param \Illuminate\Http\Request $request The HTTP request from the client
