@@ -12,7 +12,7 @@ class CaptureInboundRequestTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function it_will_record_successful_requests()
+    public function it_will_capture_successful_requests()
     {
         $this->get('/v0/seed-ranks');
 
@@ -20,7 +20,7 @@ class CaptureInboundRequestTest extends TestCase
     }
 
     /** @test */
-    public function it_will_record_unsuccessful_requests()
+    public function it_will_capture_unsuccessful_requests()
     {
         $mockedService = $this->mock(SeedRankService::class, function ($mock) {
             $mock->shouldReceive('all')->andThrow(new Exception('Something'));
@@ -33,7 +33,7 @@ class CaptureInboundRequestTest extends TestCase
     }
 
     /** @test */
-    public function it_will_not_record_404_requests()
+    public function it_will_not_capture_404_requests()
     {
         $this->get('/invalid-endpoint');
 
