@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\Middleware\CaptureInboundRequest;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -27,6 +28,8 @@ class AppServiceProvider extends ServiceProvider
             \App\Contracts\Services\TestQuestionService::class,
             \App\Services\TestQuestionService::class
         );
+
+        $this->app->singleton(CaptureInboundRequest::class);
     }
 
     /**
