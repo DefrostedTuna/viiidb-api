@@ -6,7 +6,10 @@ use App\Http\Controllers\V0\SeedTestController;
 use App\Http\Controllers\V0\TestQuestionController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/')->uses([HealthCheckController::class, 'status'])->withoutMiddleware(['throttle:api']);
+Route::get('/')->uses([HealthCheckController::class, 'status'])->withoutMiddleware([
+    'throttle:api',
+    'request.capture',
+]);
 
 Route::get('/seed-ranks/')->uses([SeedRankController::class, 'index']);
 Route::get('/seed-ranks/{rank}')->uses([SeedRankController::class, 'show']);
