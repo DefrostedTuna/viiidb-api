@@ -7,13 +7,20 @@ use Illuminate\Database\Eloquent\Builder;
 trait Searchable
 {
     /**
+     * The fields that should be searchable.
+     *
+     * @var array
+     */
+    protected $searchableFields = [];
+
+    /**
      * Get the fields that should be searchable.
      *
      * @return array
      */
     public function getSearchableFields(): array
     {
-        return isset($this->searchableFields) ? $this->searchableFields : [];
+        return $this->searchableFields;
     }
 
     /**

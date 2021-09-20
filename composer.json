@@ -10,6 +10,7 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.54",
         "laravel/tinker": "^2.5",
+        "sentry/sentry-laravel": "^2.8",
         "webpatser/laravel-uuid": "^4.0"
     },
     "require-dev": {
