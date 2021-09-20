@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.5](https://github.com/DefrostedTuna/viiidb-api/compare/0.2.4...0.2.5) (2021-09-20)
+
+
+### Bug Fixes
+
+* remove request analytics from status endpoint (API-81) ([#31](https://github.com/DefrostedTuna/viiidb-api/issues/31)) ([042aafa](https://github.com/DefrostedTuna/viiidb-api/commit/042aafa40fc293f471aea3f33781366e3d1e7426))
+
 ## [0.2.4](https://github.com/DefrostedTuna/viiidb-api/compare/0.2.3...0.2.4) (2021-09-20)
 
 
