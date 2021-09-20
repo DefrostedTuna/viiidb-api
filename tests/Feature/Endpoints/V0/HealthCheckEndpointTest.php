@@ -9,6 +9,8 @@ class HealthCheckEndpointTest extends TestCase
     /** @test */
     public function it_can_check_the_server_status()
     {
+        $this->withoutMiddleware();
+
         $baseUrl = config('app.url');
         $currentApiVersion = config('app.current_api_version');
 
@@ -23,6 +25,8 @@ class HealthCheckEndpointTest extends TestCase
                 'message' => 'VIIIDB API is currently under construction and is subject to frequent major changes. The following resources are currently available for consumption.',
                 'resources' => [
                     'seed_ranks' => "{$baseUrl}/v{$currentApiVersion}/seed-ranks",
+                    'seed_tests' => "{$baseUrl}/v{$currentApiVersion}/seed-tests",
+                    'test_questions' => "{$baseUrl}/v{$currentApiVersion}/test-questions",
                 ],
             ],
         ]);
