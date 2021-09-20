@@ -11,6 +11,11 @@ use Webpatser\Uuid\Uuid;
 
 class CaptureInboundRequest
 {
+    /**
+     * The time at which the request was first processed.
+     *
+     * @var int
+     */
     protected $startTime = 0;
 
     /**
