@@ -29,6 +29,11 @@ class AppServiceProvider extends ServiceProvider
             \App\Services\TestQuestionService::class
         );
 
+        $this->app->bind(
+            \App\Contracts\Services\StatusEffectService::class,
+            \App\Services\StatusEffectService::class
+        );
+
         $this->app->singleton(CaptureInboundRequest::class);
     }
 
