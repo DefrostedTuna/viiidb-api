@@ -3,6 +3,7 @@
 use App\Http\Controllers\V0\HealthCheckController;
 use App\Http\Controllers\V0\SeedRankController;
 use App\Http\Controllers\V0\SeedTestController;
+use App\Http\Controllers\V0\StatusEffectController;
 use App\Http\Controllers\V0\TestQuestionController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,3 +20,6 @@ Route::get('/seed-tests/{test}')->uses([SeedTestController::class, 'show']);
 
 Route::get('/test-questions/')->uses([TestQuestionController::class, 'index']);
 Route::get('/test-questions/{id}')->uses([TestQuestionController::class, 'show']);
+
+Route::get('/status-effects/')->uses([StatusEffectController::class, 'index']);
+Route::get('/status-effects/{id}')->uses([StatusEffectController::class, 'show']);

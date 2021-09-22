@@ -27,6 +27,7 @@ class HealthCheckEndpointTest extends TestCase
                     'seed_ranks' => "{$baseUrl}/v{$currentApiVersion}/seed-ranks",
                     'seed_tests' => "{$baseUrl}/v{$currentApiVersion}/seed-tests",
                     'test_questions' => "{$baseUrl}/v{$currentApiVersion}/test-questions",
+                    'status_effects' => "{$baseUrl}/v{$currentApiVersion}/status-effects",
                 ],
             ],
         ]);
