@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.6](https://github.com/DefrostedTuna/viiidb-api/compare/0.2.5...0.2.6) (2021-09-22)
+
+
+### Features
+
+* add status effect resource (API-12) ([#33](https://github.com/DefrostedTuna/viiidb-api/issues/33)) ([b338809](https://github.com/DefrostedTuna/viiidb-api/commit/b338809ef51690d280887e4c1ad604e5fcfb5d41))
+
 ## [0.2.5](https://github.com/DefrostedTuna/viiidb-api/compare/0.2.4...0.2.5) (2021-09-20)
 
 
