@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class SeedRank extends Model
+class StatusEffect extends Model
 {
     use HasFactory;
 
@@ -13,14 +13,14 @@ class SeedRank extends Model
      *
      * @var string
      */
-    protected $table = 'seed_ranks';
+    protected $table = 'status_effects';
 
     /**
      * The default field used to order query results by.
      *
      * @var string
      */
-    protected $orderByField = 'salary';
+    protected $orderByField = 'name';
 
     /**
      * The default direction used to order query results by.
@@ -36,8 +36,9 @@ class SeedRank extends Model
      */
     protected $visible = [
         'id',
-        'rank',
-        'salary',
+        'name',
+        'type',
+        'description',
     ];
 
     /**
@@ -46,9 +47,10 @@ class SeedRank extends Model
      * @var array
      */
     protected $casts = [
-        'id'     => 'string',
-        'rank'   => 'string',
-        'salary' => 'integer',
+        'id'          => 'string',
+        'name'        => 'string',
+        'type'        => 'string',
+        'description' => 'string',
     ];
 
     /**
@@ -57,8 +59,9 @@ class SeedRank extends Model
      * @var array
      */
     protected $searchableFields = [
-        'rank',
-        'salary',
+        'name',
+        'type',
+        'description',
     ];
 
     /**
@@ -67,8 +70,9 @@ class SeedRank extends Model
      * @return array
      */
     protected $filterableFields = [
-        'rank',
-        'salary',
+        'name',
+        'type',
+        'description',
     ];
 
     /*
@@ -78,6 +82,6 @@ class SeedRank extends Model
      */
     public function getRouteKeyName(): string
     {
-        return 'rank';
+        return 'name';
     }
 }
