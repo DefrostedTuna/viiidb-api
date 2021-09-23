@@ -2,9 +2,9 @@
 
 namespace App\Http\Transformers\V0;
 
-use App\Contracts\Transformers\RecordTransformer;
+use App\Http\Transformers\RecordTransformer;
 
-class StatusEffectTransformer implements RecordTransformer
+class StatusEffectTransformer extends RecordTransformer
 {
     /**
      * Transforms an individual record to standardize the output.
@@ -21,23 +21,5 @@ class StatusEffectTransformer implements RecordTransformer
             'type' => $record['type'],
             'description' => $record['description'],
         ];
-    }
-
-    /**
-     * Transforms a collection of records to standardize the output.
-     *
-     * @param array $collection The collection of records to be transformed
-     *
-     * @return array
-     */
-    public function transformCollection(array $collection): array
-    {
-        $data = [];
-
-        foreach ($collection as $record) {
-            $data[] = $this->transformRecord($record);
-        }
-
-        return $data;
     }
 }
