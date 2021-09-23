@@ -2,9 +2,9 @@
 
 namespace App\Http\Transformers\V0;
 
-use App\Contracts\Transformers\RecordTransformer;
+use App\Http\Transformers\RecordTransformer;
 
-class TestQuestionTransformer implements RecordTransformer
+class TestQuestionTransformer extends RecordTransformer
 {
     /**
      * Instance of the SeedTestTransformer.
@@ -35,24 +35,6 @@ class TestQuestionTransformer implements RecordTransformer
             $data['seed_test'] = $record['seed_test']
                 ? $this->getSeedTestTransformer()->transformRecord($record['seed_test'])
                 : null;
-        }
-
-        return $data;
-    }
-
-    /**
-     * Transforms a collection of records to standardize the output.
-     *
-     * @param array $collection The collection of records to be transformed
-     *
-     * @return array
-     */
-    public function transformCollection(array $collection): array
-    {
-        $data = [];
-
-        foreach ($collection as $record) {
-            $data[] = $this->transformRecord($record);
         }
 
         return $data;
