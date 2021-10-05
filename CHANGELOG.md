@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.7](https://github.com/DefrostedTuna/viiidb-api/compare/0.2.6...0.2.7) (2021-10-05)
+
+
+### Features
+
+* add element resource ([#39](https://github.com/DefrostedTuna/viiidb-api/issues/39)) ([c057609](https://github.com/DefrostedTuna/viiidb-api/commit/c05760971a7053fc9149faa593d5d3e7c5797361))
+* add sort_id to the status effect resource (API-85) ([#40](https://github.com/DefrostedTuna/viiidb-api/issues/40)) ([ab61295](https://github.com/DefrostedTuna/viiidb-api/commit/ab612958546c8590379e5491a152b5e6fc411a5b))
+* add stat resource (API-11) ([#38](https://github.com/DefrostedTuna/viiidb-api/issues/38)) ([6f9bd87](https://github.com/DefrostedTuna/viiidb-api/commit/6f9bd87e6340c4c03ac1f0a0b64a894f644ca0c4))
+
 ## [0.2.6](https://github.com/DefrostedTuna/viiidb-api/compare/0.2.5...0.2.6) (2021-09-22)
 
 
