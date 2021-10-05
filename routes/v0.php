@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\V0\ElementController;
 use App\Http\Controllers\V0\HealthCheckController;
 use App\Http\Controllers\V0\SeedRankController;
 use App\Http\Controllers\V0\SeedTestController;
@@ -23,3 +24,6 @@ Route::get('/test-questions/{id}')->uses([TestQuestionController::class, 'show']
 
 Route::get('/status-effects/')->uses([StatusEffectController::class, 'index']);
 Route::get('/status-effects/{id}')->uses([StatusEffectController::class, 'show']);
+
+Route::get('/elements/')->uses([ElementController::class, 'index']);
+Route::get('/elements/{id}')->uses([ElementController::class, 'show']);
