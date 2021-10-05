@@ -2,6 +2,58 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.7](https://github.com/DefrostedTuna/viiidb-api/compare/0.2.6...0.2.7) (2021-10-05)
+
+
+### Features
+
+* add element resource ([#39](https://github.com/DefrostedTuna/viiidb-api/issues/39)) ([c057609](https://github.com/DefrostedTuna/viiidb-api/commit/c05760971a7053fc9149faa593d5d3e7c5797361))
+* add sort_id to the status effect resource (API-85) ([#40](https://github.com/DefrostedTuna/viiidb-api/issues/40)) ([ab61295](https://github.com/DefrostedTuna/viiidb-api/commit/ab612958546c8590379e5491a152b5e6fc411a5b))
+* add stat resource (API-11) ([#38](https://github.com/DefrostedTuna/viiidb-api/issues/38)) ([6f9bd87](https://github.com/DefrostedTuna/viiidb-api/commit/6f9bd87e6340c4c03ac1f0a0b64a894f644ca0c4))
+
+## [0.2.6](https://github.com/DefrostedTuna/viiidb-api/compare/0.2.5...0.2.6) (2021-09-22)
+
+
+### Features
+
+* add status effect resource (API-12) ([#33](https://github.com/DefrostedTuna/viiidb-api/issues/33)) ([b338809](https://github.com/DefrostedTuna/viiidb-api/commit/b338809ef51690d280887e4c1ad604e5fcfb5d41))
+
+## [0.2.5](https://github.com/DefrostedTuna/viiidb-api/compare/0.2.4...0.2.5) (2021-09-20)
+
+
+### Bug Fixes
+
+* remove request analytics from status endpoint (API-81) ([#31](https://github.com/DefrostedTuna/viiidb-api/issues/31)) ([042aafa](https://github.com/DefrostedTuna/viiidb-api/commit/042aafa40fc293f471aea3f33781366e3d1e7426))
+
+## [0.2.4](https://github.com/DefrostedTuna/viiidb-api/compare/0.2.3...0.2.4) (2021-09-20)
+
+
+### Features
+
+* add inbound request analytics (API-53) ([#27](https://github.com/DefrostedTuna/viiidb-api/issues/27)) ([5da56b9](https://github.com/DefrostedTuna/viiidb-api/commit/5da56b9afe8e81a6b9fa3477550eec40c19d625a))
+* introduce exception monitoring via sentry (API-61) ([#26](https://github.com/DefrostedTuna/viiidb-api/issues/26)) ([9310359](https://github.com/DefrostedTuna/viiidb-api/commit/9310359b15d95159a1a8486d53d73cfa58b15677))
+
+
+### Bug Fixes
+
+* include timestamps when seeding the seed rank resource (API-74) ([#25](https://github.com/DefrostedTuna/viiidb-api/issues/25)) ([9b4ce85](https://github.com/DefrostedTuna/viiidb-api/commit/9b4ce85f623ec8033eb5edf9360635c4b4de0bdb))
+* remove throttle middleware from status endpoint (API-80) ([#29](https://github.com/DefrostedTuna/viiidb-api/issues/29)) ([548d8ef](https://github.com/DefrostedTuna/viiidb-api/commit/548d8efa0a6fc82f5e0150d9a99a0e7310b7dd5f))
+
+## [0.2.3](https://github.com/DefrostedTuna/viiidb-api/compare/0.2.2...0.2.3) (2021-08-30)
+
+
+### Features
+
+* add seed test resource (API-10) ([#20](https://github.com/DefrostedTuna/viiidb-api/issues/20)) ([6b21f80](https://github.com/DefrostedTuna/viiidb-api/commit/6b21f800138c12ebc1a18c1ac129097a56e23c2e))
+* add test questions resource & relationship scaffolding (API-9) ([#21](https://github.com/DefrostedTuna/viiidb-api/issues/21)) ([0cae402](https://github.com/DefrostedTuna/viiidb-api/commit/0cae402f6071b1af6f493a2235f6c0db4dcca69f))
+
+## [0.2.2](https://github.com/DefrostedTuna/viiidb-api/compare/0.2.1...0.2.2) (2021-08-27)
+
+
+### Features
+
+* allow records to be filtered by the value of a given field (API-67) ([#18](https://github.com/DefrostedTuna/viiidb-api/issues/18)) ([24d92e0](https://github.com/DefrostedTuna/viiidb-api/commit/24d92e0e1d80936e6f742cd954d6153e8603b1a9))
+
 ## [0.2.1](https://github.com/DefrostedTuna/viiidb-api/compare/0.2.0...0.2.1) (2021-08-22)
 
 
