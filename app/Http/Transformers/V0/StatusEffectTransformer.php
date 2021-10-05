@@ -17,6 +17,7 @@ class StatusEffectTransformer extends RecordTransformer
     {
         return [
             'id' => $record['id'],
+            'sort_id' => $record['sort_id'],
             'name' => $record['name'],
             'type' => $record['type'],
             'description' => $record['description'],
