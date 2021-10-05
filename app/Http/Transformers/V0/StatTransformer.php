@@ -4,7 +4,7 @@ namespace App\Http\Transformers\V0;
 
 use App\Http\Transformers\RecordTransformer;
 
-class StatusEffectTransformer extends RecordTransformer
+class StatTransformer extends RecordTransformer
 {
     /**
      * Transforms an individual record to standardize the output.
@@ -19,8 +19,7 @@ class StatusEffectTransformer extends RecordTransformer
             'id' => $record['id'],
             'sort_id' => $record['sort_id'],
             'name' => $record['name'],
-            'type' => $record['type'],
-            'description' => $record['description'],
+            'abbreviation' => $record['abbreviation'],
         ];
     }
 }

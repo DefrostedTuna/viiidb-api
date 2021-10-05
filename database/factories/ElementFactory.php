@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\StatusEffect;
+use App\Models\Element;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class StatusEffectFactory extends Factory
+class ElementFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = StatusEffect::class;
+    protected $model = Element::class;
 
     /**
      * Define the model's default state.
@@ -22,10 +22,8 @@ class StatusEffectFactory extends Factory
     public function definition()
     {
         return [
-            'sort_id' => $this->faker->unique()->numberBetween(1, 28),
-            'name' => $this->faker->word,
-            'type' => $this->faker->word,
-            'description' => $this->faker->paragraph,
+            'sort_id' => $this->faker->unique()->numberBetween(1, 8),
+            'name' => $this->faker->word(),
         ];
     }
 }

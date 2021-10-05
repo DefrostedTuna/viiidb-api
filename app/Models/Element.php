@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class StatusEffect extends Model
+class Element extends Model
 {
     use HasFactory;
 
@@ -13,7 +13,7 @@ class StatusEffect extends Model
      *
      * @var string
      */
-    protected $table = 'status_effects';
+    protected $table = 'elements';
 
     /**
      * The default field used to order query results by.
@@ -38,8 +38,6 @@ class StatusEffect extends Model
         'id',
         'sort_id',
         'name',
-        'type',
-        'description',
     ];
 
     /**
@@ -48,11 +46,9 @@ class StatusEffect extends Model
      * @var array
      */
     protected $casts = [
-        'id'          => 'string',
-        'sort_id'     => 'integer',
-        'name'        => 'string',
-        'type'        => 'string',
-        'description' => 'string',
+        'id'      => 'string',
+        'sort_id' => 'integer',
+        'name'    => 'string',
     ];
 
     /**
@@ -62,8 +58,6 @@ class StatusEffect extends Model
      */
     protected $searchableFields = [
         'name',
-        'type',
-        'description',
     ];
 
     /**
@@ -73,8 +67,6 @@ class StatusEffect extends Model
      */
     protected $filterableFields = [
         'name',
-        'type',
-        'description',
     ];
 
     /*

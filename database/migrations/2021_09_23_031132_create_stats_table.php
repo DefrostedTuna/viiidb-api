@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStatusEffectsTable extends Migration
+class CreateStatsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateStatusEffectsTable extends Migration
      */
     public function up()
     {
-        Schema::create('status_effects', function (Blueprint $table) {
+        Schema::create('stats', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->integer('sort_id');
             $table->string('name');
-            $table->string('type');
-            $table->text('description')->nullable();
+            $table->string('abbreviation');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateStatusEffectsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('status_effects');
+        Schema::dropIfExists('stats');
     }
 }

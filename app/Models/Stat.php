@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class StatusEffect extends Model
+class Stat extends Model
 {
     use HasFactory;
 
@@ -13,7 +13,7 @@ class StatusEffect extends Model
      *
      * @var string
      */
-    protected $table = 'status_effects';
+    protected $table = 'stats';
 
     /**
      * The default field used to order query results by.
@@ -38,8 +38,7 @@ class StatusEffect extends Model
         'id',
         'sort_id',
         'name',
-        'type',
-        'description',
+        'abbreviation',
     ];
 
     /**
@@ -48,11 +47,10 @@ class StatusEffect extends Model
      * @var array
      */
     protected $casts = [
-        'id'          => 'string',
-        'sort_id'     => 'integer',
-        'name'        => 'string',
-        'type'        => 'string',
-        'description' => 'string',
+        'id'           => 'string',
+        'sort_id'      => 'integer',
+        'name'         => 'string',
+        'abbreviation' => 'string',
     ];
 
     /**
@@ -60,30 +58,12 @@ class StatusEffect extends Model
      *
      * @var array
      */
-    protected $searchableFields = [
-        'name',
-        'type',
-        'description',
-    ];
+    protected $searchableFields = [];
 
     /**
      * The fields that can be used as a filter on the resource.
      *
      * @return array
      */
-    protected $filterableFields = [
-        'name',
-        'type',
-        'description',
-    ];
-
-    /*
-     * Get the route key for the model.
-     *
-     * @return string
-     */
-    public function getRouteKeyName(): string
-    {
-        return 'name';
-    }
+    protected $filterableFields = [];
 }
