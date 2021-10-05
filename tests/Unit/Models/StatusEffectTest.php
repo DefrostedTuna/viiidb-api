@@ -23,7 +23,7 @@ class StatusEffectTest extends TestCase
     {
         $statusEffect = new StatusEffect();
 
-        $this->assertEquals('name', $statusEffect->getOrderByField());
+        $this->assertEquals('sort_id', $statusEffect->getOrderByField());
     }
 
     /** @test */
@@ -33,6 +33,7 @@ class StatusEffectTest extends TestCase
 
         $visibleFields = [
             'id',
+            'sort_id',
             'name',
             'type',
             'description',
@@ -49,6 +50,7 @@ class StatusEffectTest extends TestCase
 
         $expected = [
             'id'          => 'string',
+            'sort_id'     => 'integer',
             'name'        => 'string',
             'type'        => 'string',
             'description' => 'string',

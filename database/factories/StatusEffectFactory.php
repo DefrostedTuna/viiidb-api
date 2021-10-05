@@ -22,6 +22,7 @@ class StatusEffectFactory extends Factory
     public function definition()
     {
         return [
+            'sort_id' => $this->faker->unique()->numberBetween(1, 28),
             'name' => $this->faker->word,
             'type' => $this->faker->word,
             'description' => $this->faker->paragraph,

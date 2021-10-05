@@ -20,7 +20,7 @@ class StatusEffect extends Model
      *
      * @var string
      */
-    protected $orderByField = 'name';
+    protected $orderByField = 'sort_id';
 
     /**
      * The default direction used to order query results by.
@@ -36,6 +36,7 @@ class StatusEffect extends Model
      */
     protected $visible = [
         'id',
+        'sort_id',
         'name',
         'type',
         'description',
@@ -48,6 +49,7 @@ class StatusEffect extends Model
      */
     protected $casts = [
         'id'          => 'string',
+        'sort_id'     => 'integer',
         'name'        => 'string',
         'type'        => 'string',
         'description' => 'string',
