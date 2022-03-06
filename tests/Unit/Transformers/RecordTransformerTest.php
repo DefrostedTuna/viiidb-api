@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Transformers\V0;
+namespace Tests\Unit\Transformers;
 
 use App\Http\Transformers\RecordTransformer;
 use Tests\TestCase;
