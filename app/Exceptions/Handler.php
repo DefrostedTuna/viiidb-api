@@ -105,7 +105,7 @@ class Handler extends ExceptionHandler
     /**
      * Determine whether or not the request should have JSON headers.
      *
-     * @param Request $request
+     * @param Request $request The HTTP request from the client
      *
      * @return bool
      */
