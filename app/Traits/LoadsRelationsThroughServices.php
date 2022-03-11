@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Model;
 use Illuminate\Support\Str;
 
 trait LoadsRelationsThroughServices
@@ -10,21 +10,21 @@ trait LoadsRelationsThroughServices
     /**
      * The relations that are available to include with the resource.
      *
-     * @var array
+     * @var string[]
      */
     protected $availableIncludes = [];
 
     /**
      * The default relations to include with the resource.
      *
-     * @var array
+     * @var string[]
      */
     protected $defaultIncludes = [];
 
     /**
      * Get the relations that are available to include with the resource.
      *
-     * @return array
+     * @return string[]
      */
     public function getAvailableIncludes(): array
     {
@@ -34,7 +34,7 @@ trait LoadsRelationsThroughServices
     /**
      * Get the default relations to include with the resource.
      *
-     * @return array
+     * @return string[]
      */
     public function getDefaultIncludes(): array
     {
@@ -49,7 +49,7 @@ trait LoadsRelationsThroughServices
      *
      * @param string $includes The requested includes in csv format
      *
-     * @return array
+     * @return string[]
      */
     public function parseIncludes(string $includes): array
     {

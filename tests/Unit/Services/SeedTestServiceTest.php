@@ -15,7 +15,7 @@ class SeedTestServiceTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function it_will_return_a_list_of_seed_tests()
+    public function it_will_return_a_list_of_seed_tests(): void
     {
         $seedTests = SeedTest::factory()->count(10)->create();
 
@@ -24,47 +24,43 @@ class SeedTestServiceTest extends TestCase
 
         $records = $service->all(new Request());
 
-        $sortedSeedTests = $seedTests->sortBy([
-            [$model->getOrderByField(), $model->getOrderByDirection()],
-        ]);
-
         $this->assertCount(10, $records);
     }
 
     /** @test */
-    public function it_will_return_an_individual_seed_test_using_the_id_key()
+    public function it_will_return_an_individual_seed_test_using_the_id_key(): void
     {
-        $seedTest = SeedTest::factory()->create();
+        $seedTest = SeedTest::factory()->create()->toArray();
 
         $model = new SeedTest();
         $service = new SeedTestService($model);
 
-        $records = $service->findOrFail($seedTest->id, new Request());
+        $records = $service->findOrFail($seedTest['id'], new Request());
 
         $this->assertEquals([
-            'id' => $seedTest->id,
-            'level' => $seedTest->level,
+            'id' => $seedTest['id'],
+            'level' => $seedTest['level'],
         ], $records);
     }
 
     /** @test */
-    public function it_will_return_an_individual_seed_test_using_the_level_key()
+    public function it_will_return_an_individual_seed_test_using_the_level_key(): void
     {
-        $seedTest = SeedTest::factory()->create();
+        $seedTest = SeedTest::factory()->create()->toArray();
 
         $model = new SeedTest();
         $service = new SeedTestService($model);
 
-        $records = $service->findOrFail($seedTest->level, new Request());
+        $records = $service->findOrFail($seedTest['level'], new Request());
 
         $this->assertEquals([
-            'id' => $seedTest->id,
-            'level' => $seedTest->level,
+            'id' => $seedTest['id'],
+            'level' => $seedTest['level'],
         ], $records);
     }
 
     /** @test */
-    public function it_will_throw_an_exception_when_an_individual_record_is_not_found()
+    public function it_will_throw_an_exception_when_an_individual_record_is_not_found(): void
     {
         $this->expectException(NotFoundHttpException::class);
 
@@ -75,11 +71,11 @@ class SeedTestServiceTest extends TestCase
     }
 
     /** @test */
-    public function it_can_search_for_seed_tests_via_the_level_column()
+    public function it_can_search_for_seed_tests_via_the_level_column(): void
     {
-        $one = SeedTest::factory()->create(['level' => 1]);
+        $one = SeedTest::factory()->create(['level' => 1])->toArray();
         SeedTest::factory()->create(['level' => 5]);
-        $three = SeedTest::factory()->create(['level' => 10]);
+        $three = SeedTest::factory()->create(['level' => 10])->toArray();
 
         $model = new SeedTest();
         $service = new SeedTestService($model);
@@ -88,20 +84,20 @@ class SeedTestServiceTest extends TestCase
 
         $this->assertEquals([
             [
-                'id' => $one->id,
-                'level' => $one->level,
+                'id' => $one['id'],
+                'level' => $one['level'],
             ],
             [
-                'id' => $three->id,
-                'level' => $three->level,
+                'id' => $three['id'],
+                'level' => $three['level'],
             ],
         ], $records);
     }
 
     /** @test */
-    public function it_can_filter_seed_tests_via_the_level_column()
+    public function it_can_filter_seed_tests_via_the_level_column(): void
     {
-        $one = SeedTest::factory()->create(['level' => 1]);
+        $one = SeedTest::factory()->create(['level' => 1])->toArray();
         SeedTest::factory()->create(['level' => 5]);
         SeedTest::factory()->create(['level' => 10]);
 
@@ -112,18 +108,18 @@ class SeedTestServiceTest extends TestCase
 
         $this->assertEquals([
             [
-                'id' => $one->id,
-                'level' => $one->level,
+                'id' => $one['id'],
+                'level' => $one['level'],
             ],
         ], $records);
     }
 
     /** @test */
-    public function it_can_filter_seed_tests_via_the_level_column_using_the_like_statement()
+    public function it_can_filter_seed_tests_via_the_level_column_using_the_like_statement(): void
     {
-        $one = SeedTest::factory()->create(['level' => 1]);
+        $one = SeedTest::factory()->create(['level' => 1])->toArray();
         SeedTest::factory()->create(['level' => 5]);
-        $three = SeedTest::factory()->create(['level' => 10]);
+        $three = SeedTest::factory()->create(['level' => 10])->toArray();
 
         $model = new SeedTest();
         $service = new SeedTestService($model);
@@ -132,20 +128,20 @@ class SeedTestServiceTest extends TestCase
 
         $this->assertEquals([
             [
-                'id' => $one->id,
-                'level' => $one->level,
+                'id' => $one['id'],
+                'level' => $one['level'],
             ],
             [
-                'id' => $three->id,
-                'level' => $three->level,
+                'id' => $three['id'],
+                'level' => $three['level'],
             ],
         ], $records);
     }
 
     /** @test */
-    public function it_can_load_the_test_questions_relation_on_a_list_of_seed_tests()
+    public function it_can_load_the_test_questions_relation_on_a_list_of_seed_tests(): void
     {
-        $seedTests = SeedTest::factory()
+        SeedTest::factory()
             ->count(10)
             ->has(TestQuestion::factory()->count(10))
             ->create();
@@ -155,10 +151,6 @@ class SeedTestServiceTest extends TestCase
 
         $records = $service->all(new Request(['include' => 'test-questions']));
 
-        $sortedSeedTests = $seedTests->sortBy([
-            [$model->getOrderByField(), $model->getOrderByDirection()],
-        ]);
-
         $this->assertArraySubset([
             [
                 'test_questions' => [],
@@ -167,21 +159,23 @@ class SeedTestServiceTest extends TestCase
     }
 
     /** @test */
-    public function it_can_load_the_test_questions_relation_on_an_individual_seed_test()
+    public function it_can_load_the_test_questions_relation_on_an_individual_seed_test(): void
     {
         $seedTest = SeedTest::factory()
             ->has(TestQuestion::factory()->count(1))
-            ->create();
+            ->create()
+            ->load('testQuestions')
+            ->toArray();
 
         $model = new SeedTest();
         $service = new SeedTestService($model);
 
-        $records = $service->findOrFail($seedTest->id, new Request(['include' => 'test-questions']));
+        $records = $service->findOrFail($seedTest['id'], new Request(['include' => 'test-questions']));
 
         $this->assertEquals([
-            'id' => $seedTest->id,
-            'level' => $seedTest->level,
-            'test_questions' => $seedTest->testQuestions->toArray(),
+            'id' => $seedTest['id'],
+            'level' => $seedTest['level'],
+            'test_questions' => $seedTest['test_questions'],
         ], $records);
     }
 }

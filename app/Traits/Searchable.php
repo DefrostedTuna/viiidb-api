@@ -3,20 +3,21 @@
 namespace App\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 trait Searchable
 {
     /**
      * The fields that should be searchable.
      *
-     * @var array
+     * @var string[]
      */
     protected $searchableFields = [];
 
     /**
      * Get the fields that should be searchable.
      *
-     * @return array
+     * @return string[]
      */
     public function getSearchableFields(): array
     {
@@ -26,10 +27,10 @@ trait Searchable
     /**
      * Search the columns defined on the model for the specified value.
      *
-     * @param Builder $query The Eloquent Query Builder instance
-     * @param mixed   $value The value to search for on the columns
+     * @param Builder<Model> $query The Eloquent Query Builder instance
+     * @param mixed          $value The value to search for on the columns
      *
-     * @return Builder
+     * @return Builder<Model>
      */
     public function scopeSearch(Builder $query, mixed $value): Builder
     {

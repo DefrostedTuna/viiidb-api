@@ -13,9 +13,9 @@ class TestQuestionEndpointTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function it_will_return_a_list_of_test_questions()
+    public function it_will_return_a_list_of_test_questions(): void
     {
-        $testQuestions = TestQuestion::factory()->count(10)->create();
+        TestQuestion::factory()->count(10)->create();
 
         $response = $this->get('/v0/test-questions');
 
@@ -35,11 +35,11 @@ class TestQuestionEndpointTest extends TestCase
     }
 
     /** @test */
-    public function it_will_return_an_individual_test_question_using_the_id_key()
+    public function it_will_return_an_individual_test_question_using_the_id_key(): void
     {
-        $testQuestion = TestQuestion::factory()->create();
+        $testQuestion = TestQuestion::factory()->create()->toArray();
 
-        $response = $this->get("/v0/test-questions/{$testQuestion->id}");
+        $response = $this->get("/v0/test-questions/{$testQuestion['id']}");
 
         $response->assertStatus(200);
         $response->assertExactJson([
@@ -47,18 +47,18 @@ class TestQuestionEndpointTest extends TestCase
             'message' => 'Successfully retrieved data.',
             'status_code' => 200,
             'data' => [
-                'id' => $testQuestion->id,
-                'sort_id' => $testQuestion->sort_id,
-                'seed_test_id' => $testQuestion->seed_test_id,
-                'question_number' => $testQuestion->question_number,
-                'question' => $testQuestion->question,
-                'answer' => $testQuestion->answer,
+                'id' => $testQuestion['id'],
+                'sort_id' => $testQuestion['sort_id'],
+                'seed_test_id' => $testQuestion['seed_test_id'],
+                'question_number' => $testQuestion['question_number'],
+                'question' => $testQuestion['question'],
+                'answer' => $testQuestion['answer'],
             ],
         ]);
     }
 
     /** @test */
-    public function it_will_throw_an_exception_when_an_individual_record_is_not_found()
+    public function it_will_throw_an_exception_when_an_individual_record_is_not_found(): void
     {
         $response = $this->get('/v0/test-questions/invalid');
 
@@ -74,14 +74,14 @@ class TestQuestionEndpointTest extends TestCase
     }
 
     /** @test */
-    public function it_can_search_for_test_questions_via_the_question_number_column()
+    public function it_can_search_for_test_questions_via_the_question_number_column(): void
     {
         $one = TestQuestion::factory()->create([
             'sort_id' => 1,
             'question_number' => 1,
             'question' => "Potions can restore a GF's HP.",
             'answer' => false,
-        ]);
+        ])->toArray();
         TestQuestion::factory()->create([
             'sort_id' => 2,
             'question_number' => 5,
@@ -92,7 +92,7 @@ class TestQuestionEndpointTest extends TestCase
             'question_number' => 10,
             'question' => 'You can stock up to 255 of each magic.',
             'answer' => false,
-        ]);
+        ])->toArray();
 
         $response = $this->get('/v0/test-questions?search=1');
 
@@ -103,34 +103,34 @@ class TestQuestionEndpointTest extends TestCase
             'status_code' => 200,
             'data' => [
                 [
-                    'id' => $one->id,
-                    'sort_id' => $one->sort_id,
-                    'seed_test_id' => $one->seed_test_id,
-                    'question_number' => $one->question_number,
-                    'question' => $one->question,
-                    'answer' => $one->answer,
+                    'id' => $one['id'],
+                    'sort_id' => $one['sort_id'],
+                    'seed_test_id' => $one['seed_test_id'],
+                    'question_number' => $one['question_number'],
+                    'question' => $one['question'],
+                    'answer' => $one['answer'],
                 ],
                 [
-                    'id' => $three->id,
-                    'sort_id' => $three->sort_id,
-                    'seed_test_id' => $three->seed_test_id,
-                    'question_number' => $three->question_number,
-                    'question' => $three->question,
-                    'answer' => $three->answer,
+                    'id' => $three['id'],
+                    'sort_id' => $three['sort_id'],
+                    'seed_test_id' => $three['seed_test_id'],
+                    'question_number' => $three['question_number'],
+                    'question' => $three['question'],
+                    'answer' => $three['answer'],
                 ],
             ],
         ]);
     }
 
     /** @test */
-    public function it_can_search_for_test_questions_via_the_question_column()
+    public function it_can_search_for_test_questions_via_the_question_column(): void
     {
         $one = TestQuestion::factory()->create([
             'sort_id' => 1,
             'question_number' => 1,
             'question' => "Potions can restore a GF's HP.",
             'answer' => false,
-        ]);
+        ])->toArray();
         TestQuestion::factory()->create([
             'sort_id' => 2,
             'question_number' => 5,
@@ -142,7 +142,7 @@ class TestQuestionEndpointTest extends TestCase
             'question_number' => 10,
             'question' => 'You can stock up to 255 of each magic.',
             'answer' => false,
-        ]);
+        ])->toArray();
 
         $response = $this->get('/v0/test-questions?search=can');
 
@@ -153,34 +153,34 @@ class TestQuestionEndpointTest extends TestCase
             'status_code' => 200,
             'data' => [
                 [
-                    'id' => $one->id,
-                    'sort_id' => $one->sort_id,
-                    'seed_test_id' => $one->seed_test_id,
-                    'question_number' => $one->question_number,
-                    'question' => $one->question,
-                    'answer' => $one->answer,
+                    'id' => $one['id'],
+                    'sort_id' => $one['sort_id'],
+                    'seed_test_id' => $one['seed_test_id'],
+                    'question_number' => $one['question_number'],
+                    'question' => $one['question'],
+                    'answer' => $one['answer'],
                 ],
                 [
-                    'id' => $three->id,
-                    'sort_id' => $three->sort_id,
-                    'seed_test_id' => $three->seed_test_id,
-                    'question_number' => $three->question_number,
-                    'question' => $three->question,
-                    'answer' => $three->answer,
+                    'id' => $three['id'],
+                    'sort_id' => $three['sort_id'],
+                    'seed_test_id' => $three['seed_test_id'],
+                    'question_number' => $three['question_number'],
+                    'question' => $three['question'],
+                    'answer' => $three['answer'],
                 ],
             ],
         ]);
     }
 
     /** @test */
-    public function it_can_search_for_test_questions_via_the_answer_column()
+    public function it_can_search_for_test_questions_via_the_answer_column(): void
     {
         $one = TestQuestion::factory()->create([
             'sort_id' => 1,
             'question_number' => 1,
             'question' => "Potions can restore a GF's HP.",
             'answer' => false,
-        ]);
+        ])->toArray();
         TestQuestion::factory()->create([
             'sort_id' => 2,
             'question_number' => 5,
@@ -192,7 +192,7 @@ class TestQuestionEndpointTest extends TestCase
             'question_number' => 10,
             'question' => 'You can stock up to 255 of each magic.',
             'answer' => false,
-        ]);
+        ])->toArray();
 
         $response = $this->get('/v0/test-questions?search=false');
 
@@ -203,34 +203,34 @@ class TestQuestionEndpointTest extends TestCase
             'status_code' => 200,
             'data' => [
                 [
-                    'id' => $one->id,
-                    'sort_id' => $one->sort_id,
-                    'seed_test_id' => $one->seed_test_id,
-                    'question_number' => $one->question_number,
-                    'question' => $one->question,
-                    'answer' => $one->answer,
+                    'id' => $one['id'],
+                    'sort_id' => $one['sort_id'],
+                    'seed_test_id' => $one['seed_test_id'],
+                    'question_number' => $one['question_number'],
+                    'question' => $one['question'],
+                    'answer' => $one['answer'],
                 ],
                 [
-                    'id' => $three->id,
-                    'sort_id' => $three->sort_id,
-                    'seed_test_id' => $three->seed_test_id,
-                    'question_number' => $three->question_number,
-                    'question' => $three->question,
-                    'answer' => $three->answer,
+                    'id' => $three['id'],
+                    'sort_id' => $three['sort_id'],
+                    'seed_test_id' => $three['seed_test_id'],
+                    'question_number' => $three['question_number'],
+                    'question' => $three['question'],
+                    'answer' => $three['answer'],
                 ],
             ],
         ]);
     }
 
     /** @test */
-    public function it_can_filter_test_questions_via_the_question_number_column()
+    public function it_can_filter_test_questions_via_the_question_number_column(): void
     {
         $one = TestQuestion::factory()->create([
             'sort_id' => 1,
             'question_number' => 1,
             'question' => "Potions can restore a GF's HP.",
             'answer' => false,
-        ]);
+        ])->toArray();
         TestQuestion::factory()->create([
             'sort_id' => 2,
             'question_number' => 5,
@@ -253,26 +253,26 @@ class TestQuestionEndpointTest extends TestCase
             'status_code' => 200,
             'data' => [
                 [
-                    'id' => $one->id,
-                    'sort_id' => $one->sort_id,
-                    'seed_test_id' => $one->seed_test_id,
-                    'question_number' => $one->question_number,
-                    'question' => $one->question,
-                    'answer' => $one->answer,
+                    'id' => $one['id'],
+                    'sort_id' => $one['sort_id'],
+                    'seed_test_id' => $one['seed_test_id'],
+                    'question_number' => $one['question_number'],
+                    'question' => $one['question'],
+                    'answer' => $one['answer'],
                 ],
             ],
         ]);
     }
 
     /** @test */
-    public function it_can_filter_test_questions_via_the_question_number_column_using_the_like_statement()
+    public function it_can_filter_test_questions_via_the_question_number_column_using_the_like_statement(): void
     {
         $one = TestQuestion::factory()->create([
             'sort_id' => 1,
             'question_number' => 1,
             'question' => "Potions can restore a GF's HP.",
             'answer' => false,
-        ]);
+        ])->toArray();
         TestQuestion::factory()->create([
             'sort_id' => 2,
             'question_number' => 5,
@@ -284,7 +284,7 @@ class TestQuestionEndpointTest extends TestCase
             'question_number' => 10,
             'question' => 'You can stock up to 255 of each magic.',
             'answer' => false,
-        ]);
+        ])->toArray();
 
         $response = $this->get('/v0/test-questions?question_number=like:1');
 
@@ -295,34 +295,34 @@ class TestQuestionEndpointTest extends TestCase
             'status_code' => 200,
             'data' => [
                 [
-                    'id' => $one->id,
-                    'sort_id' => $one->sort_id,
-                    'seed_test_id' => $one->seed_test_id,
-                    'question_number' => $one->question_number,
-                    'question' => $one->question,
-                    'answer' => $one->answer,
+                    'id' => $one['id'],
+                    'sort_id' => $one['sort_id'],
+                    'seed_test_id' => $one['seed_test_id'],
+                    'question_number' => $one['question_number'],
+                    'question' => $one['question'],
+                    'answer' => $one['answer'],
                 ],
                 [
-                    'id' => $three->id,
-                    'sort_id' => $three->sort_id,
-                    'seed_test_id' => $three->seed_test_id,
-                    'question_number' => $three->question_number,
-                    'question' => $three->question,
-                    'answer' => $three->answer,
+                    'id' => $three['id'],
+                    'sort_id' => $three['sort_id'],
+                    'seed_test_id' => $three['seed_test_id'],
+                    'question_number' => $three['question_number'],
+                    'question' => $three['question'],
+                    'answer' => $three['answer'],
                 ],
             ],
         ]);
     }
 
     /** @test */
-    public function it_can_filter_test_questions_via_the_question_column()
+    public function it_can_filter_test_questions_via_the_question_column(): void
     {
         $one = TestQuestion::factory()->create([
             'sort_id' => 1,
             'question_number' => 1,
             'question' => "Potions can restore a GF's HP.",
             'answer' => false,
-        ]);
+        ])->toArray();
         TestQuestion::factory()->create([
             'sort_id' => 2,
             'question_number' => 5,
@@ -345,26 +345,26 @@ class TestQuestionEndpointTest extends TestCase
             'status_code' => 200,
             'data' => [
                 [
-                    'id' => $one->id,
-                    'sort_id' => $one->sort_id,
-                    'seed_test_id' => $one->seed_test_id,
-                    'question_number' => $one->question_number,
-                    'question' => $one->question,
-                    'answer' => $one->answer,
+                    'id' => $one['id'],
+                    'sort_id' => $one['sort_id'],
+                    'seed_test_id' => $one['seed_test_id'],
+                    'question_number' => $one['question_number'],
+                    'question' => $one['question'],
+                    'answer' => $one['answer'],
                 ],
             ],
         ]);
     }
 
     /** @test */
-    public function it_can_filter_test_questions_via_the_question_column_using_the_like_statement()
+    public function it_can_filter_test_questions_via_the_question_column_using_the_like_statement(): void
     {
         $one = TestQuestion::factory()->create([
             'sort_id' => 1,
             'question_number' => 1,
             'question' => "Potions can restore a GF's HP.",
             'answer' => false,
-        ]);
+        ])->toArray();
         TestQuestion::factory()->create([
             'sort_id' => 2,
             'question_number' => 5,
@@ -376,7 +376,7 @@ class TestQuestionEndpointTest extends TestCase
             'question_number' => 10,
             'question' => 'You can stock up to 255 of each magic.',
             'answer' => false,
-        ]);
+        ])->toArray();
 
         $response = $this->get('/v0/test-questions?question=like:can');
 
@@ -387,27 +387,27 @@ class TestQuestionEndpointTest extends TestCase
             'status_code' => 200,
             'data' => [
                 [
-                    'id' => $one->id,
-                    'sort_id' => $one->sort_id,
-                    'seed_test_id' => $one->seed_test_id,
-                    'question_number' => $one->question_number,
-                    'question' => $one->question,
-                    'answer' => $one->answer,
+                    'id' => $one['id'],
+                    'sort_id' => $one['sort_id'],
+                    'seed_test_id' => $one['seed_test_id'],
+                    'question_number' => $one['question_number'],
+                    'question' => $one['question'],
+                    'answer' => $one['answer'],
                 ],
                 [
-                    'id' => $three->id,
-                    'sort_id' => $three->sort_id,
-                    'seed_test_id' => $three->seed_test_id,
-                    'question_number' => $three->question_number,
-                    'question' => $three->question,
-                    'answer' => $three->answer,
+                    'id' => $three['id'],
+                    'sort_id' => $three['sort_id'],
+                    'seed_test_id' => $three['seed_test_id'],
+                    'question_number' => $three['question_number'],
+                    'question' => $three['question'],
+                    'answer' => $three['answer'],
                 ],
             ],
         ]);
     }
 
     /** @test */
-    public function it_can_filter_test_questions_via_the_answer_column()
+    public function it_can_filter_test_questions_via_the_answer_column(): void
     {
         TestQuestion::factory()->create([
             'sort_id' => 1,
@@ -420,7 +420,7 @@ class TestQuestionEndpointTest extends TestCase
             'question_number' => 5,
             'question' => 'Whoever strikes the finishing blow in battle receives the most EXP.',
             'answer' => true,
-        ]);
+        ])->toArray();
         TestQuestion::factory()->create([
             'sort_id' => 3,
             'question_number' => 10,
@@ -437,26 +437,26 @@ class TestQuestionEndpointTest extends TestCase
             'status_code' => 200,
             'data' => [
                 [
-                    'id' => $two->id,
-                    'sort_id' => $two->sort_id,
-                    'seed_test_id' => $two->seed_test_id,
-                    'question_number' => $two->question_number,
-                    'question' => $two->question,
-                    'answer' => $two->answer,
+                    'id' => $two['id'],
+                    'sort_id' => $two['sort_id'],
+                    'seed_test_id' => $two['seed_test_id'],
+                    'question_number' => $two['question_number'],
+                    'question' => $two['question'],
+                    'answer' => $two['answer'],
                 ],
             ],
         ]);
     }
 
     /** @test */
-    public function it_can_filter_test_questions_via_the_answer_column_using_the_like_statement()
+    public function it_can_filter_test_questions_via_the_answer_column_using_the_like_statement(): void
     {
         $one = TestQuestion::factory()->create([
             'sort_id' => 1,
             'question_number' => 1,
             'question' => "Potions can restore a GF's HP.",
             'answer' => false,
-        ]);
+        ])->toArray();
         TestQuestion::factory()->create([
             'sort_id' => 2,
             'question_number' => 5,
@@ -468,7 +468,7 @@ class TestQuestionEndpointTest extends TestCase
             'question_number' => 10,
             'question' => 'You can stock up to 255 of each magic.',
             'answer' => false,
-        ]);
+        ])->toArray();
 
         $response = $this->get('/v0/test-questions?answer=like:f');
 
@@ -479,29 +479,29 @@ class TestQuestionEndpointTest extends TestCase
             'status_code' => 200,
             'data' => [
                 [
-                    'id' => $one->id,
-                    'sort_id' => $one->sort_id,
-                    'seed_test_id' => $one->seed_test_id,
-                    'question_number' => $one->question_number,
-                    'question' => $one->question,
-                    'answer' => $one->answer,
+                    'id' => $one['id'],
+                    'sort_id' => $one['sort_id'],
+                    'seed_test_id' => $one['seed_test_id'],
+                    'question_number' => $one['question_number'],
+                    'question' => $one['question'],
+                    'answer' => $one['answer'],
                 ],
                 [
-                    'id' => $three->id,
-                    'sort_id' => $three->sort_id,
-                    'seed_test_id' => $three->seed_test_id,
-                    'question_number' => $three->question_number,
-                    'question' => $three->question,
-                    'answer' => $three->answer,
+                    'id' => $three['id'],
+                    'sort_id' => $three['sort_id'],
+                    'seed_test_id' => $three['seed_test_id'],
+                    'question_number' => $three['question_number'],
+                    'question' => $three['question'],
+                    'answer' => $three['answer'],
                 ],
             ],
         ]);
     }
 
     /** @test */
-    public function it_can_load_the_seed_test_relation_on_a_list_of_test_questions()
+    public function it_can_load_the_seed_test_relation_on_a_list_of_test_questions(): void
     {
-        $testQuestions = TestQuestion::factory()
+        TestQuestion::factory()
             ->count(10)
             ->for(SeedTest::factory())
             ->create();
@@ -530,14 +530,16 @@ class TestQuestionEndpointTest extends TestCase
     }
 
     /** @test */
-    public function it_can_load_the_seed_test_relation_on_an_individual_test_question()
+    public function it_can_load_the_seed_test_relation_on_an_individual_test_question(): void
     {
         $testQuestion = TestQuestion::factory()
             ->for(SeedTest::factory())
-            ->create();
+            ->create()
+            ->load('seedTest')
+            ->toArray();
 
         $seedTestTransformer = $this->app->make(SeedTestTransformer::class);
-        $response = $this->get("/v0/test-questions/{$testQuestion->id}?include=seed-test");
+        $response = $this->get("/v0/test-questions/{$testQuestion['id']}?include=seed-test");
 
         $response->assertStatus(200);
         $response->assertExactJson([
@@ -545,13 +547,13 @@ class TestQuestionEndpointTest extends TestCase
             'message' => 'Successfully retrieved data.',
             'status_code' => 200,
             'data' => [
-                'id' => $testQuestion->id,
-                'sort_id' => $testQuestion->sort_id,
-                'seed_test_id' => $testQuestion->seed_test_id,
-                'question_number' => $testQuestion->question_number,
-                'question' => $testQuestion->question,
-                'answer' => $testQuestion->answer,
-                'seed_test' => $seedTestTransformer->transformRecord($testQuestion->seedTest->toArray()),
+                'id' => $testQuestion['id'],
+                'sort_id' => $testQuestion['sort_id'],
+                'seed_test_id' => $testQuestion['seed_test_id'],
+                'question_number' => $testQuestion['question_number'],
+                'question' => $testQuestion['question'],
+                'answer' => $testQuestion['answer'],
+                'seed_test' => $seedTestTransformer->transformRecord($testQuestion['seed_test']),
             ],
         ]);
     }

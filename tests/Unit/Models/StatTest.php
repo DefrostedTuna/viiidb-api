@@ -8,7 +8,7 @@ use Tests\TestCase as TestCase;
 class StatTest extends TestCase
 {
     /** @test */
-    public function it_uses_the_proper_database_table()
+    public function it_uses_the_proper_database_table(): void
     {
         $stat = new Stat();
 
@@ -16,7 +16,7 @@ class StatTest extends TestCase
     }
 
     /** @test */
-    public function it_explicitly_defines_the_column_that_results_should_use_for_ordering()
+    public function it_explicitly_defines_the_column_that_results_should_use_for_ordering(): void
     {
         $stat = new Stat();
 
@@ -24,7 +24,7 @@ class StatTest extends TestCase
     }
 
     /** @test */
-    public function it_explicitly_defines_the_visible_fields_for_api_consumption()
+    public function it_explicitly_defines_the_visible_fields_for_api_consumption(): void
     {
         $stat = new Stat();
 
@@ -39,7 +39,7 @@ class StatTest extends TestCase
     }
 
     /** @test */
-    public function it_explicitly_defines_the_cast_type_for_each_field()
+    public function it_explicitly_defines_the_cast_type_for_each_field(): void
     {
         $stat = new Stat();
         $fields = $stat->getCasts();
@@ -55,7 +55,7 @@ class StatTest extends TestCase
     }
 
     /** @test */
-    public function it_explicitly_defines_the_fields_that_are_searchable()
+    public function it_explicitly_defines_the_fields_that_are_searchable(): void
     {
         $stat = new Stat();
 
@@ -65,7 +65,7 @@ class StatTest extends TestCase
     }
 
     /** @test */
-    public function it_explicitly_defines_the_fields_that_are_filterable()
+    public function it_explicitly_defines_the_fields_that_are_filterable(): void
     {
         $stat = new Stat();
 

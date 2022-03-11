@@ -8,7 +8,7 @@ use Tests\TestCase;
 class LoadsRelationsThroughServicesTest extends TestCase
 {
     /** @test */
-    public function it_will_recursively_look_through_child_relations_to_validate_includes()
+    public function it_will_recursively_look_through_child_relations_to_validate_includes(): void
     {
         $seedTest = new SeedTest();
 
@@ -19,7 +19,7 @@ class LoadsRelationsThroughServicesTest extends TestCase
     }
 
     /** @test */
-    public function it_will_validate_that_the_relation_exists_before_trying_to_retrieve_the_relation()
+    public function it_will_validate_that_the_relation_exists_before_trying_to_retrieve_the_relation(): void
     {
         $seedTest = new SeedTest();
 
@@ -30,7 +30,7 @@ class LoadsRelationsThroughServicesTest extends TestCase
     }
 
     /** @test */
-    public function it_will_only_load_two_levels_of_relations()
+    public function it_will_only_load_two_levels_of_relations(): void
     {
         $seedTest = new SeedTest();
 

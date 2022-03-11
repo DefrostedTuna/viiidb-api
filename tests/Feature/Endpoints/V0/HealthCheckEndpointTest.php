@@ -7,7 +7,7 @@ use Tests\TestCase;
 class HealthCheckEndpointTest extends TestCase
 {
     /** @test */
-    public function it_can_check_the_server_status()
+    public function it_can_check_the_server_status(): void
     {
         $this->withoutMiddleware();
 

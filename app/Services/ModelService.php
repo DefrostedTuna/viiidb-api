@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Contracts\Services\ModelService as ModelServiceContract;
 use App\Models\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -21,11 +22,11 @@ class ModelService implements ModelServiceContract
      *
      * @param Request $request The HTTP request from the client
      *
-     * @return array
+     * @return array<int, array<string, mixed>>
      */
     public function all(Request $request): array
     {
-        $query = $this->model->newQuery();
+        $query = $this->getNewQueryBuilderInstance();
 
         if ($request->has('search')) {
             $query->search($request->search);
@@ -36,7 +37,7 @@ class ModelService implements ModelServiceContract
         );
 
         $results = $query->with($includes)
-            ->filter($request->query())
+            ->filter((array) $request->query())
             ->get();
 
         return $results->toArray();
@@ -50,7 +51,7 @@ class ModelService implements ModelServiceContract
      *
      * @throws NotFoundHttpException
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function findOrFail(string $id, Request $request): array
     {
@@ -69,5 +70,15 @@ class ModelService implements ModelServiceContract
         }
 
         return $data->toArray();
+    }
+
+    /**
+     * Create a new query builder instance.
+     *
+     * @return Builder<Model>
+     */
+    protected function getNewQueryBuilderInstance(): Builder
+    {
+        return $this->model->newQuery();
     }
 }

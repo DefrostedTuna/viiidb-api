@@ -3,20 +3,21 @@
 namespace App\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 trait FiltersRecordsByFields
 {
     /**
      * The fields that can be used as a filter on the resource.
      *
-     * @return array
+     * @var string[]
      */
     protected $filterableFields = [];
 
     /**
      * The fields that can be used as a filter on the resource.
      *
-     * @return array
+     * @return string[]
      */
     public function getFilterableFields(): array
     {
@@ -26,10 +27,10 @@ trait FiltersRecordsByFields
     /**
      * Filter the records by the given criteria.
      *
-     * @param Builder $query   The Eloquent Query Builder instance
-     * @param array   $filters An array of `key => value` pairs that correspond to `column => filter`
+     * @param Builder<Model>       $query   The Eloquent Query Builder instance
+     * @param array<string, mixed> $filters An array of `key => value` pairs that correspond to `column => filter`
      *
-     * @return Builder
+     * @return Builder<Model>
      */
     public function scopeFilter(Builder $query, array $filters): Builder
     {

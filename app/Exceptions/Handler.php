@@ -5,7 +5,9 @@ namespace App\Exceptions;
 use App\Traits\ApiResponse;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -15,7 +17,7 @@ class Handler extends ExceptionHandler
     /**
      * A list of the exception types that are not reported.
      *
-     * @var array
+     * @var string[]
      */
     protected $dontReport = [
     ];
@@ -23,7 +25,7 @@ class Handler extends ExceptionHandler
     /**
      * A list of the inputs that are never flashed for validation exceptions.
      *
-     * @var array
+     * @var string[]
      */
     protected $dontFlash = [
         'current_password',
@@ -33,10 +35,8 @@ class Handler extends ExceptionHandler
 
     /**
      * Register the exception handling callbacks for the application.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->reportable(function (Throwable $e) {
         });
@@ -45,11 +45,9 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @param Throwable $e
-     *
-     * @return void
+     * @param Throwable $e The exception that was thrown
      */
-    public function report(Throwable $e)
+    public function report(Throwable $e): void
     {
         if (app()->bound('sentry') && $this->shouldReport($e)) {
             app('sentry')->captureException($e);
@@ -61,14 +59,14 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param \Illuminate\Http\Request $request The HTTP request from the client
-     * @param Throwable                $e       The exception that was thrown
+     * @param Request   $request The HTTP request from the client
+     * @param Throwable $e       The exception that was thrown
      *
      * @return Response
      */
     public function render($request, Throwable $e): Response
     {
-        if ($request->route() && in_array('api', $request->route()->middleware())) {
+        if ($this->requestShouldHaveJsonHeaders($request)) {
             $request->headers->set('accept', 'application/json');
         }
 
@@ -88,14 +86,31 @@ class Handler extends ExceptionHandler
      */
     protected function handleJsonException(Throwable $e): JsonResponse
     {
+        $statusCode = 500;
         $message = config('app.debug')
             ? $e->getMessage()
             : ($this->isHttpException($e) ? $e->getMessage() : 'Server Error');
 
+        if ($e instanceof HttpExceptionInterface) {
+            $statusCode = $e->getStatusCode();
+        }
+
         return $this->respondWithError(
             $message,
             $this->convertExceptionToArray($e),
-            $this->isHttpException($e) ? $e->getStatusCode() : 500
+            $statusCode
         );
+    }
+
+    /**
+     * Determine whether or not the request should have JSON headers.
+     *
+     * @param Request $request
+     *
+     * @return bool
+     */
+    protected function requestShouldHaveJsonHeaders(Request $request): bool
+    {
+        return $request->route() && in_array('api', (array) $request->route()->middleware());
     }
 }

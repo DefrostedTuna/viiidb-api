@@ -5,6 +5,9 @@ namespace Database\Factories;
 use App\Models\SeedTest;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends Factory<SeedTest>
+ */
 class SeedTestFactory extends Factory
 {
     /**

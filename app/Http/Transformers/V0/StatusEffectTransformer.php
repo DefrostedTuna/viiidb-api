@@ -9,9 +9,9 @@ class StatusEffectTransformer extends RecordTransformer
     /**
      * Transforms an individual record to standardize the output.
      *
-     * @param array $record The record to be transformed
+     * @param array<string, mixed> $record The record to be transformed
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function transformRecord(array $record): array
     {

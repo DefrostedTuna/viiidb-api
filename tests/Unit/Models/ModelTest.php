@@ -17,7 +17,7 @@ class ModelTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function it_explicitly_disables_incrementing_primary_keys()
+    public function it_explicitly_disables_incrementing_primary_keys(): void
     {
         $model = new Model();
 
@@ -25,7 +25,7 @@ class ModelTest extends TestCase
     }
 
     /** @test */
-    public function it_sets_the_primary_key_column_explicitly()
+    public function it_sets_the_primary_key_column_explicitly(): void
     {
         $model = new Model();
 
@@ -33,7 +33,7 @@ class ModelTest extends TestCase
     }
 
     /** @test */
-    public function it_sets_the_primary_key_type_to_string()
+    public function it_sets_the_primary_key_type_to_string(): void
     {
         $model = new Model();
 
@@ -41,7 +41,7 @@ class ModelTest extends TestCase
     }
 
     /** @test */
-    public function it_explicitly_defines_the_order_results_should_be_returned_by()
+    public function it_explicitly_defines_the_order_results_should_be_returned_by(): void
     {
         $model = new Model();
 
@@ -49,7 +49,7 @@ class ModelTest extends TestCase
     }
 
     /** @test */
-    public function it_does_not_allow_properties_to_be_assigned_in_mass()
+    public function it_does_not_allow_properties_to_be_assigned_in_mass(): void
     {
         $model = new Model();
 
@@ -57,7 +57,7 @@ class ModelTest extends TestCase
     }
 
     /** @test */
-    public function it_explicitly_defines_the_hidden_fields_for_api_consumption()
+    public function it_explicitly_defines_the_hidden_fields_for_api_consumption(): void
     {
         $model = new Model();
 
@@ -71,16 +71,16 @@ class ModelTest extends TestCase
     }
 
     /** @test */
-    public function it_uses_uuids_for_the_primary_key()
+    public function it_uses_uuids_for_the_primary_key(): void
     {
         $this->assertTrue(in_array(
             Uuids::class,
-            class_uses(Model::class)
+            class_uses(Model::class) ?: []
         ));
     }
 
     /** @test */
-    public function it_will_not_allow_the_uuid_to_be_changed()
+    public function it_will_not_allow_the_uuid_to_be_changed(): void
     {
         $seedRank = SeedRank::factory()->create();
 
@@ -91,38 +91,38 @@ class ModelTest extends TestCase
     }
 
     /** @test */
-    public function it_can_order_query_results()
+    public function it_can_order_query_results(): void
     {
         $this->assertTrue(in_array(
             OrdersQueryResults::class,
-            class_uses(Model::class)
+            class_uses(Model::class) ?: []
         ));
     }
 
     /** @test */
-    public function it_includes_search_functionality()
+    public function it_includes_search_functionality(): void
     {
         $this->assertTrue(in_array(
             Searchable::class,
-            class_uses(Model::class)
+            class_uses(Model::class) ?: []
         ));
     }
 
     /** @test */
-    public function it_includes_the_ability_to_filter_records_by_fields()
+    public function it_includes_the_ability_to_filter_records_by_fields(): void
     {
         $this->assertTrue(in_array(
             FiltersRecordsByFields::class,
-            class_uses(Model::class)
+            class_uses(Model::class) ?: []
         ));
     }
 
     /** @test */
-    public function it_loads_relations_through_services()
+    public function it_loads_relations_through_services(): void
     {
         $this->assertTrue(in_array(
             LoadsRelationsThroughServices::class,
-            class_uses(Model::class)
+            class_uses(Model::class) ?: []
         ));
     }
 }
