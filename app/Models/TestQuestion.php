@@ -33,7 +33,7 @@ class TestQuestion extends Model
     /**
      * The attributes that should be visible in serialization.
      *
-     * @var array
+     * @var string[]
      */
     protected $visible = [
         'id',
@@ -48,7 +48,7 @@ class TestQuestion extends Model
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'id'              => 'string',
@@ -62,7 +62,7 @@ class TestQuestion extends Model
     /**
      * The fields that should be searchable.
      *
-     * @var array
+     * @var string[]
      */
     protected $searchableFields = [
         'question_number',
@@ -73,7 +73,7 @@ class TestQuestion extends Model
     /**
      * The fields that can be used as a filter on the resource.
      *
-     * @return array
+     * @var string[]
      */
     protected $filterableFields = [
         'question_number',
@@ -84,7 +84,7 @@ class TestQuestion extends Model
     /**
      * The relations that are available to include with the resource.
      *
-     * @var array
+     * @var string[]
      */
     protected $availableIncludes = [
         'seedTest',
@@ -93,7 +93,7 @@ class TestQuestion extends Model
     /**
      * The default relations to include with the resource.
      *
-     * @var array
+     * @var string[]
      */
     protected $defaultIncludes = [];
 
@@ -110,7 +110,7 @@ class TestQuestion extends Model
     /**
      * The SeeD Test that the record belongs to.
      *
-     * @return BelongsTo
+     * @return BelongsTo<SeedTest, TestQuestion>
      */
     public function seedTest(): BelongsTo
     {

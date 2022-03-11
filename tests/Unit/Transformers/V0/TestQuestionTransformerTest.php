@@ -6,13 +6,12 @@ use App\Http\Transformers\V0\SeedTestTransformer;
 use App\Http\Transformers\V0\TestQuestionTransformer;
 use App\Models\SeedTest;
 use App\Models\TestQuestion;
-use Illuminate\Database\Eloquent\Factories\Sequence;
 use Tests\TestCase;
 
 class TestQuestionTransformerTest extends TestCase
 {
     /** @test */
-    public function it_will_transform_a_single_record()
+    public function it_will_transform_a_single_record(): void
     {
         $testQuestion = TestQuestion::factory()->make([
             'id' => 'some-random-uuid',
@@ -21,65 +20,66 @@ class TestQuestionTransformerTest extends TestCase
             'question' => "Potions can restore a GF's HP.",
             'answer' => false,
             'arbitrary' => 'data',
-        ]);
+        ])->toArray();
 
         $transformer = $this->app->make(TestQuestionTransformer::class);
 
-        $transformedRecord = $transformer->transformRecord($testQuestion->toArray());
+        $transformedRecord = $transformer->transformRecord($testQuestion);
 
         $this->assertEquals([
-            'id' => $testQuestion->id,
-            'sort_id' => $testQuestion->sort_id,
-            'seed_test_id' => $testQuestion->seed_test_id,
-            'question_number' => $testQuestion->question_number,
-            'question' => $testQuestion->question,
-            'answer' => $testQuestion->answer,
+            'id' => $testQuestion['id'],
+            'sort_id' => $testQuestion['sort_id'],
+            'seed_test_id' => $testQuestion['seed_test_id'],
+            'question_number' => $testQuestion['question_number'],
+            'question' => $testQuestion['question'],
+            'answer' => $testQuestion['answer'],
         ], $transformedRecord);
     }
 
     /** @test */
-    public function it_will_transform_a_collection_of_records()
+    public function it_will_transform_a_collection_of_records(): void
     {
-        $testQuestions = TestQuestion::factory()->count(3)->make(new Sequence(
+        $testQuestions = TestQuestion::factory()->count(3)->sequence(
             ['id' => 'one', 'sort_id' => 1],
             ['id' => 'two', 'sort_id' => 2],
             ['id' => 'three', 'sort_id' => 3]
-        ));
+        )->make()->toArray();
 
         $transformer = $this->app->make(TestQuestionTransformer::class);
 
-        $transformedRecords = $transformer->transformCollection($testQuestions->toArray());
+        $transformedRecords = $transformer->transformCollection($testQuestions);
 
+        $this->assertCount(3, $testQuestions);
         $this->assertEquals([
             [
-                'id' => $testQuestions[0]->id,
-                'sort_id' => $testQuestions[0]->sort_id,
-                'seed_test_id' => $testQuestions[0]->seed_test_id,
-                'question_number' => $testQuestions[0]->question_number,
-                'question' => $testQuestions[0]->question,
-                'answer' => $testQuestions[0]->answer,
+                'id' => $testQuestions[0]['id'],
+                'sort_id' => $testQuestions[0]['sort_id'],
+                'seed_test_id' => $testQuestions[0]['seed_test_id'],
+                'question_number' => $testQuestions[0]['question_number'],
+                'question' => $testQuestions[0]['question'],
+                'answer' => $testQuestions[0]['answer'],
             ],
             [
-                'id' => $testQuestions[1]->id,
-                'sort_id' => $testQuestions[1]->sort_id,
-                'seed_test_id' => $testQuestions[1]->seed_test_id,
-                'question_number' => $testQuestions[1]->question_number,
-                'question' => $testQuestions[1]->question,
-                'answer' => $testQuestions[1]->answer,
+                'id' => $testQuestions[1]['id'],
+                'sort_id' => $testQuestions[1]['sort_id'],
+                'seed_test_id' => $testQuestions[1]['seed_test_id'],
+                'question_number' => $testQuestions[1]['question_number'],
+                'question' => $testQuestions[1]['question'],
+                'answer' => $testQuestions[1]['answer'],
             ],
             [
-                'id' => $testQuestions[2]->id,
-                'sort_id' => $testQuestions[2]->sort_id,
-                'seed_test_id' => $testQuestions[2]->seed_test_id,
-                'question_number' => $testQuestions[2]->question_number,
-                'question' => $testQuestions[2]->question,
-                'answer' => $testQuestions[2]->answer,
+                'id' => $testQuestions[2]['id'],
+                'sort_id' => $testQuestions[2]['sort_id'],
+                'seed_test_id' => $testQuestions[2]['seed_test_id'],
+                'question_number' => $testQuestions[2]['question_number'],
+                'question' => $testQuestions[2]['question'],
+                'answer' => $testQuestions[2]['answer'],
             ],
         ], $transformedRecords);
     }
 
     /** @test */
-    public function it_will_transform_the_seed_test_record_if_it_is_present()
+    public function it_will_transform_the_seed_test_record_if_it_is_present(): void
     {
         $seedTest = SeedTest::factory()->make(['id' => 'some-uuid'])->toArray();
         $testQuestion = TestQuestion::factory()->make([
@@ -106,7 +106,7 @@ class TestQuestionTransformerTest extends TestCase
     }
 
     /** @test */
-    public function it_will_include_the_seed_test_key_in_the_event_no_records_are_returned_from_the_relation()
+    public function it_will_include_the_seed_test_key_in_the_event_no_records_are_returned_from_the_relation(): void
     {
         $testQuestion = TestQuestion::factory()->make([
             'id' => 'some-random-uuid',

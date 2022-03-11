@@ -5,6 +5,9 @@ namespace Database\Factories;
 use App\Models\StatusEffect;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends Factory<StatusEffect>
+ */
 class StatusEffectFactory extends Factory
 {
     /**

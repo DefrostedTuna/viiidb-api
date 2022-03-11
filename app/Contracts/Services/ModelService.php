@@ -12,7 +12,7 @@ interface ModelService
      *
      * @param Request $request The HTTP request from the client
      *
-     * @return array
+     * @return array<int, array<string, mixed>>
      */
     public function all(Request $request): array;
 
@@ -24,7 +24,7 @@ interface ModelService
      *
      * @throws NotFoundHttpException
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function findOrFail(string $id, Request $request): array;
 }

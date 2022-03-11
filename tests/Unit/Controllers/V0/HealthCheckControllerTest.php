@@ -8,7 +8,7 @@ use Tests\TestCase;
 class HealthCheckControllerTest extends TestCase
 {
     /** @test */
-    public function it_can_check_the_server_status()
+    public function it_can_check_the_server_status(): void
     {
         $baseUrl = config('app.url');
         $currentApiVersion = config('app.current_api_version');

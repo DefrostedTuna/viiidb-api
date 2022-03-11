@@ -5,6 +5,9 @@ namespace Database\Factories;
 use App\Models\Element;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends Factory<Element>
+ */
 class ElementFactory extends Factory
 {
     /**

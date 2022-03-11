@@ -7,18 +7,11 @@ use App\Http\Transformers\RecordTransformer;
 class SeedTestTransformer extends RecordTransformer
 {
     /**
-     * Instance of the TestQuestionTransformer.
-     *
-     * @var TestQuestionTransformer
-     */
-    protected $testQuestionTransformer;
-
-    /**
      * Transforms an individual record to standardize the output.
      *
-     * @param array $record The record to be transformed
+     * @param array<string, mixed> $record The record to be transformed
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function transformRecord(array $record): array
     {
@@ -37,18 +30,12 @@ class SeedTestTransformer extends RecordTransformer
     }
 
     /**
-     * Get the instance of the TestQuestionTransformer.
-     *
-     * If an existing instance does not exist, a new instance will be created.
+     * Create a new TestQuestionTransformer instance.
      *
      * @return TestQuestionTransformer
      */
     protected function getTestQuestionTransformer(): TestQuestionTransformer
     {
-        if (! $this->testQuestionTransformer) {
-            $this->testQuestionTransformer = new TestQuestionTransformer();
-        }
-
-        return $this->testQuestionTransformer;
+        return new TestQuestionTransformer();
     }
 }

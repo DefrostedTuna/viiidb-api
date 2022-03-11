@@ -32,7 +32,7 @@ class Stat extends Model
     /**
      * The attributes that should be visible in serialization.
      *
-     * @var array
+     * @var string[]
      */
     protected $visible = [
         'id',
@@ -44,7 +44,7 @@ class Stat extends Model
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'id'           => 'string',
@@ -56,14 +56,14 @@ class Stat extends Model
     /**
      * The fields that should be searchable.
      *
-     * @var array
+     * @var string[]
      */
     protected $searchableFields = [];
 
     /**
      * The fields that can be used as a filter on the resource.
      *
-     * @return array
+     * @var string[]
      */
     protected $filterableFields = [];
 }

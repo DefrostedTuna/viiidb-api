@@ -11,9 +11,9 @@ class StatusEffectEndpointTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function it_will_return_a_list_of_status_effects()
+    public function it_will_return_a_list_of_status_effects(): void
     {
-        $statusEffects = StatusEffect::factory()->count(10)->create();
+        StatusEffect::factory()->count(10)->create();
 
         $response = $this->get('/v0/status-effects');
 
@@ -33,11 +33,11 @@ class StatusEffectEndpointTest extends TestCase
     }
 
     /** @test */
-    public function it_will_return_an_individual_status_effect_using_the_id_key()
+    public function it_will_return_an_individual_status_effect_using_the_id_key(): void
     {
-        $statusEffect = StatusEffect::factory()->create();
+        $statusEffect = StatusEffect::factory()->create()->toArray();
 
-        $response = $this->get("/v0/status-effects/{$statusEffect->id}");
+        $response = $this->get("/v0/status-effects/{$statusEffect['id']}");
 
         $response->assertStatus(200);
         $response->assertExactJson([
@@ -45,21 +45,21 @@ class StatusEffectEndpointTest extends TestCase
             'message' => 'Successfully retrieved data.',
             'status_code' => 200,
             'data' => [
-                'id' => $statusEffect->id,
-                'sort_id' => $statusEffect->sort_id,
-                'name' => $statusEffect->name,
-                'type' => $statusEffect->type,
-                'description' => $statusEffect->description,
+                'id' => $statusEffect['id'],
+                'sort_id' => $statusEffect['sort_id'],
+                'name' => $statusEffect['name'],
+                'type' => $statusEffect['type'],
+                'description' => $statusEffect['description'],
             ],
         ]);
     }
 
     /** @test */
-    public function it_will_return_an_individual_status_effect_using_the_name_key()
+    public function it_will_return_an_individual_status_effect_using_the_name_key(): void
     {
-        $statusEffect = StatusEffect::factory()->create();
+        $statusEffect = StatusEffect::factory()->create()->toArray();
 
-        $response = $this->get("/v0/status-effects/{$statusEffect->name}");
+        $response = $this->get("/v0/status-effects/{$statusEffect['name']}");
 
         $response->assertStatus(200);
         $response->assertExactJson([
@@ -67,17 +67,17 @@ class StatusEffectEndpointTest extends TestCase
             'message' => 'Successfully retrieved data.',
             'status_code' => 200,
             'data' => [
-                'id' => $statusEffect->id,
-                'sort_id' => $statusEffect->sort_id,
-                'name' => $statusEffect->name,
-                'type' => $statusEffect->type,
-                'description' => $statusEffect->description,
+                'id' => $statusEffect['id'],
+                'sort_id' => $statusEffect['sort_id'],
+                'name' => $statusEffect['name'],
+                'type' => $statusEffect['type'],
+                'description' => $statusEffect['description'],
             ],
         ]);
     }
 
     /** @test */
-    public function it_will_throw_an_exception_when_an_individual_record_is_not_found()
+    public function it_will_throw_an_exception_when_an_individual_record_is_not_found(): void
     {
         $response = $this->get('/v0/status-effects/invalid');
 
@@ -93,11 +93,23 @@ class StatusEffectEndpointTest extends TestCase
     }
 
     /** @test */
-    public function it_can_search_for_status_effects_via_the_name_column()
+    public function it_can_search_for_status_effects_via_the_name_column(): void
     {
-        StatusEffect::factory()->create(['sort_id' => 1, 'name' => 'sleep', 'type' => 'harmful']);
-        $two = StatusEffect::factory()->create(['sort_id' => 2, 'name' => 'slow', 'type' => 'harmful']);
-        StatusEffect::factory()->create(['sort_id' => 3, 'name' => 'haste', 'type' => 'beneficial']);
+        StatusEffect::factory()->create([
+            'sort_id' => 1,
+            'name' => 'sleep',
+            'type' => 'harmful',
+        ]);
+        $two = StatusEffect::factory()->create([
+            'sort_id' => 2,
+            'name' => 'slow',
+            'type' => 'harmful',
+        ])->toArray();
+        StatusEffect::factory()->create([
+            'sort_id' => 3,
+            'name' => 'haste',
+            'type' => 'beneficial',
+        ]);
 
         $response = $this->get('/v0/status-effects?search=slow');
 
@@ -108,22 +120,34 @@ class StatusEffectEndpointTest extends TestCase
             'status_code' => 200,
             'data' => [
                 [
-                    'id' => $two->id,
-                    'sort_id' => $two->sort_id,
-                    'name' => $two->name,
-                    'type' => $two->type,
-                    'description' => $two->description,
+                    'id' => $two['id'],
+                    'sort_id' => $two['sort_id'],
+                    'name' => $two['name'],
+                    'type' => $two['type'],
+                    'description' => $two['description'],
                 ],
             ],
         ]);
     }
 
     /** @test */
-    public function it_can_search_for_status_effects_via_the_type_column()
+    public function it_can_search_for_status_effects_via_the_type_column(): void
     {
-        $one = StatusEffect::factory()->create(['sort_id' => 1, 'name' => 'sleep', 'type' => 'harmful']);
-        $two = StatusEffect::factory()->create(['sort_id' => 2, 'name' => 'slow', 'type' => 'harmful']);
-        StatusEffect::factory()->create(['sort_id' => 3, 'name' => 'haste', 'type' => 'beneficial']);
+        $one = StatusEffect::factory()->create([
+            'sort_id' => 1,
+            'name' => 'sleep',
+            'type' => 'harmful',
+        ])->toArray();
+        $two = StatusEffect::factory()->create([
+            'sort_id' => 2,
+            'name' => 'slow',
+            'type' => 'harmful',
+        ])->toArray();
+        StatusEffect::factory()->create([
+            'sort_id' => 3,
+            'name' => 'haste',
+            'type' => 'beneficial',
+        ]);
 
         $response = $this->get('/v0/status-effects?search=harmful');
 
@@ -134,25 +158,25 @@ class StatusEffectEndpointTest extends TestCase
             'status_code' => 200,
             'data' => [
                 [
-                    'id' => $one->id,
-                    'sort_id' => $one->sort_id,
-                    'name' => $one->name,
-                    'type' => $one->type,
-                    'description' => $one->description,
+                    'id' => $one['id'],
+                    'sort_id' => $one['sort_id'],
+                    'name' => $one['name'],
+                    'type' => $one['type'],
+                    'description' => $one['description'],
                 ],
                 [
-                    'id' => $two->id,
-                    'sort_id' => $two->sort_id,
-                    'name' => $two->name,
-                    'type' => $two->type,
-                    'description' => $two->description,
+                    'id' => $two['id'],
+                    'sort_id' => $two['sort_id'],
+                    'name' => $two['name'],
+                    'type' => $two['type'],
+                    'description' => $two['description'],
                 ],
             ],
         ]);
     }
 
     /** @test */
-    public function it_can_search_for_status_effects_via_the_description_column()
+    public function it_can_search_for_status_effects_via_the_description_column(): void
     {
         StatusEffect::factory()->create([
             'sort_id' => 1,
@@ -171,7 +195,7 @@ class StatusEffectEndpointTest extends TestCase
             'name' => 'haste',
             'type' => 'beneficial',
             'description' => 'Group Two',
-        ]);
+        ])->toArray();
 
         $response = $this->get('/v0/status-effects?search=two');
 
@@ -182,22 +206,34 @@ class StatusEffectEndpointTest extends TestCase
             'status_code' => 200,
             'data' => [
                 [
-                    'id' => $three->id,
-                    'sort_id' => $three->sort_id,
-                    'name' => $three->name,
-                    'type' => $three->type,
-                    'description' => $three->description,
+                    'id' => $three['id'],
+                    'sort_id' => $three['sort_id'],
+                    'name' => $three['name'],
+                    'type' => $three['type'],
+                    'description' => $three['description'],
                 ],
             ],
         ]);
     }
 
     /** @test */
-    public function it_can_filter_status_effects_via_the_name_column()
+    public function it_can_filter_status_effects_via_the_name_column(): void
     {
-        $one = StatusEffect::factory()->create(['sort_id' => 1, 'name' => 'sleep', 'type' => 'harmful']);
-        StatusEffect::factory()->create(['sort_id' => 2, 'name' => 'slow', 'type' => 'harmful']);
-        StatusEffect::factory()->create(['sort_id' => 3, 'name' => 'haste', 'type' => 'beneficial']);
+        $one = StatusEffect::factory()->create([
+            'sort_id' => 1,
+            'name' => 'sleep',
+            'type' => 'harmful',
+        ])->toArray();
+        StatusEffect::factory()->create([
+            'sort_id' => 2,
+            'name' => 'slow',
+            'type' => 'harmful',
+        ]);
+        StatusEffect::factory()->create([
+            'sort_id' => 3,
+            'name' => 'haste',
+            'type' => 'beneficial',
+        ]);
 
         $response = $this->get('/v0/status-effects?name=sleep');
 
@@ -208,22 +244,34 @@ class StatusEffectEndpointTest extends TestCase
             'status_code' => 200,
             'data' => [
                 [
-                    'id' => $one->id,
-                    'sort_id' => $one->sort_id,
-                    'name' => $one->name,
-                    'type' => $one->type,
-                    'description' => $one->description,
+                    'id' => $one['id'],
+                    'sort_id' => $one['sort_id'],
+                    'name' => $one['name'],
+                    'type' => $one['type'],
+                    'description' => $one['description'],
                 ],
             ],
         ]);
     }
 
     /** @test */
-    public function it_can_filter_status_effects_via_the_name_column_using_the_like_statement()
+    public function it_can_filter_status_effects_via_the_name_column_using_the_like_statement(): void
     {
-        $one = StatusEffect::factory()->create(['sort_id' => 1, 'name' => 'sleep', 'type' => 'harmful']);
-        $two = StatusEffect::factory()->create(['sort_id' => 2, 'name' => 'slow', 'type' => 'harmful']);
-        StatusEffect::factory()->create(['sort_id' => 3, 'name' => 'haste', 'type' => 'beneficial']);
+        $one = StatusEffect::factory()->create([
+            'sort_id' => 1,
+            'name' => 'sleep',
+            'type' => 'harmful',
+        ])->toArray();
+        $two = StatusEffect::factory()->create([
+            'sort_id' => 2,
+            'name' => 'slow',
+            'type' => 'harmful',
+        ])->toArray();
+        StatusEffect::factory()->create([
+            'sort_id' => 3,
+            'name' => 'haste',
+            'type' => 'beneficial',
+        ]);
 
         $response = $this->get('/v0/status-effects?name=like:sl');
 
@@ -234,29 +282,41 @@ class StatusEffectEndpointTest extends TestCase
             'status_code' => 200,
             'data' => [
                 [
-                    'id' => $one->id,
-                    'sort_id' => $one->sort_id,
-                    'name' => $one->name,
-                    'type' => $one->type,
-                    'description' => $one->description,
+                    'id' => $one['id'],
+                    'sort_id' => $one['sort_id'],
+                    'name' => $one['name'],
+                    'type' => $one['type'],
+                    'description' => $one['description'],
                 ],
                 [
-                    'id' => $two->id,
-                    'sort_id' => $two->sort_id,
-                    'name' => $two->name,
-                    'type' => $two->type,
-                    'description' => $two->description,
+                    'id' => $two['id'],
+                    'sort_id' => $two['sort_id'],
+                    'name' => $two['name'],
+                    'type' => $two['type'],
+                    'description' => $two['description'],
                 ],
             ],
         ]);
     }
 
     /** @test */
-    public function it_can_filter_status_effects_via_the_type_column()
+    public function it_can_filter_status_effects_via_the_type_column(): void
     {
-        $one = StatusEffect::factory()->create(['sort_id' => 1, 'name' => 'sleep', 'type' => 'harmful']);
-        $two = StatusEffect::factory()->create(['sort_id' => 2, 'name' => 'slow', 'type' => 'harmful']);
-        StatusEffect::factory()->create(['sort_id' => 3, 'name' => 'haste', 'type' => 'beneficial']);
+        $one = StatusEffect::factory()->create([
+            'sort_id' => 1,
+            'name' => 'sleep',
+            'type' => 'harmful',
+        ])->toArray();
+        $two = StatusEffect::factory()->create([
+            'sort_id' => 2,
+            'name' => 'slow',
+            'type' => 'harmful',
+        ])->toArray();
+        StatusEffect::factory()->create([
+            'sort_id' => 3,
+            'name' => 'haste',
+            'type' => 'beneficial',
+        ]);
 
         $response = $this->get('/v0/status-effects?type=harmful');
 
@@ -267,29 +327,41 @@ class StatusEffectEndpointTest extends TestCase
             'status_code' => 200,
             'data' => [
                 [
-                    'id' => $one->id,
-                    'sort_id' => $one->sort_id,
-                    'name' => $one->name,
-                    'type' => $one->type,
-                    'description' => $one->description,
+                    'id' => $one['id'],
+                    'sort_id' => $one['sort_id'],
+                    'name' => $one['name'],
+                    'type' => $one['type'],
+                    'description' => $one['description'],
                 ],
                 [
-                    'id' => $two->id,
-                    'sort_id' => $two->sort_id,
-                    'name' => $two->name,
-                    'type' => $two->type,
-                    'description' => $two->description,
+                    'id' => $two['id'],
+                    'sort_id' => $two['sort_id'],
+                    'name' => $two['name'],
+                    'type' => $two['type'],
+                    'description' => $two['description'],
                 ],
             ],
         ]);
     }
 
     /** @test */
-    public function it_can_filter_status_effects_via_the_type_column_using_the_like_statement()
+    public function it_can_filter_status_effects_via_the_type_column_using_the_like_statement(): void
     {
-        $one = StatusEffect::factory()->create(['sort_id' => 1, 'name' => 'sleep', 'type' => 'harmful']);
-        $two = StatusEffect::factory()->create(['sort_id' => 2, 'name' => 'slow', 'type' => 'harmful']);
-        StatusEffect::factory()->create(['sort_id' => 3, 'name' => 'haste', 'type' => 'beneficial']);
+        $one = StatusEffect::factory()->create([
+            'sort_id' => 1,
+            'name' => 'sleep',
+            'type' => 'harmful',
+        ])->toArray();
+        $two = StatusEffect::factory()->create([
+            'sort_id' => 2,
+            'name' => 'slow',
+            'type' => 'harmful',
+        ])->toArray();
+        StatusEffect::factory()->create([
+            'sort_id' => 3,
+            'name' => 'haste',
+            'type' => 'beneficial',
+        ]);
 
         $response = $this->get('/v0/status-effects?type=like:harm');
 
@@ -300,38 +372,38 @@ class StatusEffectEndpointTest extends TestCase
             'status_code' => 200,
             'data' => [
                 [
-                    'id' => $one->id,
-                    'sort_id' => $one->sort_id,
-                    'name' => $one->name,
-                    'type' => $one->type,
-                    'description' => $one->description,
+                    'id' => $one['id'],
+                    'sort_id' => $one['sort_id'],
+                    'name' => $one['name'],
+                    'type' => $one['type'],
+                    'description' => $one['description'],
                 ],
                 [
-                    'id' => $two->id,
-                    'sort_id' => $two->sort_id,
-                    'name' => $two->name,
-                    'type' => $two->type,
-                    'description' => $two->description,
+                    'id' => $two['id'],
+                    'sort_id' => $two['sort_id'],
+                    'name' => $two['name'],
+                    'type' => $two['type'],
+                    'description' => $two['description'],
                 ],
             ],
         ]);
     }
 
     /** @test */
-    public function it_can_filter_status_effects_via_the_description_column()
+    public function it_can_filter_status_effects_via_the_description_column(): void
     {
         $one = StatusEffect::factory()->create([
             'sort_id' => 1,
             'name' => 'sleep',
             'type' => 'harmful',
             'description' => 'Group One',
-        ]);
+        ])->toArray();
         $two = StatusEffect::factory()->create([
             'sort_id' => 2,
             'name' => 'slow',
             'type' => 'harmful',
             'description' => 'Group One',
-        ]);
+        ])->toArray();
         StatusEffect::factory()->create([
             'sort_id' => 3,
             'name' => 'haste',
@@ -348,38 +420,38 @@ class StatusEffectEndpointTest extends TestCase
             'status_code' => 200,
             'data' => [
                 [
-                    'id' => $one->id,
-                    'sort_id' => $one->sort_id,
-                    'name' => $one->name,
-                    'type' => $one->type,
-                    'description' => $one->description,
+                    'id' => $one['id'],
+                    'sort_id' => $one['sort_id'],
+                    'name' => $one['name'],
+                    'type' => $one['type'],
+                    'description' => $one['description'],
                 ],
                 [
-                    'id' => $two->id,
-                    'sort_id' => $two->sort_id,
-                    'name' => $two->name,
-                    'type' => $two->type,
-                    'description' => $two->description,
+                    'id' => $two['id'],
+                    'sort_id' => $two['sort_id'],
+                    'name' => $two['name'],
+                    'type' => $two['type'],
+                    'description' => $two['description'],
                 ],
             ],
         ]);
     }
 
     /** @test */
-    public function it_can_filter_status_effects_via_the_description_column_using_the_like_statement()
+    public function it_can_filter_status_effects_via_the_description_column_using_the_like_statement(): void
     {
         $one = StatusEffect::factory()->create([
             'sort_id' => 1,
             'name' => 'sleep',
             'type' => 'harmful',
             'description' => 'Group One',
-        ]);
+        ])->toArray();
         $two = StatusEffect::factory()->create([
             'sort_id' => 2,
             'name' => 'slow',
             'type' => 'harmful',
             'description' => 'Group One',
-        ]);
+        ])->toArray();
         StatusEffect::factory()->create([
             'sort_id' => 3,
             'name' => 'haste',
@@ -396,18 +468,18 @@ class StatusEffectEndpointTest extends TestCase
             'status_code' => 200,
             'data' => [
                 [
-                    'id' => $one->id,
-                    'sort_id' => $one->sort_id,
-                    'name' => $one->name,
-                    'type' => $one->type,
-                    'description' => $one->description,
+                    'id' => $one['id'],
+                    'sort_id' => $one['sort_id'],
+                    'name' => $one['name'],
+                    'type' => $one['type'],
+                    'description' => $one['description'],
                 ],
                 [
-                    'id' => $two->id,
-                    'sort_id' => $two->sort_id,
-                    'name' => $two->name,
-                    'type' => $two->type,
-                    'description' => $two->description,
+                    'id' => $two['id'],
+                    'sort_id' => $two['sort_id'],
+                    'name' => $two['name'],
+                    'type' => $two['type'],
+                    'description' => $two['description'],
                 ],
             ],
         ]);

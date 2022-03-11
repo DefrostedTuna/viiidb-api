@@ -14,7 +14,7 @@ class CaptureInboundRequest
     /**
      * The time at which the request was first processed.
      *
-     * @var int
+     * @var float
      */
     protected $startTime = 0;
 
@@ -26,7 +26,7 @@ class CaptureInboundRequest
      *
      * @return mixed
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): mixed
     {
         $this->startTime = microtime(true);
 
@@ -38,13 +38,11 @@ class CaptureInboundRequest
      *
      * @param Request      $request  The HTTP request from the client
      * @param JsonResponse $response The response sent back to the client
-     *
-     * @return void
      */
-    public function terminate(Request $request, JsonResponse $response)
+    public function terminate(Request $request, JsonResponse $response): void
     {
         $endTime = microtime(true);
-        $timeInMilliseconds = number_format($endTime - $this->startTime, 3) * 1000;
+        $timeInMilliseconds = number_format(($endTime - $this->startTime) * 1000, 3);
 
         DB::table('inbound_requests')->insert([
             'id' => Uuid::generate(4),
