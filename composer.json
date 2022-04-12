@@ -9,21 +9,21 @@
         "fruitcake/laravel-cors": "^3.0",
         "guzzlehttp/guzzle": "^7.4",
         "http-interop/http-factory-guzzle": "^1.2",
-        "laravel/framework": "^9.3.1",
+        "laravel/framework": "^9.8.1",
         "laravel/scout": "^9.4",
         "laravel/tinker": "^2.7",
         "meilisearch/meilisearch-php": "^0.23.1",
-        "sentry/sentry-laravel": "^2.11",
+        "sentry/sentry-laravel": "^2.12",
         "webpatser/laravel-uuid": "^4.0"
     },
     "require-dev": {
         "dms/phpunit-arraysubset-asserts": "^0.4.0",
         "fakerphp/faker": "^1.9.1",
         "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^6.1",
+        "nunomaduro/collision": "^6.2",
         "nunomaduro/larastan": "^2.1",
-        "phpunit/phpunit": "^9.5.10",
-        "spatie/laravel-ignition": "^1.0"
+        "phpunit/phpunit": "^9.5.20",
+        "spatie/laravel-ignition": "^1.2"
     },
     "autoload": {
         "psr-4": {
