@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Element extends Model
+class Element extends SearchableModel
 {
     use HasFactory;
 

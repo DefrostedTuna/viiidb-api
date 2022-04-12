@@ -54,13 +54,6 @@ class Stat extends Model
     ];
 
     /**
-     * The fields that should be searchable.
-     *
-     * @var string[]
-     */
-    protected $searchableFields = [];
-
-    /**
      * The fields that can be used as a filter on the resource.
      *
      * @var string[]

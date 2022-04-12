@@ -6,6 +6,7 @@ use App\Traits\ApiResponse;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Throwable;
@@ -87,17 +88,23 @@ class Handler extends ExceptionHandler
     protected function handleJsonException(Throwable $e): JsonResponse
     {
         $statusCode = 500;
+        $errors = $this->convertExceptionToArray($e);
         $message = config('app.debug')
             ? $e->getMessage()
-            : ($this->isHttpException($e) ? $e->getMessage() : 'Server Error');
+            : ($this->shouldReportPublicMessage($e) ? $e->getMessage() : 'Server Error');
 
         if ($e instanceof HttpExceptionInterface) {
             $statusCode = $e->getStatusCode();
         }
 
+        if ($e instanceof ValidationException) {
+            $statusCode = $e->status;
+            $errors = $e->errors();
+        }
+
         return $this->respondWithError(
             $message,
-            $this->convertExceptionToArray($e),
+            $errors,
             $statusCode
         );
     }
@@ -112,5 +119,25 @@ class Handler extends ExceptionHandler
     protected function requestShouldHaveJsonHeaders(Request $request): bool
     {
         return $request->route() && in_array('api', (array) $request->route()->middleware());
+    }
+
+    /**
+     * Determine if the exception should report the message to the user.
+     *
+     * @param Throwable $e The exception that was thrown
+     *
+     * @return bool
+     */
+    protected function shouldReportPublicMessage(Throwable $e): bool
+    {
+        if ($this->isHttpException($e)) {
+            return true;
+        }
+
+        if ($e instanceof ValidationException) {
+            return true;
+        }
+
+        return false;
     }
 }

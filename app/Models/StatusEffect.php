@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class StatusEffect extends Model
+class StatusEffect extends SearchableModel
 {
     use HasFactory;
 

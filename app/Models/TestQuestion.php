@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class TestQuestion extends Model
+class TestQuestion extends SearchableModel
 {
     use HasFactory;
 

@@ -81,7 +81,7 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
     networks:
       - viiidb
- 
+
   database:
     container_name: database
     image: mysql:5.7
@@ -96,6 +96,21 @@ services:
     volumes:
       - ./mysql:/var/lib/mysql
     networks:
+      - viiidb
+
+  meilisearch:
+    image: getmeili/meilisearch:v0.26.1
+    container_name: uptilt-meilisearch
+    ports:
+      - 7700:7700
+    volumes:
+      - ./meilisearch:/data.ms
+    environment:
+      VIRTUAL_HOST: meilisearch.local
+      MEILI_MASTER_KEY: secret
+      MEILI_NO_ANALYTICS: true
+    networks:
+      - uptilt
       - viiidb
 ```
 

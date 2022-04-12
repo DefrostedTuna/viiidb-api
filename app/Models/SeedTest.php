@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class SeedTest extends Model
+class SeedTest extends SearchableModel
 {
     use HasFactory;
 
