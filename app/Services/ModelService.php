@@ -28,17 +28,11 @@ class ModelService implements ModelServiceContract
     {
         $query = $this->getNewQueryBuilderInstance();
 
-        if ($request->has('search')) {
-            $query->search($request->search);
-        }
-
         $includes = $this->model->parseIncludes(
             $request->include ?: ''
         );
 
-        $results = $query->with($includes)
-            ->filter((array) $request->query())
-            ->get();
+        $results = $query->with($includes)->get();
 
         return $results->toArray();
     }

@@ -65,18 +65,6 @@ class ElementTest extends TestCase
     }
 
     /** @test */
-    public function it_explicitly_defines_the_fields_that_are_filterable(): void
-    {
-        $element = new Element();
-
-        $expected = [
-            'name',
-        ];
-
-        $this->assertEquals($expected, $element->getFilterableFields());
-    }
-
-    /** @test */
     public function it_explicitly_defines_the_route_key_name(): void
     {
         $element = new Element();

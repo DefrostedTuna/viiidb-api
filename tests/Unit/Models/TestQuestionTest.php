@@ -77,20 +77,6 @@ class TestQuestionTest extends TestCase
     }
 
     /** @test */
-    public function it_explicitly_defines_the_fields_that_are_filterable(): void
-    {
-        $testQuestion = new TestQuestion();
-
-        $expected = [
-            'question_number',
-            'question',
-            'answer',
-        ];
-
-        $this->assertEquals($expected, $testQuestion->getFilterableFields());
-    }
-
-    /** @test */
     public function it_explicitly_defines_the_relations_that_are_available_to_include_with_the_resource(): void
     {
         $testQuestion = new TestQuestion();
