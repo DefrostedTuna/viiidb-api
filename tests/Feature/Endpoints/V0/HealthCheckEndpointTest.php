@@ -32,12 +32,12 @@ class HealthCheckEndpointTest extends TestCase
                                 'options' => [],
                             ],
                             'only' => [
-                                'description' => 'A comma separated list of resources to search.',
-                                'options' => ['seed_ranks', 'seed_tests', 'test_questions', 'status_effects', 'elements'],
+                                'description' => 'A comma separated list of resources to search. Options may be formatted as camelCase, snake_case, or kebab-case.',
+                                'options' => ['seed-ranks', 'seed-tests', 'test-questions', 'status-effects', 'elements'],
                             ],
                             'exclude' => [
-                                'description' => 'A comma separated list of resources to exclude from search results.',
-                                'options' => ['seed_ranks', 'seed_tests', 'test_questions', 'status_effects', 'elements'],
+                                'description' => 'A comma separated list of resources to exclude from search results. Options may be formatted as camelCase, snake_case, or kebab-case.',
+                                'options' => ['seed-ranks', 'seed-tests', 'test-questions', 'status-effects', 'elements'],
                             ],
                         ],
                     ],
@@ -47,11 +47,21 @@ class HealthCheckEndpointTest extends TestCase
                     ],
                     'seed_tests' => [
                         'url' => "{$baseUrl}/v{$currentApiVersion}/seed-tests",
-                        'query_parameters' => [],
+                        'query_parameters' => [
+                            'include' => [
+                                'description' => 'Include the specified relations with the results. Options may be formatted as camelCase, snake_case, or kebab-case.',
+                                'options' => ['test-questions'],
+                            ],
+                        ],
                     ],
                     'test_questions' => [
                         'url' => "{$baseUrl}/v{$currentApiVersion}/test-questions",
-                        'query_parameters' => [],
+                        'query_parameters' => [
+                            'include' => [
+                                'description' => 'Include the specified relations with the results. Options may be formatted as camelCase, snake_case, or kebab-case.',
+                                'options' => ['seed-test'],
+                            ],
+                        ],
                     ],
                     'status_effects' => [
                         'url' => "{$baseUrl}/v{$currentApiVersion}/status-effects",
