@@ -28,9 +28,9 @@ class MeilisearchService implements SearchService
     /**
      * Search the system for a subset of records.
      *
-     * @param string   $query   The string by which to search
-     * @param string[] $only    The resources that should be searched
-     * @param string[] $exclude The resources that should be excluded from the search
+     * @param string             $query   The string by which to search
+     * @param array<int, string> $only    The resources that should be searched
+     * @param array<int, string> $exclude The resources that should be excluded from the search
      *
      * @return array<string, array<int, array<string, mixed>>>
      */
@@ -87,7 +87,7 @@ class MeilisearchService implements SearchService
     /**
      * Pluck only the given resources from the ones available.
      *
-     * @param string[] $only The resources that should be searched
+     * @param array<int, string> $only The resources that should be searched
      *
      * @return array<string, string>
      */
@@ -102,7 +102,7 @@ class MeilisearchService implements SearchService
     /**
      * Exclude the given resources from the ones available.
      *
-     * @param string[] $exclude The resources that should be excluded from the search
+     * @param array<int, string> $exclude The resources that should be excluded from the search
      *
      * @return array<string, string>
      */
