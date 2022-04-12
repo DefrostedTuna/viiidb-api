@@ -32,7 +32,7 @@ class StatusEffect extends SearchableModel
     /**
      * The attributes that should be visible in serialization.
      *
-     * @var string[]
+     * @var array<int, string>
      */
     protected $visible = [
         'id',
@@ -58,7 +58,7 @@ class StatusEffect extends SearchableModel
     /**
      * The fields that should be searchable.
      *
-     * @var string[]
+     * @var array<int, string>
      */
     protected $searchableFields = [
         'name',
@@ -69,7 +69,7 @@ class StatusEffect extends SearchableModel
     /**
      * The fields that can be used as a filter on the resource.
      *
-     * @var string[]
+     * @var array<int, string>
      */
     protected $filterableFields = [
         'name',

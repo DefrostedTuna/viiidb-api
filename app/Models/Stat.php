@@ -32,7 +32,7 @@ class Stat extends Model
     /**
      * The attributes that should be visible in serialization.
      *
-     * @var string[]
+     * @var array<int, string>
      */
     protected $visible = [
         'id',
@@ -56,7 +56,7 @@ class Stat extends Model
     /**
      * The fields that can be used as a filter on the resource.
      *
-     * @var string[]
+     * @var array<int, string>
      */
     protected $filterableFields = [];
 }

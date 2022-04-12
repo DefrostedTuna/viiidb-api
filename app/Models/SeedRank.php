@@ -32,7 +32,7 @@ class SeedRank extends SearchableModel
     /**
      * The attributes that should be visible in serialization.
      *
-     * @var string[]
+     * @var array<int, string>
      */
     protected $visible = [
         'id',
@@ -54,7 +54,7 @@ class SeedRank extends SearchableModel
     /**
      * The fields that should be searchable.
      *
-     * @var string[]
+     * @var array<int, string>
      */
     protected $searchableFields = [
         'rank',

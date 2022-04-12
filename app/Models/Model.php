@@ -37,14 +37,14 @@ class Model extends EloquentModel
     /**
      * The attributes that are mass assignable.
      *
-     * @var string[]
+     * @var array<int, string>
      */
     protected $fillable = [];
 
     /**
      * The attributes that should be hidden for arrays.
      *
-     * @var string[]
+     * @var array<int, string>
      */
     protected $hidden = [
         'created_at',

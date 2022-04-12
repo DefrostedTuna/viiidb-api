@@ -11,14 +11,14 @@ class SearchableModel extends Model
     /**
      * The fields that should be searchable.
      *
-     * @var string[]
+     * @var array<int, string>
      */
     protected $searchableFields = [];
 
     /**
      * Get the fields that should be searchable.
      *
-     * @return string[]
+     * @return array<int, string>
      */
     public function getSearchableFields(): array
     {

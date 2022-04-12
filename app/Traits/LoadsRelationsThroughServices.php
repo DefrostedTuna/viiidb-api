@@ -10,21 +10,21 @@ trait LoadsRelationsThroughServices
     /**
      * The relations that are available to include with the resource.
      *
-     * @var string[]
+     * @var array<int, string>
      */
     protected $availableIncludes = [];
 
     /**
      * The default relations to include with the resource.
      *
-     * @var string[]
+     * @var array<int, string>
      */
     protected $defaultIncludes = [];
 
     /**
      * Get the relations that are available to include with the resource.
      *
-     * @return string[]
+     * @return array<int, string>
      */
     public function getAvailableIncludes(): array
     {
@@ -34,7 +34,7 @@ trait LoadsRelationsThroughServices
     /**
      * Get the default relations to include with the resource.
      *
-     * @return string[]
+     * @return array<int, string>
      */
     public function getDefaultIncludes(): array
     {
@@ -49,7 +49,7 @@ trait LoadsRelationsThroughServices
      *
      * @param string $includes The requested includes in csv format
      *
-     * @return string[]
+     * @return array<int, string>
      */
     public function parseIncludes(string $includes): array
     {

@@ -33,7 +33,7 @@ class SeedTest extends SearchableModel
     /**
      * The attributes that should be visible in serialization.
      *
-     * @var string[]
+     * @var array<int, string>
      */
     protected $visible = [
         'id',
@@ -54,7 +54,7 @@ class SeedTest extends SearchableModel
     /**
      * The fields that should be searchable.
      *
-     * @var string[]
+     * @var array<int, string>
      */
     protected $searchableFields = [
         'level',
@@ -63,7 +63,7 @@ class SeedTest extends SearchableModel
     /**
      * The fields that can be used as a filter on the resource.
      *
-     * @var string[]
+     * @var array<int, string>
      */
     protected $filterableFields = [
         'level',
@@ -72,7 +72,7 @@ class SeedTest extends SearchableModel
     /**
      * The relations that are available to include with the resource.
      *
-     * @var string[]
+     * @var array<int, string>
      */
     protected $availableIncludes = [
         'testQuestions',
@@ -81,7 +81,7 @@ class SeedTest extends SearchableModel
     /**
      * The default relations to include with the resource.
      *
-     * @var string[]
+     * @var array<int, string>
      */
     protected $defaultIncludes = [];
 
