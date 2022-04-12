@@ -5,7 +5,6 @@ namespace App\Http\Controllers\V0;
 use App\Contracts\Services\SeedRankService;
 use App\Http\Controllers\ResourceController;
 use App\Http\Transformers\V0\SeedRankTransformer;
-use Illuminate\Http\Request;
 
 class SeedRankController extends ResourceController
 {

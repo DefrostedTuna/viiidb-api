@@ -5,7 +5,6 @@ namespace App\Http\Controllers\V0;
 use App\Contracts\Services\TestQuestionService;
 use App\Http\Controllers\ResourceController;
 use App\Http\Transformers\V0\TestQuestionTransformer;
-use Illuminate\Http\Request;
 
 class TestQuestionController extends ResourceController
 {

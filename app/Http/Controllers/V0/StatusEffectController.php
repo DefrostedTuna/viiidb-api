@@ -5,7 +5,6 @@ namespace App\Http\Controllers\V0;
 use App\Contracts\Services\StatusEffectService;
 use App\Http\Controllers\ResourceController;
 use App\Http\Transformers\V0\StatusEffectTransformer;
-use Illuminate\Http\Request;
 
 class StatusEffectController extends ResourceController
 {
