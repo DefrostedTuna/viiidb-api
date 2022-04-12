@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class SeedRank extends Model
+class SeedRank extends SearchableModel
 {
     use HasFactory;
 

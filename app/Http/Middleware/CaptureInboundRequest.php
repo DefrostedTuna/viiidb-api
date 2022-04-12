@@ -5,7 +5,9 @@ namespace App\Http\Middleware;
 use Carbon\Carbon;
 use Closure;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Webpatser\Uuid\Uuid;
 
@@ -24,9 +26,9 @@ class CaptureInboundRequest
      * @param Request $request The HTTP request from the client
      * @param Closure $next    The next middleware in the chain
      *
-     * @return mixed
+     * @return JsonResponse|RedirectResponse|Response
      */
-    public function handle(Request $request, Closure $next): mixed
+    public function handle(Request $request, Closure $next): JsonResponse|RedirectResponse|Response
     {
         $this->startTime = microtime(true);
 

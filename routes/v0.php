@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\V0\ElementController;
 use App\Http\Controllers\V0\HealthCheckController;
+use App\Http\Controllers\V0\SearchController;
 use App\Http\Controllers\V0\SeedRankController;
 use App\Http\Controllers\V0\SeedTestController;
 use App\Http\Controllers\V0\StatusEffectController;
@@ -12,6 +13,8 @@ Route::get('/')->uses([HealthCheckController::class, 'status'])->withoutMiddlewa
     'throttle:api',
     'request.capture',
 ]);
+
+Route::get('/search')->uses([SearchController::class, 'index'])->middleware('search.sanitize');
 
 Route::get('/seed-ranks/')->uses([SeedRankController::class, 'index']);
 Route::get('/seed-ranks/{rank}')->uses([SeedRankController::class, 'show']);
