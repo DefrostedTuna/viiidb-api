@@ -53,24 +53,4 @@ class StatTest extends TestCase
 
         $this->assertEquals($expected, $fields);
     }
-
-    /** @test */
-    public function it_explicitly_defines_the_fields_that_are_searchable(): void
-    {
-        $stat = new Stat();
-
-        $expected = [];
-
-        $this->assertEquals($expected, $stat->getSearchableFields());
-    }
-
-    /** @test */
-    public function it_explicitly_defines_the_fields_that_are_filterable(): void
-    {
-        $stat = new Stat();
-
-        $expected = [];
-
-        $this->assertEquals($expected, $stat->getFilterableFields());
-    }
 }

@@ -74,20 +74,6 @@ class StatusEffectTest extends TestCase
     }
 
     /** @test */
-    public function it_explicitly_defines_the_fields_that_are_filterable(): void
-    {
-        $statusEffect = new StatusEffect();
-
-        $expected = [
-            'name',
-            'type',
-            'description',
-        ];
-
-        $this->assertEquals($expected, $statusEffect->getFilterableFields());
-    }
-
-    /** @test */
     public function it_explicitly_defines_the_route_key_name(): void
     {
         $statusEffect = new StatusEffect();

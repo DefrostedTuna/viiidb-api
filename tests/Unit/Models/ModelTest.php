@@ -4,10 +4,8 @@ namespace Tests\Unit\Models;
 
 use App\Models\Model;
 use App\Models\SeedRank;
-use App\Traits\FiltersRecordsByFields;
 use App\Traits\LoadsRelationsThroughServices;
 use App\Traits\OrdersQueryResults;
-use App\Traits\Searchable;
 use App\Traits\Uuids;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase as TestCase;
@@ -95,24 +93,6 @@ class ModelTest extends TestCase
     {
         $this->assertTrue(in_array(
             OrdersQueryResults::class,
-            class_uses(Model::class) ?: []
-        ));
-    }
-
-    /** @test */
-    public function it_includes_search_functionality(): void
-    {
-        $this->assertTrue(in_array(
-            Searchable::class,
-            class_uses(Model::class) ?: []
-        ));
-    }
-
-    /** @test */
-    public function it_includes_the_ability_to_filter_records_by_fields(): void
-    {
-        $this->assertTrue(in_array(
-            FiltersRecordsByFields::class,
             class_uses(Model::class) ?: []
         ));
     }

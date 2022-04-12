@@ -69,19 +69,6 @@ class SeedRankTest extends TestCase
     }
 
     /** @test */
-    public function it_explicitly_defines_the_fields_that_are_filterable(): void
-    {
-        $seedRank = new SeedRank();
-
-        $expected = [
-            'rank',
-            'salary',
-        ];
-
-        $this->assertEquals($expected, $seedRank->getFilterableFields());
-    }
-
-    /** @test */
     public function it_explicitly_defines_the_route_key_name(): void
     {
         $seedRank = new SeedRank();

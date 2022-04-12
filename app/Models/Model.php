@@ -2,19 +2,15 @@
 
 namespace App\Models;
 
-use App\Traits\FiltersRecordsByFields;
 use App\Traits\LoadsRelationsThroughServices;
 use App\Traits\OrdersQueryResults;
-use App\Traits\Searchable;
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 
 class Model extends EloquentModel
 {
-    use FiltersRecordsByFields;
     use LoadsRelationsThroughServices;
     use OrdersQueryResults;
-    use Searchable;
     use Uuids;
 
     /**

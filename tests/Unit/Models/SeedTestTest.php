@@ -67,18 +67,6 @@ class SeedTestTest extends TestCase
     }
 
     /** @test */
-    public function it_explicitly_defines_the_fields_that_are_filterable(): void
-    {
-        $seedTest = new SeedTest();
-
-        $expected = [
-            'level',
-        ];
-
-        $this->assertEquals($expected, $seedTest->getFilterableFields());
-    }
-
-    /** @test */
     public function it_explicitly_defines_the_relations_that_are_available_to_include_with_the_resource(): void
     {
         $seedTest = new SeedTest();
