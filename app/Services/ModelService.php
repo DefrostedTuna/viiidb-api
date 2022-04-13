@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Contracts\Services\ModelService as ModelServiceContract;
 use App\Models\Model;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ModelService implements ModelServiceContract
@@ -20,19 +19,17 @@ class ModelService implements ModelServiceContract
     /**
      * Retrieve all of the records in the database.
      *
-     * @param Request $request The HTTP request from the client
+     * @param array<int, string> $includes The relations to include on the resource
      *
      * @return array<int, array<string, mixed>>
      */
-    public function all(Request $request): array
+    public function all(array $includes = []): array
     {
         $query = $this->getNewQueryBuilderInstance();
 
-        $includes = $this->model->parseIncludes(
-            $request->include ?: ''
-        );
-
-        $results = $query->with($includes)->get();
+        $results = $query->with(
+            $this->model->verifyIncludes($includes)
+        )->get();
 
         return $results->toArray();
     }
@@ -40,21 +37,19 @@ class ModelService implements ModelServiceContract
     /**
      * Retrieve a specific record from the database, or fail if a record was not found.
      *
-     * @param string  $id      The ID of the requested resource
-     * @param Request $request The HTTP request from the client
+     * @param string             $id       The ID of the requested resource
+     * @param array<int, string> $includes The relations to include on the resource
      *
      * @throws NotFoundHttpException
      *
      * @return array<string, mixed>
      */
-    public function findOrFail(string $id, Request $request): array
+    public function findOrFail(string $id, array $includes = []): array
     {
-        $includes = $this->model->parseIncludes(
-            $request->include ?: ''
-        );
-
         $data = $this->model
-            ->with($includes)
+            ->with(
+                $this->model->verifyIncludes($includes)
+            )
             ->where($this->model->getKeyName(), $id)
             ->orWhere($this->model->getRouteKeyName(), $id)
             ->first();
