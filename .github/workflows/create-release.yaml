@@ -48,6 +48,7 @@ jobs:
           yarn global add standard-version
           git config --global user.name "tunabot"
           git config --global user.email rbennett1106@gmail.com
+          git config --global --add safe.directory $GITHUB_WORKSPACE
 
       - name: Checkout Code
         uses: actions/checkout@v2
