@@ -13,13 +13,15 @@ class CaptureInboundRequestTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function it_will_capture_successful_requests()
+    public function it_will_capture_successful_requests(): void
     {
         $request = new Request();
         $response = new JsonResponse([], 200);
         $middleware = new CaptureInboundRequest();
 
-        $middleware->handle($request, function () {});
+        $middleware->handle($request, function () {
+            return new JsonResponse([], 200);
+        });
         $middleware->terminate($request, $response);
 
         /*
@@ -41,13 +43,15 @@ class CaptureInboundRequestTest extends TestCase
     }
 
     /** @test */
-    public function it_will_capture_unsuccessful_requests()
+    public function it_will_capture_unsuccessful_requests(): void
     {
         $request = new Request();
         $response = new JsonResponse([], 500);
         $middleware = new CaptureInboundRequest();
 
-        $middleware->handle($request, function () {});
+        $middleware->handle($request, function () {
+            return new JsonResponse([], 500);
+        });
         $middleware->terminate($request, $response);
 
         /*

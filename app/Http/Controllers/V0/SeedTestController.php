@@ -5,7 +5,6 @@ namespace App\Http\Controllers\V0;
 use App\Contracts\Services\SeedTestService;
 use App\Http\Controllers\ResourceController;
 use App\Http\Transformers\V0\SeedTestTransformer;
-use Illuminate\Http\Request;
 
 class SeedTestController extends ResourceController
 {

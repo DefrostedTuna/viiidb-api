@@ -2,7 +2,6 @@
 
 namespace App\Contracts\Services;
 
-use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 interface ModelService
@@ -10,21 +9,21 @@ interface ModelService
     /**
      * Retrieve all of the records in the database.
      *
-     * @param Request $request The HTTP request from the client
+     * @param array<int, string> $includes The relations to include on the resource
      *
-     * @return array
+     * @return array<int, array<string, mixed>>
      */
-    public function all(Request $request): array;
+    public function all(array $includes = []): array;
 
     /**
      * Retrieve a specific record from the database, or fail if a record was not found.
      *
-     * @param string  $id      The ID of the requested resource
-     * @param Request $request The HTTP request from the client
+     * @param string             $id       The ID of the requested resource
+     * @param array<int, string> $includes The relations to include on the resource
      *
      * @throws NotFoundHttpException
      *
-     * @return array
+     * @return array<string, mixed>
      */
-    public function findOrFail(string $id, Request $request): array;
+    public function findOrFail(string $id, array $includes = []): array;
 }

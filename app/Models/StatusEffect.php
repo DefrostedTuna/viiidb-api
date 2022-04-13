@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class StatusEffect extends Model
+class StatusEffect extends SearchableModel
 {
     use HasFactory;
 
@@ -32,7 +32,7 @@ class StatusEffect extends Model
     /**
      * The attributes that should be visible in serialization.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $visible = [
         'id',
@@ -45,7 +45,7 @@ class StatusEffect extends Model
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'id'          => 'string',
@@ -58,7 +58,7 @@ class StatusEffect extends Model
     /**
      * The fields that should be searchable.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $searchableFields = [
         'name',
@@ -69,7 +69,7 @@ class StatusEffect extends Model
     /**
      * The fields that can be used as a filter on the resource.
      *
-     * @return array
+     * @var array<int, string>
      */
     protected $filterableFields = [
         'name',

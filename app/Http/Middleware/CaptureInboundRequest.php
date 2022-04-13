@@ -5,7 +5,9 @@ namespace App\Http\Middleware;
 use Carbon\Carbon;
 use Closure;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Webpatser\Uuid\Uuid;
 
@@ -14,7 +16,7 @@ class CaptureInboundRequest
     /**
      * The time at which the request was first processed.
      *
-     * @var int
+     * @var float
      */
     protected $startTime = 0;
 
@@ -24,9 +26,9 @@ class CaptureInboundRequest
      * @param Request $request The HTTP request from the client
      * @param Closure $next    The next middleware in the chain
      *
-     * @return mixed
+     * @return JsonResponse|RedirectResponse|Response
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): JsonResponse|RedirectResponse|Response
     {
         $this->startTime = microtime(true);
 
@@ -38,13 +40,11 @@ class CaptureInboundRequest
      *
      * @param Request      $request  The HTTP request from the client
      * @param JsonResponse $response The response sent back to the client
-     *
-     * @return void
      */
-    public function terminate(Request $request, JsonResponse $response)
+    public function terminate(Request $request, JsonResponse $response): void
     {
         $endTime = microtime(true);
-        $timeInMilliseconds = number_format($endTime - $this->startTime, 3) * 1000;
+        $timeInMilliseconds = number_format(($endTime - $this->startTime) * 1000, 3);
 
         DB::table('inbound_requests')->insert([
             'id' => Uuid::generate(4),

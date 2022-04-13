@@ -11,7 +11,7 @@ class SeedTestTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function it_uses_the_proper_database_table()
+    public function it_uses_the_proper_database_table(): void
     {
         $seedTest = new SeedTest();
 
@@ -19,7 +19,7 @@ class SeedTestTest extends TestCase
     }
 
     /** @test */
-    public function it_explicitly_defines_the_column_that_results_should_use_for_ordering()
+    public function it_explicitly_defines_the_column_that_results_should_use_for_ordering(): void
     {
         $seedTest = new SeedTest();
 
@@ -27,7 +27,7 @@ class SeedTestTest extends TestCase
     }
 
     /** @test */
-    public function it_explicitly_defines_the_visible_fields_for_api_consumption()
+    public function it_explicitly_defines_the_visible_fields_for_api_consumption(): void
     {
         $seedTest = new SeedTest();
 
@@ -41,7 +41,7 @@ class SeedTestTest extends TestCase
     }
 
     /** @test */
-    public function it_explicitly_defines_the_cast_type_for_each_field()
+    public function it_explicitly_defines_the_cast_type_for_each_field(): void
     {
         $seedTest = new SeedTest();
         $fields = $seedTest->getCasts();
@@ -55,7 +55,7 @@ class SeedTestTest extends TestCase
     }
 
     /** @test */
-    public function it_explicitly_defines_the_fields_that_are_searchable()
+    public function it_explicitly_defines_the_fields_that_are_searchable(): void
     {
         $seedTest = new SeedTest();
 
@@ -67,19 +67,7 @@ class SeedTestTest extends TestCase
     }
 
     /** @test */
-    public function it_explicitly_defines_the_fields_that_are_filterable()
-    {
-        $seedTest = new SeedTest();
-
-        $expected = [
-            'level',
-        ];
-
-        $this->assertEquals($expected, $seedTest->getFilterableFields());
-    }
-
-    /** @test */
-    public function it_explicitly_defines_the_relations_that_are_available_to_include_with_the_resource()
+    public function it_explicitly_defines_the_relations_that_are_available_to_include_with_the_resource(): void
     {
         $seedTest = new SeedTest();
 
@@ -91,7 +79,7 @@ class SeedTestTest extends TestCase
     }
 
     /** @test */
-    public function it_explicitly_defines_the_default_relations_to_include_with_the_resource()
+    public function it_explicitly_defines_the_default_relations_to_include_with_the_resource(): void
     {
         $seedTest = new SeedTest();
 
@@ -101,7 +89,7 @@ class SeedTestTest extends TestCase
     }
 
     /** @test */
-    public function it_explicitly_defines_the_route_key_name()
+    public function it_explicitly_defines_the_route_key_name(): void
     {
         $seedTest = new SeedTest();
 

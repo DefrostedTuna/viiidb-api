@@ -27,7 +27,7 @@ trait OrdersQueryResults
      */
     public function getOrderByField(): string
     {
-        return $this->orderByField ?: $this->getKeyName;
+        return $this->orderByField ?: $this->getKeyName();
     }
 
     /**
@@ -43,7 +43,7 @@ trait OrdersQueryResults
     /**
      * Bootstrap the trait on the model.
      */
-    protected static function bootOrdersQueryResults()
+    protected static function bootOrdersQueryResults(): void
     {
         static::addGlobalScope(new OrderQueryResults());
     }

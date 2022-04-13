@@ -2,20 +2,16 @@
 
 namespace App\Models;
 
-use App\Traits\FiltersRecordsByFields;
-use App\Traits\LoadsRelationsThroughServices;
 use App\Traits\OrdersQueryResults;
-use App\Traits\Searchable;
 use App\Traits\Uuids;
+use App\Traits\VerifiesIncludes;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 
 class Model extends EloquentModel
 {
-    use FiltersRecordsByFields;
-    use LoadsRelationsThroughServices;
     use OrdersQueryResults;
-    use Searchable;
     use Uuids;
+    use VerifiesIncludes;
 
     /**
      * Indicates if the IDs are auto-incrementing.
@@ -41,14 +37,14 @@ class Model extends EloquentModel
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $fillable = [];
 
     /**
      * The attributes that should be hidden for arrays.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $hidden = [
         'created_at',

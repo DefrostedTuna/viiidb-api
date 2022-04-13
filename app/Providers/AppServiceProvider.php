@@ -9,11 +9,14 @@ class AppServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
+        $this->app->bind(
+            \App\Contracts\Services\Search\SearchService::class,
+            \App\Services\Search\MeilisearchService::class
+        );
+
         $this->app->bind(
             \App\Contracts\Services\SeedRankService::class,
             \App\Services\SeedRankService::class
@@ -44,10 +47,8 @@ class AppServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap any application services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
     }
 }

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class SeedTest extends Model
+class SeedTest extends SearchableModel
 {
     use HasFactory;
 
@@ -33,7 +33,7 @@ class SeedTest extends Model
     /**
      * The attributes that should be visible in serialization.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $visible = [
         'id',
@@ -44,7 +44,7 @@ class SeedTest extends Model
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'id'    => 'string',
@@ -54,7 +54,7 @@ class SeedTest extends Model
     /**
      * The fields that should be searchable.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $searchableFields = [
         'level',
@@ -63,7 +63,7 @@ class SeedTest extends Model
     /**
      * The fields that can be used as a filter on the resource.
      *
-     * @return array
+     * @var array<int, string>
      */
     protected $filterableFields = [
         'level',
@@ -72,7 +72,7 @@ class SeedTest extends Model
     /**
      * The relations that are available to include with the resource.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $availableIncludes = [
         'testQuestions',
@@ -81,7 +81,7 @@ class SeedTest extends Model
     /**
      * The default relations to include with the resource.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $defaultIncludes = [];
 
@@ -98,7 +98,7 @@ class SeedTest extends Model
     /**
      * The Test Questions that are associated with the record.
      *
-     * @return HasMany
+     * @return HasMany<TestQuestion>
      */
     public function testQuestions(): HasMany
     {

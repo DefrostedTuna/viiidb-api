@@ -35,7 +35,7 @@ class ResourceController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $records = $this->service->all($request);
+        $records = $this->service->all($request->get('include', []));
 
         return $this->respondWithSuccess(
             'Successfully retrieved data.',
@@ -56,7 +56,7 @@ class ResourceController extends Controller
         return $this->respondWithSuccess(
             'Successfully retrieved data.',
             $this->transformer->transformRecord(
-                $this->service->findOrFail($id, $request)
+                $this->service->findOrFail($id, $request->get('include', []))
             )
         );
     }

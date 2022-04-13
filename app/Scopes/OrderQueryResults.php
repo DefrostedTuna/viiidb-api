@@ -11,11 +11,19 @@ class OrderQueryResults implements Scope
     /**
      * Order the query results by what is configured on the model.
      *
-     * @param Builder $builder The instance of the Eloquent query builder
-     * @param Model   $model   The instance of the current model
+     * @param Builder<Model> $builder The instance of the Eloquent query builder
+     * @param Model          $model   The instance of the current model
      */
-    public function apply(Builder $builder, Model $model)
+    public function apply(Builder $builder, Model $model): void
     {
-        $builder->orderBy($model->getOrderByField(), $model->getOrderByDirection());
+        if (
+            method_exists($model, 'getOrderByField') &&
+            method_exists($model, 'getOrderByDirection')
+        ) {
+            $builder->orderBy(
+                $model->getOrderByField(),
+                $model->getOrderByDirection()
+            );
+        }
     }
 }
