@@ -55,5 +55,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'request.capture' => \App\Http\Middleware\CaptureInboundRequest::class,
+        'relations.sanitize' => \App\Http\Middleware\SanitizesRelationalIncludes::class,
     ];
 }

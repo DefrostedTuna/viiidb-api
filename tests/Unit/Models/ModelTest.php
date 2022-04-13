@@ -4,9 +4,9 @@ namespace Tests\Unit\Models;
 
 use App\Models\Model;
 use App\Models\SeedRank;
-use App\Traits\LoadsRelationsThroughServices;
 use App\Traits\OrdersQueryResults;
 use App\Traits\Uuids;
+use App\Traits\VerifiesIncludes;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase as TestCase;
 
@@ -97,11 +97,10 @@ class ModelTest extends TestCase
         ));
     }
 
-    /** @test */
-    public function it_loads_relations_through_services(): void
+    public function it_can_verify_the_relations_that_can_be_included_with_the_resource(): void
     {
         $this->assertTrue(in_array(
-            LoadsRelationsThroughServices::class,
+            VerifiesIncludes::class,
             class_uses(Model::class) ?: []
         ));
     }

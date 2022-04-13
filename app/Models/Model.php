@@ -2,16 +2,16 @@
 
 namespace App\Models;
 
-use App\Traits\LoadsRelationsThroughServices;
 use App\Traits\OrdersQueryResults;
 use App\Traits\Uuids;
+use App\Traits\VerifiesIncludes;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 
 class Model extends EloquentModel
 {
-    use LoadsRelationsThroughServices;
     use OrdersQueryResults;
     use Uuids;
+    use VerifiesIncludes;
 
     /**
      * Indicates if the IDs are auto-incrementing.
