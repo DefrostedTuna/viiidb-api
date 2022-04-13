@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/DefrostedTuna/viiidb-api/compare/0.2.7...0.3.0) (2022-04-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* Searching via SQL using query parameters has been deprecated. The `search` and `{field}` query parameters on resource endpoints will no longer work moving forward. Please use the `/v{apiVersion}/search` endpoint instead in order to search through the various resources.
+
+### Features
+
+* add query param option descriptions to status endpoint ([#50](https://github.com/DefrostedTuna/viiidb-api/issues/50)) ([545af28](https://github.com/DefrostedTuna/viiidb-api/commit/545af28b4a5068fe0a02ede9f58463c1cc043b94))
+* introduce meilisearch service via laravel scout ([#47](https://github.com/DefrostedTuna/viiidb-api/issues/47)) ([1144806](https://github.com/DefrostedTuna/viiidb-api/commit/1144806db63f05d4bad846d62825918f6f633b2a))
+
+
+### refactor
+
+* remove search and filter functionality from sql queries ([#48](https://github.com/DefrostedTuna/viiidb-api/issues/48)) ([fb930c6](https://github.com/DefrostedTuna/viiidb-api/commit/fb930c624739daaa47092fa8a6ce7184c8c972f6))
+
 ## [0.2.7](https://github.com/DefrostedTuna/viiidb-api/compare/0.2.6...0.2.7) (2021-10-05)
 
 
