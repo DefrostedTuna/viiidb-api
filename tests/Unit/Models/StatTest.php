@@ -3,7 +3,7 @@
 namespace Tests\Unit\Models;
 
 use App\Models\Stat;
-use Tests\TestCase as TestCase;
+use Tests\TestCase;
 
 class StatTest extends TestCase
 {

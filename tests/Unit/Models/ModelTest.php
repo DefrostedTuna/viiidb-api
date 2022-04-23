@@ -8,7 +8,7 @@ use App\Traits\OrdersQueryResults;
 use App\Traits\Uuids;
 use App\Traits\VerifiesIncludes;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase as TestCase;
+use Tests\TestCase;
 
 class ModelTest extends TestCase
 {

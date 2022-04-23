@@ -3,7 +3,7 @@
 namespace Tests\Unit\Models;
 
 use App\Models\Element;
-use Tests\TestCase as TestCase;
+use Tests\TestCase;
 
 class ElementTest extends TestCase
 {
