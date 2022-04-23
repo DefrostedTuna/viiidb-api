@@ -4,7 +4,7 @@ namespace Tests\Unit\Models;
 
 use App\Models\StatusEffect;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase as TestCase;
+use Tests\TestCase;
 
 class StatusEffectTest extends TestCase
 {

@@ -4,7 +4,7 @@ namespace Tests\Unit\Models;
 
 use App\Models\SeedTest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase as TestCase;
+use Tests\TestCase;
 
 class SeedTestTest extends TestCase
 {

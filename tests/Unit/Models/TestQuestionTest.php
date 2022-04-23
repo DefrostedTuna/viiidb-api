@@ -4,7 +4,7 @@ namespace Tests\Unit\Models;
 
 use App\Models\TestQuestion;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase as TestCase;
+use Tests\TestCase;
 
 class TestQuestionTest extends TestCase
 {
