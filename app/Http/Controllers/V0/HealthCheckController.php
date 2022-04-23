@@ -70,6 +70,10 @@ class HealthCheckController extends Controller
                     'url' => "{$baseUrl}/v{$currentApiVersion}/elements",
                     'query_parameters' => [],
                 ],
+                'items' => [
+                    'url' => "{$baseUrl}/v{$currentApiVersion}/items",
+                    'query_parameters' => [],
+                ],
             ],
         ]);
     }

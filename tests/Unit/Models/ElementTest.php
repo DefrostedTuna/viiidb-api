@@ -41,7 +41,6 @@ class ElementTest extends TestCase
     public function it_explicitly_defines_the_cast_type_for_each_field(): void
     {
         $element = new Element();
-        $fields = $element->getCasts();
 
         $expected = [
             'id'      => 'string',
@@ -49,7 +48,7 @@ class ElementTest extends TestCase
             'name'    => 'string',
         ];
 
-        $this->assertEquals($expected, $fields);
+        $this->assertEquals($expected, $element->getCasts());
     }
 
     /** @test */

@@ -71,6 +71,10 @@ class HealthCheckEndpointTest extends TestCase
                         'url' => "{$baseUrl}/v{$currentApiVersion}/elements",
                         'query_parameters' => [],
                     ],
+                    'items' => [
+                        'url' => "{$baseUrl}/v{$currentApiVersion}/items",
+                        'query_parameters' => [],
+                    ],
                 ],
             ],
         ]);
