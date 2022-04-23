@@ -110,7 +110,6 @@ services:
       MEILI_MASTER_KEY: secret
       MEILI_NO_ANALYTICS: 'true'
     networks:
-      - uptilt
       - viiidb
 ```
 
