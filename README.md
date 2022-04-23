@@ -108,7 +108,7 @@ services:
     environment:
       VIRTUAL_HOST: meilisearch.local
       MEILI_MASTER_KEY: secret
-      MEILI_NO_ANALYTICS: true
+      MEILI_NO_ANALYTICS: 'true'
     networks:
       - uptilt
       - viiidb
