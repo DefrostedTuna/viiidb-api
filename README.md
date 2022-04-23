@@ -166,13 +166,12 @@ Make sure to trust the newly generated SSL certificate at an OS level after it i
 
 The last resource defined within this manifest is the `database` service. Simply put, this is used to persist data for Docker containers across the same network. Abstracting this resource to a global system level will allow multiple containers to utilize the same resource. This saves the system from having duplicate resources, allowing databases to be managed in a single, convenient place.
 
-
 #### Creating Databases
 
 By default, the database container will not contain any, well, databases. To create a database, the following command can be run from the directory where the global resources are stored;
 
 ```bash
-docker-compose exec database mysql -u root -psecret -e "CREATE DATABASE DATABASE_NAME_HERE;"
+docker compose exec database mysql -u root -psecret -e "CREATE DATABASE DATABASE_NAME_HERE;"
 ```
 
 **Note**: This command can only be used if the resources are currently _running_.
@@ -182,7 +181,7 @@ docker-compose exec database mysql -u root -psecret -e "CREATE DATABASE DATABASE
 In the event it is desirable to create a new user, the following command can be run from the directory where the global resources are stored;
 
 ```bash
-docker-compose exec database mysql -u root -psecret -e "CREATE USER 'USERNAME_HERE'@'%' IDENTIFIED BY 'PASSWORD_HERE';"
+docker compose exec database mysql -u root -psecret -e "CREATE USER 'USERNAME_HERE'@'%' IDENTIFIED BY 'PASSWORD_HERE';"
 ```
 
 **Note**: This command can only be used if the resources are currently _running_.
@@ -193,7 +192,7 @@ docker-compose exec database mysql -u root -psecret -e "CREATE USER 'USERNAME_HE
 In the event a new user or database has been added, permissions will need to be granted for access to the desired resources. To grant privileges to a user for a specific database, the following command can be run from the directory where the global resources are stored;
 
 ```bash
-docker-compose exec database mysql -u root -psecret -e "GRANT ALL PRIVILEGES ON DATABASE_NAME_HERE . * TO 'USERNAME_HERE'@'%'; FLUSH PRIVILEGES;"
+docker compose exec database mysql -u root -psecret -e "GRANT ALL PRIVILEGES ON DATABASE_NAME_HERE . * TO 'USERNAME_HERE'@'%'; FLUSH PRIVILEGES;"
 ```
 
 **Note**: This command can only be used if the resources are currently _running_.
@@ -252,7 +251,7 @@ docker-compose restart
 If this is the first time setting up VIIIDB API locally, the dependencies will need to be installed via Composer. While this can be done locally, it is highly recommended to install them from within the container instance. This will reduce version conflicts and ensure a more stable environment. Install the dependencies by running the following command;
 
 ```bash
-docker-compose exec viiidb-api composer install --no-interaction
+docker compose exec viiidb-api composer install --no-interaction
 ```
 
 ### Application Key Generation
@@ -260,41 +259,55 @@ docker-compose exec viiidb-api composer install --no-interaction
 If this is the first time setting up VIIIDB API locally, an application key will need to be generated. This can be done either from the local machine, or from within the container.
 
 ```bash
-docker-compose exec viiidb-api php artisan key:generate
+docker compose exec viiidb-api php artisan key:generate
 ```
 
 ### Database & Migrations
 
-VIIIDB API does not ship with a database container. With this being the case, a standalone database instance must be accessible. The [Global Resources](#global-resources) section covers how to spin up a database container. To create the default database using this method, navigate to the directory where the global Docker resources are stored and run the following command.
+VIIIDB API does not ship with a database container, nor a Meilisearch container. With this being the case, a standalone database and Meilisearch instance must be accessible. The [Global Resources](#global-resources) section covers how to spin up these resources. To create the default database using this method, navigate to the directory where the global Docker resources are stored and run the following command.
 
 ```bash
-docker-compose exec database mysql -u root -psecret -e "CREATE DATABASE viiidb";
+docker compose exec database mysql -u root -psecret -e "CREATE DATABASE viiidb";
 ```
 
 With an existing database in place, migrations can be run to create the tables. Migrations should always be performed from _within_ the Docker container. This ensures the correct database and environment are targeted during the migration.
 
 ```bash
-docker-compose exec viiidb-api php artisan migrate
+docker compose exec viiidb-api php artisan migrate
 ```
+
+Once the migrations have been run and all of the tables created, the data must be populated within the database. This can be taken care of using seeders. Simply run the seeder and the data will be created.
+
+```bash
+docker compose exec viiidb-api php artisan db:seed
+```
+
+Meilisearch does not require an index to be created prior to seeding the search data. This will be taken care of while seeding the data to the service. Normally each index must be seeded individually. However, a single command has been created to ease this process.
+
+```bash
+docker compose exec viiidb-api php artisan search:seed
+```
+
+This command will seed each of the required resources to Meilisearch in bulk.
 
 ## Testing
 
 VIIIDB API uses PHPUnit for testing. Unit tests should be run from _inside_ the container in order to ensure proper database functionality across all testing suites.
 
 ```bash
-docker-compose exec viiidb-api vendor/bin/phpunit
+docker compose exec viiidb-api vendor/bin/phpunit
 ```
 
 XDebug is enabled out of the box for local development which allows code coverage reports to be easily generated.
 
 ```bash
-docker-compose exec viiidb-api vendor/bin/phpunit --coverage-text
+docker compose exec viiidb-api vendor/bin/phpunit --coverage-text
 ```
 
 These commands can be aliased to make frequent testing easier
 
 ```bash
-alias t="docker-compose exec viiidb-api vendor/bin/phpunit"
+alias t="docker compose exec viiidb-api vendor/bin/phpunit"
  
 # Tests can now be run with...
  
