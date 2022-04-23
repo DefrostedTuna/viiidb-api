@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\V0\ElementController;
 use App\Http\Controllers\V0\HealthCheckController;
+use App\Http\Controllers\V0\ItemController;
 use App\Http\Controllers\V0\SearchController;
 use App\Http\Controllers\V0\SeedRankController;
 use App\Http\Controllers\V0\SeedTestController;
@@ -31,4 +32,7 @@ Route::group(['middleware' => 'relations.sanitize'], function () {
 
     Route::get('/elements/')->uses([ElementController::class, 'index']);
     Route::get('/elements/{id}')->uses([ElementController::class, 'show']);
+
+    Route::get('/items/')->uses([ItemController::class, 'index']);
+    Route::get('/items/{id}')->uses([ItemController::class, 'show']);
 });

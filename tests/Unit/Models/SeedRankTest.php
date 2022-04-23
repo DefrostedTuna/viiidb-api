@@ -44,7 +44,6 @@ class SeedRankTest extends TestCase
     public function it_explicitly_defines_the_cast_type_for_each_field(): void
     {
         $seedRank = new SeedRank();
-        $fields = $seedRank->getCasts();
 
         $expected = [
             'id' => 'string',
@@ -52,7 +51,7 @@ class SeedRankTest extends TestCase
             'salary' => 'integer',
         ];
 
-        $this->assertEquals($expected, $fields);
+        $this->assertEquals($expected, $seedRank->getCasts());
     }
 
     /** @test */

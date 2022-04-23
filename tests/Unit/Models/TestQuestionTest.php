@@ -48,7 +48,6 @@ class TestQuestionTest extends TestCase
     public function it_explicitly_defines_the_cast_type_for_each_field(): void
     {
         $testQuestion = new TestQuestion();
-        $fields = $testQuestion->getCasts();
 
         $expected = [
             'id'              => 'string',
@@ -59,7 +58,7 @@ class TestQuestionTest extends TestCase
             'answer'          => 'boolean',
         ];
 
-        $this->assertEquals($expected, $fields);
+        $this->assertEquals($expected, $testQuestion->getCasts());
     }
 
     /** @test */

@@ -42,6 +42,11 @@ class AppServiceProvider extends ServiceProvider
             \App\Services\ElementService::class
         );
 
+        $this->app->bind(
+            \App\Contracts\Services\ItemService::class,
+            \App\Services\ItemService::class
+        );
+
         $this->app->singleton(CaptureInboundRequest::class);
     }
 

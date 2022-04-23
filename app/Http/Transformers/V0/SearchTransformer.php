@@ -18,6 +18,7 @@ class SearchTransformer
         'stats' => StatTransformer::class,
         'status_effects' => StatusEffectTransformer::class,
         'test_questions' => TestQuestionTransformer::class,
+        'items' => ItemTransformer::class,
     ];
 
     /**
