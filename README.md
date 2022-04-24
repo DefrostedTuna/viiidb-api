@@ -294,22 +294,17 @@ This command will seed each of the required resources to Meilisearch in bulk.
 VIIIDB API uses PHPUnit for testing. Unit tests should be run from _inside_ the container in order to ensure proper database functionality across all testing suites.
 
 ```bash
-docker compose exec viiidb-api vendor/bin/phpunit
+docker compose exec viiidb-api composer run test
 ```
 
 XDebug is enabled out of the box for local development which allows code coverage reports to be easily generated.
 
 ```bash
-docker compose exec viiidb-api vendor/bin/phpunit --coverage-text
+docker compose exec viiidb-api composer run test:report
 ```
 
-These commands can be aliased to make frequent testing easier
+PHPStan support is also included and is configured to use level 8 as the standard.
 
 ```bash
-alias t="docker compose exec viiidb-api vendor/bin/phpunit"
- 
-# Tests can now be run with...
- 
-t
-t --coverage-text
+docker compose exec viiidb-api composer run phpstan
 ```
