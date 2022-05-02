@@ -74,6 +74,19 @@ class HealthCheckController extends Controller
                     'url' => "{$baseUrl}/v{$currentApiVersion}/items",
                     'query_parameters' => [],
                 ],
+                'locations' => [
+                    'url' => "{$baseUrl}/v{$currentApiVersion}/locations",
+                    'query_parameters' => [
+                        'include' => [
+                            'description' => 'Include the specified relations with the results. Options may be formatted as camelCase, snake_case, or kebab-case.',
+                            'options' => [
+                                'region',
+                                'parent',
+                                'locations',
+                            ],
+                        ],
+                    ],
+                ],
             ],
         ]);
     }
