@@ -5,6 +5,7 @@ namespace App\Services\Search;
 use App\Contracts\Services\Search\SearchService;
 use App\Models\Element;
 use App\Models\Item;
+use App\Models\Location;
 use App\Models\SearchableModel;
 use App\Models\SeedRank;
 use App\Models\SeedTest;
@@ -22,6 +23,7 @@ class MeilisearchService implements SearchService
      */
     protected $searchable = [
         'items' => Item::class,
+        'locations' => Location::class,
         'seed_tests' => SeedTest::class,
         'test_questions' => TestQuestion::class,
         'status_effects' => StatusEffect::class,

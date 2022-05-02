@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Element;
 use App\Models\Item;
+use App\Models\Location;
 use App\Models\SearchableModel;
 use App\Models\SeedRank;
 use App\Models\SeedTest;
@@ -40,6 +41,7 @@ class SeedSearchService extends Command
         StatusEffect::class,
         TestQuestion::class,
         Item::class,
+        Location::class,
     ];
 
     /**

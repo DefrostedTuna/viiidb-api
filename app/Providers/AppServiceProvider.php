@@ -47,6 +47,11 @@ class AppServiceProvider extends ServiceProvider
             \App\Services\ItemService::class
         );
 
+        $this->app->bind(
+            \App\Contracts\Services\LocationService::class,
+            \App\Services\LocationService::class
+        );
+
         $this->app->singleton(CaptureInboundRequest::class);
     }
 
