@@ -1,7 +1,7 @@
 # VIIIDB API
 
 <p align="center">
-  <img src="https://img.shields.io/github/workflow/status/DefrostedTuna/viiidb-api/Build%20Branch/master?label=Build&logo=github&style=flat-square">
+  <img src="https://img.shields.io/github/actions/workflow/status/DefrostedTuna/viiidb-api/build-branch.yaml?branch=master&label=Build&logo=github&style=flat-square">
 
   <a href="https://github.com/DefrostedTuna/viiidb-api/releases">
     <img src="https://img.shields.io/github/v/release/DefrostedTuna/viiidb-api?label=Stable&sort=semver&logo=github&style=flat-square">
@@ -84,7 +84,7 @@ services:
 
   database:
     container_name: database
-    image: mysql:5.7
+    image: mysql:5.8
     ports:
       - 3306:3306
     environment:
@@ -99,7 +99,7 @@ services:
       - viiidb
 
   meilisearch:
-    image: getmeili/meilisearch:v0.26.1
+    image: getmeili/meilisearch:v1.0.2
     container_name: uptilt-meilisearch
     ports:
       - 7700:7700
@@ -107,7 +107,7 @@ services:
       - ./meilisearch:/data.ms
     environment:
       VIRTUAL_HOST: meilisearch.local
-      MEILI_MASTER_KEY: secret
+      MEILI_MASTER_KEY: super-secret-master-key
       MEILI_NO_ANALYTICS: 'true'
     networks:
       - viiidb
@@ -123,15 +123,15 @@ First up is a network resource. The network resource is what Docker containers w
 
 The second resource here is the `reverse-proxy` service. The proxy service enables Docker containers to be accessed locally via a specified hostname. Whenever a container is spun up on the same network as the proxy container, the reverse proxy will look for a `VIRTUAL_HOST` environment variable on the new container. When a request is made to the local machine, the reverse proxy will look for a container with a matching `VIRTUAL_HOST` value. If a matching value is found it will route all traffic to the container that was matched.
 
-For example, the default `VIRTUAL_HOST` value for VIIIDB API is configured as `api.local.viiidb.com`. Binding this value to the container will expose the application via [https://api.local.viiidb.com](https://api.local.viiidb.com) rather than requiring the use of something like http://localhost:8080. This approach helps to streamline the development process when working with microservice ecosystems locally.
+For example, the default `VIRTUAL_HOST` value for VIIIDB API is configured as `api.viiidb.local`. Binding this value to the container will expose the application via [https://api.viiidb.local](https://api.viiidb.local) rather than requiring the use of something like http://localhost:8080. This approach helps to streamline the development process when working with microservice ecosystems locally.
 
 Aside from the `VIRTUAL_HOST` variable being set on the container, a matching `host` record must exist on the local system to direct traffic for the hostname back to `localhost`. Using the default configuration for VIIIDB API mentioned above, the system's `hosts` file will need to be modified to include the following line.
 
 ```bash
-127.0.0.1       api.local.viiidb.com
+127.0.0.1       api.viiidb.local
 ```
 
-This will allow any outbound traffic sent to `api.local.viiidb.com` to be redirected back to the local machine where it can be picked up by the reverse proxy container. 
+This will allow any outbound traffic sent to `api.viiidb.local` to be redirected back to the local machine where it can be picked up by the reverse proxy container. 
 
 #### SSL Certificates
 
@@ -144,7 +144,7 @@ To create an SSL certificate for a specific hostname, simply run the following c
 if [ ! -d "certs" ]; then mkdir certs; fi
 
 # This can be any hostname desired
-export SSL_DOMAIN_NAME=api.local.viiidb.com
+export SSL_DOMAIN_NAME=api.viiidb.local
 
 # Requires OpenSSL v1.1.1+
 openssl req -x509 \
@@ -230,7 +230,7 @@ Bind the `VIRTUAL_HOST` value specified in `.env` to your systems `hosts` file.
 # /etc/hosts -- Unix Systems
 # C:\Windows\System32\drivers\etc\hosts -- Windows Systems
  
-127.0.0.1    api.local.viiidb.com
+127.0.0.1    api.viiidb.local
 ```
 
 With this taken care of, the Docker container can be initialized.
