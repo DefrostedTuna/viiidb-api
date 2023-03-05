@@ -4,9 +4,11 @@ use App\Http\Controllers\V0\ElementController;
 use App\Http\Controllers\V0\HealthCheckController;
 use App\Http\Controllers\V0\ItemController;
 use App\Http\Controllers\V0\LocationController;
+use App\Http\Controllers\V0\LocationLocationController;
 use App\Http\Controllers\V0\SearchController;
 use App\Http\Controllers\V0\SeedRankController;
 use App\Http\Controllers\V0\SeedTestController;
+use App\Http\Controllers\V0\SeedTestTestQuestionController;
 use App\Http\Controllers\V0\StatusEffectController;
 use App\Http\Controllers\V0\TestQuestionController;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +26,7 @@ Route::group(['middleware' => 'relations.sanitize'], function () {
 
     Route::get('/seed-tests/')->uses([SeedTestController::class, 'index']);
     Route::get('/seed-tests/{test}')->uses([SeedTestController::class, 'show']);
+    Route::get('/seed-tests/{test}/test-questions')->uses([SeedTestTestQuestionController::class, 'index']);
 
     Route::get('/test-questions/')->uses([TestQuestionController::class, 'index']);
     Route::get('/test-questions/{id}')->uses([TestQuestionController::class, 'show']);
@@ -39,4 +42,5 @@ Route::group(['middleware' => 'relations.sanitize'], function () {
 
     Route::get('/locations/')->uses([LocationController::class, 'index']);
     Route::get('/locations/{id}')->uses([LocationController::class, 'show']);
+    Route::get('/locations/{id}/locations')->uses([LocationLocationController::class, 'index']);
 });
