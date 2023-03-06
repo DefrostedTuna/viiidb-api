@@ -12,8 +12,8 @@
         "laravel/framework": "^9.8.1",
         "laravel/scout": "^9.4",
         "laravel/tinker": "^2.7",
-        "meilisearch/meilisearch-php": "^0.23.1",
-        "sentry/sentry-laravel": "^2.12",
+        "meilisearch/meilisearch-php": "^1.0",
+        "sentry/sentry-laravel": "^3.2",
         "webpatser/laravel-uuid": "^4.0"
     },
     "require-dev": {
