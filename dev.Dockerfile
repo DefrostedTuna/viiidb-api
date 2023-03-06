@@ -1,4 +1,4 @@
-FROM defrostedtuna/php-nginx:8.0-dev
+FROM defrostedtuna/php-nginx:8.1-dev
 
 # Git and OpenSSH are needed for the Remote Containers setup.
 RUN apk add --no-cache \

@@ -110,13 +110,14 @@ class ModelService implements ModelServiceContract
      *
      * @param string $relation The name of the relation to instantiate
      *
-     * @return Model<EloquentModel>
+     * @return Model
      */
     protected function getRelatedInstance(string $relation): Model
     {
-        /** @var Relation */
+        /** @var Relation<Model> */
         $relation = $this->model->{$relation}();
 
+        /** @var Model */
         return $relation->getRelated();
     }
 }

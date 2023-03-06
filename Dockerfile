@@ -1,4 +1,4 @@
-FROM defrostedtuna/php-nginx:8.0
+FROM defrostedtuna/php-nginx:8.1
 
 # Copy the project files.
 COPY . /app
