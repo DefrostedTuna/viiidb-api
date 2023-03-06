@@ -22,7 +22,10 @@ jobs:
       - name: Run Unit Tests
         run: |
           php artisan key:generate --env=testing
-          vendor/bin/phpunit
+          composer run test
+
+      - name: Run PHPStan
+        run: composer run phpstan
 
   # We only want to build the branch if the commit was not pushed as part of an automated release.
   # In the event the commit was pushed as part of the automated release, it would have already
