@@ -4,10 +4,6 @@ parameters:
       - tests
   level: 8
   ignoreErrors:
-    # This is thrown when creating an instance of a model using factories. Since we know what the instance is, we can ignore these errors.
-    - '#Access to an undefined property [a-zA-Z0-9\\_]+\|Illuminate\\Database\\Eloquent\\Collection<int, [a-zA-Z0-9\\_]+>::\$[a-zA-Z0-9\\_]+#'
-    # This is thrown when creating an instance of a model using factories. Since we know what the instance is, we can ignore these errors.
-    - '#Call to an undefined method [a-zA-Z0-9\\_]+\|Illuminate\\Database\\Eloquent\\Collection<int, [a-zA-Z0-9\\_]+>::[a-zA-Z0-9\\_]+()#'
   excludePaths:
 includes:
   - ./vendor/nunomaduro/larastan/extension.neon

@@ -4,7 +4,7 @@ namespace Tests\Unit\Console\Commands;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\PendingCommand;
-use MeiliSearch\Client;
+use Meilisearch\Client;
 use Tests\TestCase;
 
 class SeedSearchServiceTest extends TestCase

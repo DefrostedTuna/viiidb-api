@@ -11,7 +11,7 @@ use App\Models\SeedTest;
 use App\Models\StatusEffect;
 use App\Models\TestQuestion;
 use Illuminate\Console\Command;
-use MeiliSearch\Client;
+use Meilisearch\Client;
 
 class SeedSearchService extends Command
 {
