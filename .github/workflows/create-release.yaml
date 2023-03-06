@@ -21,7 +21,10 @@ jobs:
       - name: Run Unit Tests
         run: |
           php artisan key:generate --env=testing
-          vendor/bin/phpunit
+          composer run test
+
+      - name: Run PHPStan
+        run: composer run phpstan
 
   # We want to release every commit that is pushed to master, with the exception of commits that are created
   # as part of a changelog update. Changelog updates do not need to be built. There are two reasons for this.
