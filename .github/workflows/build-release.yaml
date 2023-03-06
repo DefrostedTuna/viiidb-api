@@ -9,7 +9,7 @@ jobs:
   run-unit-tests:
     name: Run Unit Tests
     runs-on: ubuntu-latest
-    container: defrostedtuna/php-nginx:8.0-dev
+    container: defrostedtuna/php-nginx:8.1-dev
     steps: 
       - name: Checkout Code
         uses: actions/checkout@v2
