@@ -3,7 +3,7 @@
 namespace Tests\Unit\Models;
 
 use App\Models\Stat;
-use Tests\TestCase as TestCase;
+use Tests\TestCase;
 
 class StatTest extends TestCase
 {
@@ -42,7 +42,6 @@ class StatTest extends TestCase
     public function it_explicitly_defines_the_cast_type_for_each_field(): void
     {
         $stat = new Stat();
-        $fields = $stat->getCasts();
 
         $expected = [
             'id'           => 'string',
@@ -51,6 +50,6 @@ class StatTest extends TestCase
             'abbreviation' => 'string',
         ];
 
-        $this->assertEquals($expected, $fields);
+        $this->assertEquals($expected, $stat->getCasts());
     }
 }

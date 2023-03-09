@@ -16,5 +16,5 @@ services:
 
 networks:
   viiidb:
-    external:
-      name: viiidb
+    name: viiidb
+    external: true

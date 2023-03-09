@@ -3,13 +3,15 @@
 namespace App\Console\Commands;
 
 use App\Models\Element;
+use App\Models\Item;
+use App\Models\Location;
 use App\Models\SearchableModel;
 use App\Models\SeedRank;
 use App\Models\SeedTest;
 use App\Models\StatusEffect;
 use App\Models\TestQuestion;
 use Illuminate\Console\Command;
-use MeiliSearch\Client;
+use Meilisearch\Client;
 
 class SeedSearchService extends Command
 {
@@ -38,6 +40,8 @@ class SeedSearchService extends Command
         SeedTest::class,
         StatusEffect::class,
         TestQuestion::class,
+        Item::class,
+        Location::class,
     ];
 
     /**

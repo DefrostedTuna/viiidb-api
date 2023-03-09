@@ -26,4 +26,15 @@ interface ModelService
      * @return array<string, mixed>
      */
     public function findOrFail(string $id, array $includes = []): array;
+
+    /**
+     * Retrieve the specified relation through the parent record, or fail if the parent record was not found.
+     *
+     * @param string             $id       The ID of the requested resource
+     * @param string             $relation The relation to load on the resource
+     * @param array<int, string> $includes The relations to include on the resource
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public function findRelationOrFail(string $id, string $relation, array $includes = []): array;
 }

@@ -1,7 +1,7 @@
 # VIIIDB API
 
 <p align="center">
-  <img src="https://img.shields.io/github/workflow/status/DefrostedTuna/viiidb-api/Build%20Branch/master?label=Build&logo=github&style=flat-square">
+  <img src="https://img.shields.io/github/actions/workflow/status/DefrostedTuna/viiidb-api/build-branch.yaml?branch=master&label=Build&logo=github&style=flat-square">
 
   <a href="https://github.com/DefrostedTuna/viiidb-api/releases">
     <img src="https://img.shields.io/github/v/release/DefrostedTuna/viiidb-api?label=Stable&sort=semver&logo=github&style=flat-square">
@@ -84,7 +84,7 @@ services:
 
   database:
     container_name: database
-    image: mysql:5.7
+    image: mysql:5.8
     ports:
       - 3306:3306
     environment:
@@ -99,7 +99,7 @@ services:
       - viiidb
 
   meilisearch:
-    image: getmeili/meilisearch:v0.26.1
+    image: getmeili/meilisearch:v1.0.2
     container_name: uptilt-meilisearch
     ports:
       - 7700:7700
@@ -107,10 +107,9 @@ services:
       - ./meilisearch:/data.ms
     environment:
       VIRTUAL_HOST: meilisearch.local
-      MEILI_MASTER_KEY: secret
-      MEILI_NO_ANALYTICS: true
+      MEILI_MASTER_KEY: super-secret-master-key
+      MEILI_NO_ANALYTICS: 'true'
     networks:
-      - uptilt
       - viiidb
 ```
 
@@ -124,15 +123,15 @@ First up is a network resource. The network resource is what Docker containers w
 
 The second resource here is the `reverse-proxy` service. The proxy service enables Docker containers to be accessed locally via a specified hostname. Whenever a container is spun up on the same network as the proxy container, the reverse proxy will look for a `VIRTUAL_HOST` environment variable on the new container. When a request is made to the local machine, the reverse proxy will look for a container with a matching `VIRTUAL_HOST` value. If a matching value is found it will route all traffic to the container that was matched.
 
-For example, the default `VIRTUAL_HOST` value for VIIIDB API is configured as `api.local.viiidb.com`. Binding this value to the container will expose the application via [https://api.local.viiidb.com](https://api.local.viiidb.com) rather than requiring the use of something like http://localhost:8080. This approach helps to streamline the development process when working with microservice ecosystems locally.
+For example, the default `VIRTUAL_HOST` value for VIIIDB API is configured as `api.viiidb.local`. Binding this value to the container will expose the application via [https://api.viiidb.local](https://api.viiidb.local) rather than requiring the use of something like http://localhost:8080. This approach helps to streamline the development process when working with microservice ecosystems locally.
 
 Aside from the `VIRTUAL_HOST` variable being set on the container, a matching `host` record must exist on the local system to direct traffic for the hostname back to `localhost`. Using the default configuration for VIIIDB API mentioned above, the system's `hosts` file will need to be modified to include the following line.
 
 ```bash
-127.0.0.1       api.local.viiidb.com
+127.0.0.1       api.viiidb.local
 ```
 
-This will allow any outbound traffic sent to `api.local.viiidb.com` to be redirected back to the local machine where it can be picked up by the reverse proxy container. 
+This will allow any outbound traffic sent to `api.viiidb.local` to be redirected back to the local machine where it can be picked up by the reverse proxy container. 
 
 #### SSL Certificates
 
@@ -145,7 +144,7 @@ To create an SSL certificate for a specific hostname, simply run the following c
 if [ ! -d "certs" ]; then mkdir certs; fi
 
 # This can be any hostname desired
-export SSL_DOMAIN_NAME=api.local.viiidb.com
+export SSL_DOMAIN_NAME=api.viiidb.local
 
 # Requires OpenSSL v1.1.1+
 openssl req -x509 \
@@ -166,13 +165,12 @@ Make sure to trust the newly generated SSL certificate at an OS level after it i
 
 The last resource defined within this manifest is the `database` service. Simply put, this is used to persist data for Docker containers across the same network. Abstracting this resource to a global system level will allow multiple containers to utilize the same resource. This saves the system from having duplicate resources, allowing databases to be managed in a single, convenient place.
 
-
 #### Creating Databases
 
 By default, the database container will not contain any, well, databases. To create a database, the following command can be run from the directory where the global resources are stored;
 
 ```bash
-docker-compose exec database mysql -u root -psecret -e "CREATE DATABASE DATABASE_NAME_HERE;"
+docker compose exec database mysql -u root -psecret -e "CREATE DATABASE DATABASE_NAME_HERE;"
 ```
 
 **Note**: This command can only be used if the resources are currently _running_.
@@ -182,7 +180,7 @@ docker-compose exec database mysql -u root -psecret -e "CREATE DATABASE DATABASE
 In the event it is desirable to create a new user, the following command can be run from the directory where the global resources are stored;
 
 ```bash
-docker-compose exec database mysql -u root -psecret -e "CREATE USER 'USERNAME_HERE'@'%' IDENTIFIED BY 'PASSWORD_HERE';"
+docker compose exec database mysql -u root -psecret -e "CREATE USER 'USERNAME_HERE'@'%' IDENTIFIED BY 'PASSWORD_HERE';"
 ```
 
 **Note**: This command can only be used if the resources are currently _running_.
@@ -193,7 +191,7 @@ docker-compose exec database mysql -u root -psecret -e "CREATE USER 'USERNAME_HE
 In the event a new user or database has been added, permissions will need to be granted for access to the desired resources. To grant privileges to a user for a specific database, the following command can be run from the directory where the global resources are stored;
 
 ```bash
-docker-compose exec database mysql -u root -psecret -e "GRANT ALL PRIVILEGES ON DATABASE_NAME_HERE . * TO 'USERNAME_HERE'@'%'; FLUSH PRIVILEGES;"
+docker compose exec database mysql -u root -psecret -e "GRANT ALL PRIVILEGES ON DATABASE_NAME_HERE . * TO 'USERNAME_HERE'@'%'; FLUSH PRIVILEGES;"
 ```
 
 **Note**: This command can only be used if the resources are currently _running_.
@@ -232,7 +230,7 @@ Bind the `VIRTUAL_HOST` value specified in `.env` to your systems `hosts` file.
 # /etc/hosts -- Unix Systems
 # C:\Windows\System32\drivers\etc\hosts -- Windows Systems
  
-127.0.0.1    api.local.viiidb.com
+127.0.0.1    api.viiidb.local
 ```
 
 With this taken care of, the Docker container can be initialized.
@@ -252,7 +250,7 @@ docker-compose restart
 If this is the first time setting up VIIIDB API locally, the dependencies will need to be installed via Composer. While this can be done locally, it is highly recommended to install them from within the container instance. This will reduce version conflicts and ensure a more stable environment. Install the dependencies by running the following command;
 
 ```bash
-docker-compose exec viiidb-api composer install --no-interaction
+docker compose exec viiidb-api composer install --no-interaction
 ```
 
 ### Application Key Generation
@@ -260,44 +258,53 @@ docker-compose exec viiidb-api composer install --no-interaction
 If this is the first time setting up VIIIDB API locally, an application key will need to be generated. This can be done either from the local machine, or from within the container.
 
 ```bash
-docker-compose exec viiidb-api php artisan key:generate
+docker compose exec viiidb-api php artisan key:generate
 ```
 
 ### Database & Migrations
 
-VIIIDB API does not ship with a database container. With this being the case, a standalone database instance must be accessible. The [Global Resources](#global-resources) section covers how to spin up a database container. To create the default database using this method, navigate to the directory where the global Docker resources are stored and run the following command.
+VIIIDB API does not ship with a database container, nor a Meilisearch container. With this being the case, a standalone database and Meilisearch instance must be accessible. The [Global Resources](#global-resources) section covers how to spin up these resources. To create the default database using this method, navigate to the directory where the global Docker resources are stored and run the following command.
 
 ```bash
-docker-compose exec database mysql -u root -psecret -e "CREATE DATABASE viiidb";
+docker compose exec database mysql -u root -psecret -e "CREATE DATABASE viiidb";
 ```
 
 With an existing database in place, migrations can be run to create the tables. Migrations should always be performed from _within_ the Docker container. This ensures the correct database and environment are targeted during the migration.
 
 ```bash
-docker-compose exec viiidb-api php artisan migrate
+docker compose exec viiidb-api php artisan migrate
 ```
+
+Once the migrations have been run and all of the tables created, the data must be populated within the database. This can be taken care of using seeders. Simply run the seeder and the data will be created.
+
+```bash
+docker compose exec viiidb-api php artisan db:seed
+```
+
+Meilisearch does not require an index to be created prior to seeding the search data. This will be taken care of while seeding the data to the service. Normally each index must be seeded individually. However, a single command has been created to ease this process.
+
+```bash
+docker compose exec viiidb-api php artisan search:seed
+```
+
+This command will seed each of the required resources to Meilisearch in bulk.
 
 ## Testing
 
 VIIIDB API uses PHPUnit for testing. Unit tests should be run from _inside_ the container in order to ensure proper database functionality across all testing suites.
 
 ```bash
-docker-compose exec viiidb-api vendor/bin/phpunit
+docker compose exec viiidb-api composer run test
 ```
 
 XDebug is enabled out of the box for local development which allows code coverage reports to be easily generated.
 
 ```bash
-docker-compose exec viiidb-api vendor/bin/phpunit --coverage-text
+docker compose exec viiidb-api composer run test:report
 ```
 
-These commands can be aliased to make frequent testing easier
+PHPStan support is also included and is configured to use level 8 as the standard.
 
 ```bash
-alias t="docker-compose exec viiidb-api vendor/bin/phpunit"
- 
-# Tests can now be run with...
- 
-t
-t --coverage-text
+docker compose exec viiidb-api composer run phpstan
 ```

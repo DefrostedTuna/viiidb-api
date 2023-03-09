@@ -4,6 +4,8 @@ namespace App\Services\Search;
 
 use App\Contracts\Services\Search\SearchService;
 use App\Models\Element;
+use App\Models\Item;
+use App\Models\Location;
 use App\Models\SearchableModel;
 use App\Models\SeedRank;
 use App\Models\SeedTest;
@@ -15,14 +17,18 @@ class MeilisearchService implements SearchService
     /**
      * The resources that are searchable.
      *
+     * This will determine the order in which the results are returned.
+     *
      * @var array<string, string>
      */
     protected $searchable = [
+        'items' => Item::class,
+        'locations' => Location::class,
+        'seed_tests' => SeedTest::class,
+        'test_questions' => TestQuestion::class,
+        'status_effects' => StatusEffect::class,
         'elements' => Element::class,
         'seed_ranks' => SeedRank::class,
-        'seed_tests' => SeedTest::class,
-        'status_effects' => StatusEffect::class,
-        'test_questions' => TestQuestion::class,
     ];
 
     /**

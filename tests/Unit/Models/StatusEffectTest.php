@@ -4,7 +4,7 @@ namespace Tests\Unit\Models;
 
 use App\Models\StatusEffect;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase as TestCase;
+use Tests\TestCase;
 
 class StatusEffectTest extends TestCase
 {
@@ -46,7 +46,6 @@ class StatusEffectTest extends TestCase
     public function it_explicitly_defines_the_cast_type_for_each_field(): void
     {
         $statusEffect = new StatusEffect();
-        $fields = $statusEffect->getCasts();
 
         $expected = [
             'id'          => 'string',
@@ -56,7 +55,7 @@ class StatusEffectTest extends TestCase
             'description' => 'string',
         ];
 
-        $this->assertEquals($expected, $fields);
+        $this->assertEquals($expected, $statusEffect->getCasts());
     }
 
     /** @test */

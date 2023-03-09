@@ -4,7 +4,7 @@ namespace Tests\Unit\Models;
 
 use App\Models\SeedTest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase as TestCase;
+use Tests\TestCase;
 
 class SeedTestTest extends TestCase
 {
@@ -44,14 +44,13 @@ class SeedTestTest extends TestCase
     public function it_explicitly_defines_the_cast_type_for_each_field(): void
     {
         $seedTest = new SeedTest();
-        $fields = $seedTest->getCasts();
 
         $expected = [
             'id'    => 'string',
             'level' => 'integer',
         ];
 
-        $this->assertEquals($expected, $fields);
+        $this->assertEquals($expected, $seedTest->getCasts());
     }
 
     /** @test */
