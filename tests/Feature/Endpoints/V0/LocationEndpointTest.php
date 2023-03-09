@@ -5,11 +5,21 @@ namespace Tests\Feature\Endpoints\V0;
 use App\Http\Transformers\V0\LocationTransformer;
 use App\Models\Location;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Routing\Middleware\ThrottleRequestsWithRedis;
 use Tests\TestCase;
 
 class LocationEndpointTest extends TestCase
 {
     use RefreshDatabase;
+
+    /**
+     * The middleware to exclude when running tests.
+     *
+     * @var array<int, class-string>
+     */
+    protected $excludedMiddlware = [
+        ThrottleRequestsWithRedis::class,
+    ];
 
     /** @test */
     public function it_will_return_a_list_of_locations(): void

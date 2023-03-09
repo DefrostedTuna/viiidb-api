@@ -1,5 +1,8 @@
 FROM defrostedtuna/php-nginx:8.1
 
+RUN apk add --no-cache \
+  php81-redis
+
 # Copy the project files.
 COPY . /app
 
