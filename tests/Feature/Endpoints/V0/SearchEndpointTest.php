@@ -10,11 +10,21 @@ use App\Models\SeedTest;
 use App\Models\StatusEffect;
 use App\Models\TestQuestion;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Routing\Middleware\ThrottleRequestsWithRedis;
 use Tests\TestCase;
 
 class SearchEndpointTest extends TestCase
 {
     use RefreshDatabase;
+
+    /**
+     * The middleware to exclude when running tests.
+     *
+     * @var array<int, class-string>
+     */
+    protected $excludedMiddlware = [
+        ThrottleRequestsWithRedis::class,
+    ];
 
     /** @test */
     public function it_will_search_for_records(): void

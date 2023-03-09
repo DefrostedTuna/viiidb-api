@@ -2,10 +2,20 @@
 
 namespace Tests\Feature\Endpoints\V0;
 
+use Illuminate\Routing\Middleware\ThrottleRequestsWithRedis;
 use Tests\TestCase;
 
 class HealthCheckEndpointTest extends TestCase
 {
+    /**
+     * The middleware to exclude when running tests.
+     *
+     * @var array<int, class-string>
+     */
+    protected $excludedMiddlware = [
+        ThrottleRequestsWithRedis::class,
+    ];
+
     /** @test */
     public function it_can_check_the_server_status(): void
     {
