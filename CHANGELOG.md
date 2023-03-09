@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.2](https://github.com/DefrostedTuna/viiidb-api/compare/0.3.1...0.3.2) (2023-03-09)
+
+
+### Features
+
+* add rate limiting to api calls (API-82) ([#69](https://github.com/DefrostedTuna/viiidb-api/issues/69)) ([fb29751](https://github.com/DefrostedTuna/viiidb-api/commit/fb29751f272b23c624960a93b5572e2d201f9e5f))
+
 ## [0.3.1](https://github.com/DefrostedTuna/viiidb-api/compare/0.3.0...0.3.1) (2023-03-09)
 
 
