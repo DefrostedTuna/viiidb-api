@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.1](https://github.com/DefrostedTuna/viiidb-api/compare/0.3.0...0.3.1) (2023-03-09)
+
+
+### Features
+
+* add items resource ([#60](https://github.com/DefrostedTuna/viiidb-api/issues/60)) ([7e4f7c7](https://github.com/DefrostedTuna/viiidb-api/commit/7e4f7c7f2327cc52cfb9ba3a55d792031ce11fa9))
+* add location resource ([#62](https://github.com/DefrostedTuna/viiidb-api/issues/62)) ([e993309](https://github.com/DefrostedTuna/viiidb-api/commit/e993309cca53579687b63bbc708c9b9157b0c8e8))
+* include relational resources ([#63](https://github.com/DefrostedTuna/viiidb-api/issues/63)) ([b1769d1](https://github.com/DefrostedTuna/viiidb-api/commit/b1769d1c22fe7d5c8b84d0f54ae206b91308af8b))
+
 ## [0.3.0](https://github.com/DefrostedTuna/viiidb-api/compare/0.2.7...0.3.0) (2022-04-13)
 
 
