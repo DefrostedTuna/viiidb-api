@@ -37,6 +37,7 @@ class StatusEffectTest extends TestCase
             'name',
             'type',
             'description',
+            'items',
         ];
 
         $this->assertEquals($visibleFields, $statusEffect->getVisible());
@@ -70,6 +71,28 @@ class StatusEffectTest extends TestCase
         ];
 
         $this->assertEquals($expected, $statusEffect->getSearchableFields());
+    }
+
+    /** @test */
+    public function it_explicitly_defines_the_relations_that_are_available_to_include_with_the_resource(): void
+    {
+        $statusEffect = new StatusEffect();
+
+        $expected = [
+            'items',
+        ];
+
+        $this->assertEquals($expected, $statusEffect->getAvailableIncludes());
+    }
+
+    /** @test */
+    public function it_explicitly_defines_the_default_relations_to_include_with_the_resource(): void
+    {
+        $statusEffect = new StatusEffect();
+
+        $expected = [];
+
+        $this->assertEquals($expected, $statusEffect->getDefaultIncludes());
     }
 
     /** @test */

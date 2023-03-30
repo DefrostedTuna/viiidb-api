@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ElementsTableSeeder::class);
         $this->call(ItemsTableSeeder::class);
         $this->call(LocationsTableSeeder::class);
+        $this->call(ItemStatusEffectTableSeeder::class);
     }
 }

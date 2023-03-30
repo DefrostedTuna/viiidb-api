@@ -46,6 +46,7 @@ class ItemTest extends TestCase
             'used_in_menu',
             'used_in_battle',
             'notes',
+            'statusEffects',
         ];
 
         $this->assertEquals($visibleFields, $item->getVisible());
@@ -99,6 +100,28 @@ class ItemTest extends TestCase
         ];
 
         $this->assertEquals($expected, $item->getSearchableFields());
+    }
+
+    /** @test */
+    public function it_explicitly_defines_the_relations_that_are_available_to_include_with_the_resource(): void
+    {
+        $item = new Item();
+
+        $expected = [
+            'statusEffects',
+        ];
+
+        $this->assertEquals($expected, $item->getAvailableIncludes());
+    }
+
+    /** @test */
+    public function it_explicitly_defines_the_default_relations_to_include_with_the_resource(): void
+    {
+        $item = new Item();
+
+        $expected = [];
+
+        $this->assertEquals($expected, $item->getDefaultIncludes());
     }
 
     /** @test */

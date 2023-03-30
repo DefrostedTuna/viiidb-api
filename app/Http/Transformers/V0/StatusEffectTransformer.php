@@ -15,12 +15,30 @@ class StatusEffectTransformer extends RecordTransformer
      */
     public function transformRecord(array $record): array
     {
-        return [
+        $data = [
             'id' => $record['id'],
             'sort_id' => $record['sort_id'],
             'name' => $record['name'],
             'type' => $record['type'],
             'description' => $record['description'],
         ];
+
+        if (array_key_exists('items', $record)) {
+            $data['items'] = $record['items']
+                ? $this->getItemTransformer()->transformCollection($record['items'])
+                : null;
+        }
+
+        return $data;
+    }
+
+    /**
+     * Create a new ItemTransformer instance.
+     *
+     * @return ItemTransformer
+     */
+    protected function getItemTransformer(): ItemTransformer
+    {
+        return new ItemTransformer();
     }
 }

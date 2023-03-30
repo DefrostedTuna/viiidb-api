@@ -15,7 +15,7 @@ abstract class TestCase extends BaseTestCase
      * 
      * @var array<int, class-string>
      */
-    protected $excludedMiddlware = [];
+    protected $excludedMiddleware = [];
 
     /**
      * Setup the test environment.
@@ -26,6 +26,6 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
 
-        $this->withoutMiddleware($this->excludedMiddlware);
+        $this->withoutMiddleware($this->excludedMiddleware);
     }
 }
