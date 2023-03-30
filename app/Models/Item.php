@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Item extends SearchableModel
 {
@@ -49,6 +50,7 @@ class Item extends SearchableModel
         'used_in_menu',
         'used_in_battle',
         'notes',
+        'statusEffects',
     ];
 
     /**
@@ -115,6 +117,22 @@ class Item extends SearchableModel
         'notes',
     ];
 
+    /**
+     * The relations that are available to include with the resource.
+     *
+     * @var array<int, string>
+     */
+    protected $availableIncludes = [
+        'statusEffects',
+    ];
+
+    /**
+     * The default relations to include with the resource.
+     *
+     * @var array<int, string>
+     */
+    protected $defaultIncludes = [];
+
     /*
      * Get the route key for the model.
      *
@@ -123,5 +141,15 @@ class Item extends SearchableModel
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+    /**
+     * The status effects that are associated with the item.
+     * 
+     * @return BelongsToMany<StatusEffect>
+     */
+    public function statusEffects(): BelongsToMany
+    {
+        return $this->belongsToMany(StatusEffect::class);
     }
 }

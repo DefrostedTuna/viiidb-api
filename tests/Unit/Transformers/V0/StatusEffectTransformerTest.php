@@ -2,7 +2,9 @@
 
 namespace Tests\Unit\Transformers\V0;
 
+use App\Http\Transformers\V0\ItemTransformer;
 use App\Http\Transformers\V0\StatusEffectTransformer;
+use App\Models\Item;
 use App\Models\StatusEffect;
 use Tests\TestCase;
 
@@ -69,5 +71,63 @@ class StatusEffectTransformerTest extends TestCase
                 'description' => $statusEffects[2]['description'],
             ],
         ], $transformedRecords);
+    }
+
+    /** @test */
+    public function it_will_transform_the_item_records_if_they_are_present(): void
+    {
+        $statusEffect = StatusEffect::factory()->make([
+            'id' => 'some-random-uuid',
+            'sort_id' => 1,
+            'name' => 'zombie',
+            'type' => 'harmful',
+            'description' => 'The Zombie status causes the target to act as if undead. This effect does not wear off on its own.',
+            'arbitrary' => 'data',
+        ])->toArray();
+
+        $item = Item::factory()->make([
+            'id' => 'some-random-string',
+            'slug' => 'remedy-plus',
+            'position' => 17,
+            'name' => 'Remedy+',
+            'type' => 'Medicine',
+            'description' => 'Cures abnormal status',
+            'menu_effect' => 'One party member',
+            'value' => 1000,
+            'price' => null,
+            'haggle' => null,
+            'sell_high' => 1500,
+            'used_in_menu' => true,
+            'used_in_battle' => true,
+            'notes' => null,
+        ])->toArray();
+
+        // Manually append the child Items to the record since we're not using the database.
+        $statusEffect['items'] = [$item];
+
+        $statusEffectTransformer = new StatusEffectTransformer();
+        $itemTransformer = new ItemTransformer();
+
+        $transformedStatusEffect = $statusEffectTransformer->transformRecord($statusEffect);
+        $transformedItem = $itemTransformer->transformRecord($item);
+
+        $this->assertEquals([$transformedItem], $transformedStatusEffect['items']);
+    }
+
+    /** @test */
+    public function it_will_include_the_items_key_in_the_event_no_records_are_returned_from_the_relation(): void
+    {
+        $statusEffect = StatusEffect::factory()->make(['id' => 'some-uuid'])->toArray();
+
+        // Manually append the Items to the record since we're not using the database.
+        $statusEffect['items'] = null;
+
+        $statusEffectTransformer = new StatusEffectTransformer();
+
+        $transformedStatusEffect = $statusEffectTransformer->transformRecord($statusEffect);
+
+        $this->assertArraySubset([
+            'items' => null,
+        ], $transformedStatusEffect);
     }
 }

@@ -16,7 +16,7 @@ class SeedRankEndpointTest extends TestCase
      *
      * @var array<int, class-string>
      */
-    protected $excludedMiddlware = [
+    protected $excludedMiddleware = [
         ThrottleRequestsWithRedis::class,
     ];
 

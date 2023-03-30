@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class StatusEffect extends SearchableModel
 {
@@ -40,6 +41,7 @@ class StatusEffect extends SearchableModel
         'name',
         'type',
         'description',
+        'items',
     ];
 
     /**
@@ -77,6 +79,22 @@ class StatusEffect extends SearchableModel
         'description',
     ];
 
+    /**
+     * The relations that are available to include with the resource.
+     *
+     * @var array<int, string>
+     */
+    protected $availableIncludes = [
+        'items',
+    ];
+
+    /**
+     * The default relations to include with the resource.
+     *
+     * @var array<int, string>
+     */
+    protected $defaultIncludes = [];
+
     /*
      * Get the route key for the model.
      *
@@ -85,5 +103,15 @@ class StatusEffect extends SearchableModel
     public function getRouteKeyName(): string
     {
         return 'name';
+    }
+
+    /**
+     * The items that are associated with the status effect.
+     * 
+     * @return BelongsToMany<Item>
+     */
+    public function items(): BelongsToMany
+    {
+        return $this->belongsToMany(Item::class);
     }
 }

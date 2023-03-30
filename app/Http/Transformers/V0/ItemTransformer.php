@@ -15,7 +15,7 @@ class ItemTransformer extends RecordTransformer
      */
     public function transformRecord(array $record): array
     {
-        return [
+        $data = [
             'id' => $record['id'],
             'slug' => $record['slug'],
             'position' => $record['position'],
@@ -31,5 +31,23 @@ class ItemTransformer extends RecordTransformer
             'used_in_battle' => $record['used_in_battle'],
             'notes' => $record['notes'],
         ];
+
+        if (array_key_exists('status_effects', $record)) {
+            $data['status_effects'] = $record['status_effects']
+                ? $this->getStatusEffectTransformer()->transformCollection($record['status_effects'])
+                : null;
+        }
+
+        return $data;
+    }
+
+    /**
+     * Create a new StatusEffectTransformer instance.
+     *
+     * @return StatusEffectTransformer
+     */
+    protected function getStatusEffectTransformer(): StatusEffectTransformer
+    {
+        return new StatusEffectTransformer();
     }
 }
